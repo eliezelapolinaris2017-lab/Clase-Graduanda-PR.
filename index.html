@@ -98,12 +98,12 @@
         <h2>Reporte mensual consolidado</h2>
         <div class="report-controls">
           <input id="reportMonth" type="month" />
-          <select id="reportEmail" title="Seleccionar estudiante y email">
+          <select id="reportEmail">
             <option value="">Seleccionar estudiante — email</option>
           </select>
           <button id="loadReport">Generar reporte</button>
           <button id="pdfReport" class="secondary">Descargar PDF</button>
-          <button id="sendReport" class="secondary">Enviar por email</button>
+          <button id="sendReport" class="secondary">Enviar PDF</button>
         </div>
         <div id="reportSummary" class="cards compact"></div>
         <div class="table-wrap"><table id="reportTable"></table></div>
@@ -134,32 +134,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.4/jspdf.plugin.autotable.min.js"></script>
   <script src="app.js"></script>
-  <script>
-    (function(){
-      const STORE='claseGraduandaPR_v1';
-      const select=document.getElementById('reportEmail');
-      if(!select) return;
-
-      function fillReportEmails(){
-        const current=select.value;
-        let stored={students:[]};
-        try{ stored=JSON.parse(localStorage.getItem(STORE)||'null')||stored; }catch(e){}
-        const students=[...(stored.students||[])].sort((a,b)=>String(a.student_name||'').localeCompare(String(b.student_name||'')));
-        select.innerHTML='<option value="">Seleccionar estudiante — email</option>' + students.map(s=>{
-          const name=String(s.student_name||'Sin nombre');
-          const email=String(s.email||'').trim();
-          const label=email ? `${name} — ${email}` : `${name} — SIN EMAIL`;
-          return `<option value="${email.replace(/"/g,'&quot;')}" ${!email?'disabled':''}>${label.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</option>`;
-        }).join('');
-        if([...select.options].some(o=>o.value===current)) select.value=current;
-      }
-
-      fillReportEmails();
-      document.getElementById('studentForm')?.addEventListener('submit',()=>setTimeout(fillReportEmails,50));
-      document.getElementById('restoreFile')?.addEventListener('change',()=>setTimeout(fillReportEmails,150));
-      document.querySelector('[data-tab="reports"]')?.addEventListener('click',fillReportEmails);
-      window.addEventListener('storage',fillReportEmails);
-    })();
-  </script>
+  <script src="pdf-email.js"></script>
 </body>
 </html>
