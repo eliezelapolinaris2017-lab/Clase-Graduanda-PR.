@@ -141,6 +141,142 @@ function buildEmailLines(r){
   return lines;
 }
 
+function generatePdf(){
+  const r=generateReport();
+  if(!r) return;
+  if(!window.jspdf || !window.jspdf.jsPDF) return toast('No se pudo cargar el generador PDF');
+
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({unit:'pt',format:'letter'});
+  const pageWidth=doc.internal.pageSize.getWidth();
+  const margin=42;
+  let y=48;
+
+  const addPageIfNeeded=(needed=80)=>{
+    if(y+needed>doc.internal.pageSize.getHeight()-45){
+      doc.addPage();
+      y=48;
+    }
+  };
+
+  doc.setFont('helvetica','bold');
+  doc.setFontSize(18);
+  doc.text(data.settings.schoolName, margin, y);
+  y+=24;
+  doc.setFontSize(13);
+  doc.text(data.settings.className, margin, y);
+  y+=18;
+  doc.setFont('helvetica','normal');
+  doc.setFontSize(10);
+  doc.text(`Estado de cuenta mensual - ${r.month}`, margin, y);
+  y+=28;
+
+  doc.autoTable({
+    startY:y,
+    margin:{left:margin,right:margin},
+    head:[['Resumen','Monto']],
+    body:[
+      ['Total asignado',money(r.totalAmount)],
+      ['Total pagado',money(r.totalPaid)],
+      ['Balance pendiente',money(r.totalBalance)]
+    ],
+    theme:'grid',
+    styles:{font:'helvetica',fontSize:9,cellPadding:5},
+    headStyles:{fontStyle:'bold'}
+  });
+  y=doc.lastAutoTable.finalY+24;
+
+  r.students.forEach(s=>{
+    const studentDues=r.dues.filter(x=>x.student_id==s.id);
+    const studentActs=r.acts.filter(x=>x.student_id==s.id);
+    const duePayments=studentDues.filter(x=>Number(x.paid)>0).sort((a,b)=>a.date.localeCompare(b.date));
+    const actPayments=studentActs.filter(x=>Number(x.paid)>0).sort((a,b)=>a.date.localeCompare(b.date));
+    if(!studentDues.length && !studentActs.length) return;
+
+    addPageIfNeeded(120);
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(12);
+    doc.text(`Estudiante: ${s.student_name}`, margin, y);
+    y+=16;
+    doc.setFont('helvetica','normal');
+    doc.setFontSize(9.5);
+    if(s.parent_name){doc.text(`Padre/Madre/Encargado: ${s.parent_name}`, margin, y); y+=14;}
+    if(s.email){doc.text(`Email: ${s.email}`, margin, y); y+=14;}
+
+    if(duePayments.length){
+      doc.autoTable({
+        startY:y+4,
+        margin:{left:margin,right:margin},
+        head:[['Pagos de Cuotas','Fecha','Pago','Balance']],
+        body:duePayments.map(x=>[x.concept,x.date,money(x.paid),money(Number(x.amount)-Number(x.paid))]),
+        theme:'striped',
+        styles:{font:'helvetica',fontSize:8.5,cellPadding:4},
+        headStyles:{fontStyle:'bold'},
+        columnStyles:{0:{cellWidth:230},1:{cellWidth:85},2:{cellWidth:85},3:{cellWidth:85}}
+      });
+      y=doc.lastAutoTable.finalY+14;
+    } else {
+      doc.setFont('helvetica','italic');
+      doc.setFontSize(9);
+      doc.text('No hay pagos de cuotas registrados en este mes.', margin, y+5);
+      y+=22;
+    }
+
+    addPageIfNeeded(90);
+    if(actPayments.length){
+      doc.autoTable({
+        startY:y,
+        margin:{left:margin,right:margin},
+        head:[['Pagos de Actividades','Fecha','Pago','Balance']],
+        body:actPayments.map(x=>[x.activity_name,x.date,money(x.paid),money(Number(x.amount)-Number(x.paid))]),
+        theme:'striped',
+        styles:{font:'helvetica',fontSize:8.5,cellPadding:4},
+        headStyles:{fontStyle:'bold'},
+        columnStyles:{0:{cellWidth:230},1:{cellWidth:85},2:{cellWidth:85},3:{cellWidth:85}}
+      });
+      y=doc.lastAutoTable.finalY+14;
+    } else {
+      doc.setFont('helvetica','italic');
+      doc.setFontSize(9);
+      doc.text('No hay pagos de actividades registrados en este mes.', margin, y+5);
+      y+=22;
+    }
+
+    const totalPaidStudent=studentDues.reduce((a,x)=>a+Number(x.paid),0)+studentActs.reduce((a,x)=>a+Number(x.paid),0);
+    addPageIfNeeded(55);
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(9.5);
+    doc.text(`Total pagado en el mes: ${money(totalPaidStudent)}`, margin, y);
+    y+=14;
+    doc.text(`Balance pendiente del estudiante: ${money(s.total_balance)}`, margin, y);
+    y+=24;
+    doc.setDrawColor(180);
+    doc.line(margin,y,pageWidth-margin,y);
+    y+=20;
+  });
+
+  addPageIfNeeded(55);
+  doc.setFont('helvetica','bold');
+  doc.setFontSize(11);
+  doc.text(`TOTAL PAGADO GENERAL: ${money(r.totalPaid)}`, margin, y);
+  y+=16;
+  doc.text(`BALANCE TOTAL GENERAL: ${money(r.totalBalance)}`, margin, y);
+
+  const pages=doc.internal.getNumberOfPages();
+  for(let p=1;p<=pages;p++){
+    doc.setPage(p);
+    doc.setFont('helvetica','normal');
+    doc.setFontSize(8);
+    doc.text(`Página ${p} de ${pages}`, pageWidth-margin, doc.internal.pageSize.getHeight()-22,{align:'right'});
+  }
+
+  const safeName=(data.settings.className||'clase-graduanda').replace(/[^a-z0-9áéíóúñü -]/gi,'').trim().replace(/\s+/g,'-').toLowerCase();
+  doc.save(`${safeName}-reporte-${r.month}.pdf`);
+  toast('PDF generado');
+}
+
+$('#pdfReport').onclick=generatePdf;
+
 $('#sendReport').onclick=()=>{
   const r=generateReport(); if(!r) return;
   const to=$('#reportEmail').value.trim();
