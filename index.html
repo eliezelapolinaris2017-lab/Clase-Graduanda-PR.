@@ -100,6 +100,7 @@
           <input id="reportMonth" type="month" />
           <input id="reportEmail" type="email" placeholder="Email destinatario" />
           <button id="loadReport">Generar reporte</button>
+          <button id="pdfReport" class="secondary">Descargar PDF</button>
           <button id="sendReport" class="secondary">Enviar por email</button>
         </div>
         <div id="reportSummary" class="cards compact"></div>
@@ -128,6 +129,8 @@
   </main>
 
   <div id="toast"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.4/jspdf.plugin.autotable.min.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
