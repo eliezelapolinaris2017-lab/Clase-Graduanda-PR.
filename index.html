@@ -7,6 +7,20 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <div id="pinLock" class="pin-lock">
+    <div class="pin-card">
+      <div class="pin-badge">ACCESO SEGURO</div>
+      <h1 id="pinWelcomeName">Clase Graduanda PR</h1>
+      <p>Ingresa tu PIN de 4 dígitos</p>
+      <form id="pinLoginForm">
+        <input id="pinInput" type="password" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" placeholder="••••" autocomplete="off" required />
+        <button type="submit">Entrar</button>
+      </form>
+      <p id="pinError" class="pin-error"></p>
+      <small>También puedes usar el código master de recuperación.</small>
+    </div>
+  </div>
+
   <header>
     <div>
       <span class="eyebrow">ADMINISTRACIÓN ESCOLAR</span>
@@ -116,8 +130,12 @@
         <form id="settingsForm" class="grid">
           <input id="settingSchool" placeholder="Nombre del colegio" />
           <input id="settingClass" placeholder="Nombre de la clase graduanda" />
+          <input id="settingAdminName" placeholder="Nombre que aparecerá en el inicio" />
+          <input id="settingPin" type="password" inputmode="numeric" maxlength="4" pattern="[0-9]{4}" placeholder="Nuevo PIN de 4 dígitos" />
           <button>Guardar configuración</button>
         </form>
+        <p class="security-note">PIN inicial: 1234. El código master de recuperación permanece disponible aunque cambies el PIN.</p>
+        <button id="lockNowBtn" class="secondary" type="button">Bloquear ahora</button>
       </div>
       <div class="box">
         <h2>Backup local</h2>
@@ -135,5 +153,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.4/jspdf.plugin.autotable.min.js"></script>
   <script src="app.js"></script>
   <script src="pdf-email.js"></script>
+  <script src="auth.js"></script>
 </body>
 </html>
