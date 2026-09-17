@@ -9,10 +9,64 @@
     .replace(/[^a-z0-9 -]/gi, '')
     .trim().replace(/\s+/g, '-').toLowerCase();
 
-  function buildPdfDocument(student = null) {
+  const loadScript = src => new Promise((resolve, reject) => {
+    const existing = [...document.scripts].find(s => s.src === src);
+    if (existing) {
+      if (existing.dataset.loaded === '1') return resolve();
+      existing.addEventListener('load', resolve, { once:true });
+      existing.addEventListener('error', reject, { once:true });
+      return;
+    }
+    const s = document.createElement('script');
+    s.src = src;
+    s.async = true;
+    s.onload = () => { s.dataset.loaded = '1'; resolve(); };
+    s.onerror = reject;
+    document.head.appendChild(s);
+  });
+
+  async function ensurePdfLibraries(){
+    if (!window.jspdf?.jsPDF) {
+      const jspdfSources = [
+        'https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js',
+        'https://unpkg.com/jspdf@2.5.2/dist/jspdf.umd.min.js'
+      ];
+      let ok = false;
+      for (const src of jspdfSources) {
+        try { await loadScript(src); if (window.jspdf?.jsPDF) { ok = true; break; } } catch {}
+      }
+      if (!ok) return false;
+    }
+
+    const testDoc = new window.jspdf.jsPDF();
+    if (typeof testDoc.autoTable !== 'function') {
+      const tableSources = [
+        'https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.4/dist/jspdf.plugin.autotable.min.js',
+        'https://unpkg.com/jspdf-autotable@3.8.4/dist/jspdf.plugin.autotable.min.js'
+      ];
+      let ok = false;
+      for (const src of tableSources) {
+        try {
+          await loadScript(src);
+          const check = new window.jspdf.jsPDF();
+          if (typeof check.autoTable === 'function') { ok = true; break; }
+        } catch {}
+      }
+      if (!ok) return false;
+    }
+    return true;
+  }
+
+  async function buildPdfDocument(student = null) {
     const month = document.querySelector('#reportMonth').value;
     if (!month) { toast('Selecciona el mes'); return null; }
-    if (!window.jspdf?.jsPDF) { toast('No se pudo cargar el generador PDF'); return null; }
+
+    toast('Preparando PDF...');
+    const ready = await ensurePdfLibraries();
+    if (!ready) {
+      toast('No se pudo cargar el generador PDF. Verifica conexión a internet.');
+      return null;
+    }
 
     const r = monthlyReport(month);
     const { jsPDF } = window.jspdf;
@@ -137,8 +191,8 @@
     return { doc, month, filename: `${base}-estado-de-cuenta-${month}.pdf`, student, totalPaid, totalBalance };
   }
 
-  document.querySelector('#pdfReport').onclick = () => {
-    const result = buildPdfDocument(selectedStudent());
+  document.querySelector('#pdfReport').onclick = async () => {
+    const result = await buildPdfDocument(selectedStudent());
     if (!result) return;
     result.doc.save(result.filename);
     toast('PDF descargado');
@@ -148,7 +202,7 @@
     const student = selectedStudent();
     if (!student) return toast('Selecciona un estudiante con email');
 
-    const result = buildPdfDocument(student);
+    const result = await buildPdfDocument(student);
     if (!result) return;
     const blob = result.doc.output('blob');
     const file = new File([blob], result.filename, { type: 'application/pdf' });
