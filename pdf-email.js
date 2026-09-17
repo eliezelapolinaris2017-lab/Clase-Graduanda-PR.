@@ -201,28 +201,19 @@
   document.querySelector('#sendReport').onclick = async () => {
     const student = selectedStudent();
     if (!student) return toast('Selecciona un estudiante con email');
+    if (!student.email) return toast('El estudiante seleccionado no tiene email');
 
     const result = await buildPdfDocument(student);
     if (!result) return;
-    const blob = result.doc.output('blob');
-    const file = new File([blob], result.filename, { type: 'application/pdf' });
-    const subject = `${data.settings.className} - Estado de cuenta ${result.month}`;
-    const body = `Saludos,\n\nAdjunto encontrará el estado de cuenta en PDF de ${student.student_name} correspondiente a ${result.month}.\n\nTotal pagado: ${money(result.totalPaid)}\nBalance pendiente: ${money(result.totalBalance)}\n\n${data.settings.schoolName}`;
 
-    if (navigator.canShare && navigator.share && navigator.canShare({ files: [file] })) {
-      try {
-        await navigator.share({ files: [file], title: subject, text: body });
-        toast('PDF listo para compartir');
-        return;
-      } catch (err) {
-        if (err?.name === 'AbortError') return;
-      }
-    }
+    const subject = `${data.settings.className} - Estado de cuenta ${result.month}`;
+    const body = `Saludos,\n\nAdjunto encontrará el estado de cuenta en PDF de ${student.student_name} correspondiente a ${result.month}.\n\nTotal pagado: ${money(result.totalPaid)}\nBalance pendiente: ${money(result.totalBalance)}\n\n${data.settings.schoolName}\n\nEl PDF fue descargado automáticamente. Favor adjuntarlo antes de enviar este correo.`;
 
     result.doc.save(result.filename);
-    toast('PDF descargado. Se abrirá el correo para adjuntarlo.');
+    toast(`PDF descargado. Abriendo correo para ${student.email}`);
+
     setTimeout(() => {
-      location.href = `mailto:${encodeURIComponent(student.email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body + '\n\nAdjunte el PDF descargado a este correo.')}`;
-    }, 350);
+      location.href = `mailto:${encodeURIComponent(student.email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    }, 450);
   };
 })();
