@@ -21,11 +21,16 @@
     </div>
   </div>
 
-  <header>
-    <div>
-      <span class="eyebrow">ADMINISTRACIÓN ESCOLAR</span>
-      <h1 id="schoolName">Clase Graduanda PR</h1>
-      <p id="className"></p>
+  <header id="mainHeader">
+    <div class="header-inner">
+      <div id="headerLogoWrap" class="header-logo-wrap" hidden>
+        <img id="headerLogo" alt="Logo del colegio" />
+      </div>
+      <div>
+        <span class="eyebrow">ADMINISTRACIÓN ESCOLAR</span>
+        <h1 id="schoolName">Clase Graduanda PR</h1>
+        <p id="className"></p>
+      </div>
     </div>
   </header>
 
@@ -112,9 +117,7 @@
         <h2>Reporte mensual consolidado</h2>
         <div class="report-controls">
           <input id="reportMonth" type="month" />
-          <select id="reportEmail">
-            <option value="">Seleccionar estudiante — email</option>
-          </select>
+          <select id="reportEmail"><option value="">Seleccionar estudiante — email</option></select>
           <button id="loadReport">Generar reporte</button>
           <button id="pdfReport" class="secondary">Descargar PDF</button>
           <button id="sendReport" class="secondary">Enviar PDF</button>
@@ -137,6 +140,31 @@
         <p class="security-note">PIN inicial: 1234. El código master de recuperación permanece disponible aunque cambies el PIN.</p>
         <button id="lockNowBtn" class="secondary" type="button">Bloquear ahora</button>
       </div>
+
+      <div class="box">
+        <h2>Logo y colores del header</h2>
+        <div class="branding-grid">
+          <div class="branding-field">
+            <label for="headerLogoFile">Logo JPG/PNG</label>
+            <input id="headerLogoFile" type="file" accept="image/jpeg,image/png,image/webp" />
+            <small>El logo se guarda en este navegador.</small>
+          </div>
+          <div class="branding-field">
+            <label for="headerColor1">Color principal</label>
+            <input id="headerColor1" type="color" value="#102d46" />
+          </div>
+          <div class="branding-field">
+            <label for="headerColor2">Color secundario</label>
+            <input id="headerColor2" type="color" value="#1c5277" />
+          </div>
+        </div>
+        <div class="branding-actions">
+          <button id="saveBrandingBtn" type="button">Guardar diseño</button>
+          <button id="removeLogoBtn" type="button" class="secondary">Quitar logo</button>
+          <button id="resetHeaderBtn" type="button" class="secondary">Colores originales</button>
+        </div>
+      </div>
+
       <div class="box">
         <h2>Backup local</h2>
         <p>Los datos se guardan en este navegador. Puedes descargar una copia y restaurarla luego.</p>
@@ -157,5 +185,6 @@
   <script src="pdf-payment-method.js"></script>
   <script src="auth.js"></script>
   <script src="report-recipient.js"></script>
+  <script src="branding.js"></script>
 </body>
 </html>
