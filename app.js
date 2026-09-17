@@ -90,49 +90,54 @@ $('#loadReport').onclick=generateReport;
 function buildEmailLines(r){
   const lines=[
     data.settings.schoolName,
-    `${data.settings.className} - Estado de balance ${r.month}`,
+    `${data.settings.className} - Estado de cuenta ${r.month}`,
     '',
     `Total asignado: ${money(r.totalAmount)}`,
     `Total pagado: ${money(r.totalPaid)}`,
     `Balance pendiente: ${money(r.totalBalance)}`,
     '',
     '============================',
-    'DESGLOSE DE COBROS',
+    'REGISTROS DE PAGO',
     '============================'
   ];
 
   r.students.forEach(s=>{
     const studentDues=r.dues.filter(x=>x.student_id==s.id);
     const studentActs=r.acts.filter(x=>x.student_id==s.id);
+    const duePayments=studentDues.filter(x=>Number(x.paid)>0);
+    const actPayments=studentActs.filter(x=>Number(x.paid)>0);
     if(!studentDues.length && !studentActs.length) return;
 
     lines.push('',`ESTUDIANTE: ${s.student_name}`);
     if(s.parent_name) lines.push(`PADRE/MADRE/ENCARGADO: ${s.parent_name}`);
 
-    if(studentDues.length){
-      lines.push('','CUOTAS');
-      studentDues.forEach(x=>{
+    lines.push('','PAGOS DE CUOTAS');
+    if(duePayments.length){
+      duePayments.sort((a,b)=>a.date.localeCompare(b.date)).forEach(x=>{
         const bal=Number(x.amount)-Number(x.paid);
-        lines.push(`• ${x.concept} | Cargo: ${money(x.amount)} | Pagado: ${money(x.paid)} | Balance: ${money(bal)}`);
+        lines.push(`• Fecha: ${x.date} | Cuota: ${x.concept} | Pago registrado: ${money(x.paid)} | Balance: ${money(bal)}`);
       });
-      const dueTotal=studentDues.reduce((a,x)=>a+Number(x.amount)-Number(x.paid),0);
-      lines.push(`Subtotal cuotas pendiente: ${money(dueTotal)}`);
+    } else {
+      lines.push('• No hay pagos de cuotas registrados en este mes.');
     }
 
-    if(studentActs.length){
-      lines.push('','ACTIVIDADES');
-      studentActs.forEach(x=>{
+    lines.push('','PAGOS DE ACTIVIDADES');
+    if(actPayments.length){
+      actPayments.sort((a,b)=>a.date.localeCompare(b.date)).forEach(x=>{
         const bal=Number(x.amount)-Number(x.paid);
-        lines.push(`• ${x.activity_name} | Cargo: ${money(x.amount)} | Pagado: ${money(x.paid)} | Balance: ${money(bal)}`);
+        lines.push(`• Fecha: ${x.date} | Actividad: ${x.activity_name} | Pago registrado: ${money(x.paid)} | Balance: ${money(bal)}`);
       });
-      const actTotal=studentActs.reduce((a,x)=>a+Number(x.amount)-Number(x.paid),0);
-      lines.push(`Subtotal actividades pendiente: ${money(actTotal)}`);
+    } else {
+      lines.push('• No hay pagos de actividades registrados en este mes.');
     }
 
-    lines.push('',`BALANCE TOTAL DEL ESTUDIANTE: ${money(s.total_balance)}`,'----------------------------');
+    const totalPaidStudent=studentDues.reduce((a,x)=>a+Number(x.paid),0)+studentActs.reduce((a,x)=>a+Number(x.paid),0);
+    lines.push('',`TOTAL PAGADO EN EL MES: ${money(totalPaidStudent)}`);
+    lines.push(`BALANCE PENDIENTE DEL ESTUDIANTE: ${money(s.total_balance)}`,'----------------------------');
   });
 
-  lines.push('',`BALANCE TOTAL GENERAL: ${money(r.totalBalance)}`);
+  lines.push('',`TOTAL PAGADO GENERAL: ${money(r.totalPaid)}`);
+  lines.push(`BALANCE TOTAL GENERAL: ${money(r.totalBalance)}`);
   return lines;
 }
 
@@ -140,7 +145,7 @@ $('#sendReport').onclick=()=>{
   const r=generateReport(); if(!r) return;
   const to=$('#reportEmail').value.trim();
   const lines=buildEmailLines(r);
-  location.href=`mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(data.settings.className+' - Desglose de balance '+r.month)}&body=${encodeURIComponent(lines.join('\n'))}`;
+  location.href=`mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(data.settings.className+' - Registros de pago '+r.month)}&body=${encodeURIComponent(lines.join('\n'))}`;
 };
 
 $('#backupBtn').onclick=()=>{ const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='clase-graduanda-backup.json'; a.click(); URL.revokeObjectURL(a.href); };
