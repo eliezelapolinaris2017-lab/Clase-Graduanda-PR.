@@ -9,6 +9,7 @@
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);font-family:Inter,Arial,sans-serif;color:var(--text)}
+body.app-locked{overflow:hidden}
 header{padding:34px clamp(20px,5vw,70px);background:linear-gradient(135deg,#102d46,#1c5277);color:#fff}
 header h1{margin:4px 0 4px;font-size:clamp(28px,4vw,42px)}
 header p{margin:0;opacity:.85}
@@ -37,8 +38,19 @@ table{width:100%;border-collapse:collapse;min-width:720px}
 th,td{text-align:left;padding:12px;border-bottom:1px solid var(--line);font-size:14px}
 th{color:#52606d;background:#fafbfc}
 .report-controls{display:grid;grid-template-columns:1fr 2fr auto auto;gap:10px}
-#toast{position:fixed;right:20px;bottom:20px;background:#111827;color:#fff;padding:12px 16px;border-radius:10px;opacity:0;transform:translateY(10px);transition:.2s;pointer-events:none}
+#toast{position:fixed;right:20px;bottom:20px;background:#111827;color:#fff;padding:12px 16px;border-radius:10px;opacity:0;transform:translateY(10px);transition:.2s;pointer-events:none;z-index:1001}
 #toast.show{opacity:1;transform:none}
+.security-note{font-size:13px;color:var(--muted);margin:14px 0}
+.pin-lock{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(135deg,#0f2940,#1c5277)}
+.pin-lock.unlocked{display:none}
+.pin-card{width:min(100%,390px);background:#fff;border-radius:22px;padding:28px;box-shadow:0 24px 80px rgba(0,0,0,.25);text-align:center}
+.pin-card h1{margin:8px 0 6px;font-size:28px;color:#17364d}
+.pin-card p{color:#6b7280}
+.pin-badge{display:inline-block;font-size:11px;letter-spacing:1.5px;font-weight:800;color:#1e5f8a;background:#e9f2f8;padding:7px 10px;border-radius:999px}
+#pinLoginForm{display:grid;gap:12px;margin-top:20px}
+#pinInput{text-align:center;font-size:30px;letter-spacing:12px;font-weight:800;padding-left:24px}
+.pin-error{min-height:20px;color:#b91c1c!important;font-weight:700}
+.pin-card small{display:block;color:#8a94a0;margin-top:10px}
 @media(max-width:800px){
   .cards{grid-template-columns:repeat(2,1fr)}
   .grid{grid-template-columns:1fr}
