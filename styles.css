@@ -6,11 +6,17 @@
   --line:#e5e7eb;
   --accent:#123b5d;
   --accent2:#1e5f8a;
+  --header1:#102d46;
+  --header2:#1c5277;
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);font-family:Inter,Arial,sans-serif;color:var(--text)}
 body.app-locked{overflow:hidden}
-header{padding:34px clamp(20px,5vw,70px);background:linear-gradient(135deg,#102d46,#1c5277);color:#fff}
+header{padding:28px clamp(20px,5vw,70px);background:linear-gradient(135deg,var(--header1),var(--header2));color:#fff}
+.header-inner{display:flex;align-items:center;gap:22px;max-width:1200px;margin:auto}
+.header-logo-wrap{width:110px;height:110px;border-radius:18px;background:rgba(255,255,255,.94);display:flex;align-items:center;justify-content:center;padding:10px;box-shadow:0 12px 30px rgba(0,0,0,.12);flex:0 0 auto}
+.header-logo-wrap[hidden]{display:none!important}
+.header-logo-wrap img{width:100%;height:100%;object-fit:contain;border-radius:10px}
 header h1{margin:4px 0 4px;font-size:clamp(28px,4vw,42px)}
 header p{margin:0;opacity:.85}
 .eyebrow{font-size:12px;letter-spacing:2px;opacity:.7}
@@ -30,6 +36,7 @@ main{max-width:1200px;margin:auto;padding:24px}
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 input,select,button{font:inherit}
 input,select{width:100%;padding:12px 13px;border:1px solid #cfd6dd;border-radius:10px;background:#fff}
+input[type="color"]{padding:4px;height:46px;cursor:pointer}
 button{border:0;border-radius:10px;padding:12px 16px;background:var(--accent);color:#fff;font-weight:700;cursor:pointer}
 button.secondary{background:#e9eef2;color:#17364d}
 button.danger{padding:7px 10px;background:#fee2e2;color:#991b1b}
@@ -38,6 +45,11 @@ table{width:100%;border-collapse:collapse;min-width:720px}
 th,td{text-align:left;padding:12px;border-bottom:1px solid var(--line);font-size:14px}
 th{color:#52606d;background:#fafbfc}
 .report-controls{display:grid;grid-template-columns:1fr 2fr auto auto;gap:10px}
+.branding-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:14px;align-items:end}
+.branding-field{display:grid;gap:7px}
+.branding-field label{font-weight:700;font-size:14px;color:#374151}
+.branding-field small{color:var(--muted);font-size:12px}
+.branding-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
 #toast{position:fixed;right:20px;bottom:20px;background:#111827;color:#fff;padding:12px 16px;border-radius:10px;opacity:0;transform:translateY(10px);transition:.2s;pointer-events:none;z-index:1001}
 #toast.show{opacity:1;transform:none}
 .security-note{font-size:13px;color:var(--muted);margin:14px 0}
@@ -53,6 +65,14 @@ th{color:#52606d;background:#fafbfc}
 .pin-card small{display:block;color:#8a94a0;margin-top:10px}
 @media(max-width:800px){
   .cards{grid-template-columns:repeat(2,1fr)}
-  .grid{grid-template-columns:1fr}
+  .grid,.branding-grid{grid-template-columns:1fr}
   .report-controls{grid-template-columns:1fr}
+  .header-inner{align-items:flex-start}
+  .header-logo-wrap{width:82px;height:82px;border-radius:15px}
+}
+@media(max-width:520px){
+  .header-inner{gap:14px}
+  .header-logo-wrap{width:68px;height:68px;padding:7px}
+  header{padding:22px 18px}
+  header h1{font-size:25px}
 }
