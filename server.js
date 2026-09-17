@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS activities (
 
 const app = express();
 app.use(express.json());
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(__dirname));
 
 const money = (n) => Number(n || 0);
 
@@ -63,7 +63,6 @@ app.get("/api/config", (_req, res) => {
   });
 });
 
-// Students
 app.get("/api/students", (_req, res) => {
   const rows = db.prepare(`
     SELECT s.*,
@@ -90,7 +89,6 @@ app.delete("/api/students/:id", (req, res) => {
   res.json({ ok: true });
 });
 
-// Dues
 app.get("/api/dues", (_req, res) => {
   res.json(db.prepare(`
     SELECT d.*, s.student_name, (d.amount-d.paid) AS balance
@@ -114,7 +112,6 @@ app.delete("/api/dues/:id", (req, res) => {
   res.json({ ok: true });
 });
 
-// Activities
 app.get("/api/activities", (_req, res) => {
   res.json(db.prepare(`
     SELECT a.*, s.student_name, (a.amount-a.paid) AS balance
@@ -138,7 +135,6 @@ app.delete("/api/activities/:id", (req, res) => {
   res.json({ ok: true });
 });
 
-// Monthly report
 function monthlyReport(month) {
   const start = `${month}-01`;
   const [y,m] = month.split("-").map(Number);
