@@ -16,6 +16,14 @@
         <input id="pinInput" type="password" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" placeholder="••••" autocomplete="off" required />
         <button type="submit">Entrar</button>
       </form>
+      <button id="openCloudRecovery" type="button" class="secondary" style="width:100%;margin-top:10px;">Recuperar desde nube</button>
+      <div id="cloudRecoveryBox" hidden style="margin-top:16px;text-align:left;">
+        <input id="recoveryCollegeCode" value="COLEGEMA-PR" placeholder="Código del colegio" autocomplete="off" />
+        <input id="recoveryCloudPin" type="password" inputmode="numeric" maxlength="6" pattern="[0-9]{4,6}" placeholder="PIN de recuperación de nube" autocomplete="off" style="margin-top:10px;" />
+        <button id="runCloudRecovery" type="button" style="width:100%;margin-top:10px;">Restaurar respaldo</button>
+        <button id="cancelCloudRecovery" type="button" class="secondary" style="width:100%;margin-top:8px;">Cancelar</button>
+        <p id="cloudRecoveryStatus" class="security-note" style="text-align:center;"></p>
+      </div>
       <p id="pinError" class="pin-error"></p>
       <small>También puedes usar el código master de recuperación.</small>
     </div>
@@ -171,12 +179,12 @@
           <h2 style="margin:0;">Mini nube automática</h2>
           <button id="cloudHidePanel" type="button" class="secondary">Cerrar</button>
         </div>
-        <p>Respaldo cifrado en Supabase. La app continúa funcionando normalmente con Local Storage.</p>
+        <p>Respaldo cifrado en Supabase. Define aquí un PIN de recuperación independiente para poder restaurar en otra computadora.</p>
         <div class="grid">
           <input id="cloudSupabaseUrl" type="url" placeholder="Supabase Project URL" />
           <input id="cloudAnonKey" type="password" placeholder="Supabase publishable key" autocomplete="off" />
           <input id="cloudCollegeCode" placeholder="Código del colegio, ej. GEMA-4821" autocomplete="off" />
-          <input id="cloudPin" type="password" inputmode="numeric" maxlength="6" pattern="[0-9]{4,6}" placeholder="PIN de nube (4 a 6 dígitos)" autocomplete="off" />
+          <input id="cloudPin" type="password" inputmode="numeric" maxlength="6" pattern="[0-9]{4,6}" placeholder="PIN de recuperación de nube (4 a 6 dígitos)" autocomplete="off" />
           <label style="display:flex;align-items:center;gap:8px;padding:10px 0;">
             <input id="cloudAutosave" type="checkbox" style="width:auto;" checked />
             Respaldo automático
@@ -215,5 +223,6 @@
   <script src="edit-records.js"></script>
   <script src="cloud-backup.js?v=20260918-6"></script>
   <script src="admin-cloud-access.js?v=20260918-3"></script>
+  <script src="cloud-recovery.js?v=20260918-1"></script>
 </body>
 </html>
