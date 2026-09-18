@@ -4,6 +4,7 @@
   const DEFAULT_SUPABASE_KEY = 'sb_publishable_9Dm_vf7L3jETvPNCcjr7CA_vqAIReqH';
   const DEFAULT_COLLEGE_CODE = 'COLEGEMA-PR';
   const AUTH_KEY = 'claseGraduandaPR_auth_v1';
+  const DATA_KEY = 'claseGraduandaPR_v1';
   const WATCHED_KEYS = new Set([
     'claseGraduandaPR_v1',
     'claseGraduandaPR_auth_v1',
@@ -96,6 +97,29 @@
     return JSON.parse(decoder.decode(decrypted));
   }
 
+  function getLocalData() {
+    try {
+      const raw = localStorage.getItem(DATA_KEY);
+      return raw ? JSON.parse(raw) : null;
+    } catch {
+      return null;
+    }
+  }
+
+  function hasMeaningfulLocalData() {
+    const d = getLocalData();
+    if (!d) return false;
+    const students = Array.isArray(d.students) ? d.students.length : 0;
+    const dues = Array.isArray(d.dues) ? d.dues.length : 0;
+    const activities = Array.isArray(d.activities) ? d.activities.length : 0;
+    const school = String(d.settings?.schoolName || '').trim();
+    const className = String(d.settings?.className || '').trim();
+
+    return students > 0 || dues > 0 || activities > 0 ||
+      (school && school !== 'Colegio de Puerto Rico') ||
+      (className && className !== 'Clase Graduanda 2027' && className !== 'Clase Graduanda');
+  }
+
   function bundleNow() {
     const records = {};
     WATCHED_KEYS.forEach(key => {
@@ -103,7 +127,7 @@
       if (value !== null) records[key] = value;
     });
     return {
-      version: 1,
+      version: 2,
       savedAt: new Date().toISOString(),
       records
     };
@@ -165,6 +189,12 @@
       if (!silent) status('Configura la mini nube primero.');
       return false;
     }
+
+    if (!hasMeaningfulLocalData()) {
+      if (!silent) status('No se subió nada: no hay datos locales suficientes para crear un respaldo seguro.');
+      return false;
+    }
+
     try {
       if (!silent) status('Guardando respaldo cifrado...');
       const payload = await encryptBundle(bundleNow(), cfg.rawKey);
@@ -305,7 +335,6 @@
 
   bootstrapHiddenCloud().then(() => {
     hydrate();
-    setTimeout(() => backupNow(true), 1800);
   }).catch(() => {});
 
   setTimeout(async () => {
