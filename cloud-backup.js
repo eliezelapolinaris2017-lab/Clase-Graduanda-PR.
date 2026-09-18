@@ -238,10 +238,10 @@
     let rawKey = current.rawKey;
     const codeChanged = current.collegeCode !== code;
     if (codeChanged || !rawKey) {
-      if (!/^\d{4,6}$/.test(pin)) return status('Para activar la nube usa un PIN de 4 a 6 dígitos.');
+      if (!/^\d{4,6}$/.test(pin)) return status('Usa un PIN de recuperación de 4 a 6 dígitos.');
       rawKey = bytesToB64(await deriveRawKey(pin, code));
     } else if (pin) {
-      if (!/^\d{4,6}$/.test(pin)) return status('El PIN debe tener de 4 a 6 dígitos.');
+      if (!/^\d{4,6}$/.test(pin)) return status('El PIN de recuperación debe tener de 4 a 6 dígitos.');
       rawKey = bytesToB64(await deriveRawKey(pin, code));
     }
 
@@ -256,8 +256,9 @@
     };
     writeConfig(cfg);
     if ($('#cloudPin')) $('#cloudPin').value = '';
-    status('Mini nube guardada. Probando conexión...');
-    await testCloud();
+    status('Mini nube guardada. Actualizando respaldo cifrado...');
+    const ok = await backupNow(false);
+    if (ok) status('PIN de recuperación actualizado y respaldo guardado.');
   }
 
   function hydrate() {
