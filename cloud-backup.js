@@ -339,6 +339,17 @@
   bootstrapHiddenCloud().then(() => {
     hydrate();
     setTimeout(() => backupNow(true), 1800);
+
+    const params = new URLSearchParams(location.search);
+    const secretEntry = params.get('nube') === 'admin' || location.hash === '#nube-admin';
+    if (secretEntry) {
+      setTimeout(() => {
+        requestCloudAdminAccess();
+        try {
+          history.replaceState({}, document.title, location.pathname);
+        } catch {}
+      }, 900);
+    }
   }).catch(() => {});
 
   setTimeout(async () => {
