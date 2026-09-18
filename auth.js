@@ -2,7 +2,7 @@
   const AUTH_KEY='claseGraduandaPR_auth_v1';
   const DATA_KEY='claseGraduandaPR_v1';
   const DEFAULT_PIN='1234';
-  const MASTER_HASH='e25f201f9014599e00073db598a2603a9c05766965336d9b9c68c3d4081ee9a3';
+  const MASTER_HASH='8ad058a4cbcd36c770fa655d04b1241da93134f5040b862e49fe628b19a34790';
 
   const $=s=>document.querySelector(s);
   const readAuth=()=>JSON.parse(localStorage.getItem(AUTH_KEY)||'null')||{pin:DEFAULT_PIN,adminName:''};
