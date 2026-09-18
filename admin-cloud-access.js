@@ -1,0 +1,54 @@
+(() => {
+  const openPanel = () => {
+    const panel = document.querySelector('#cloudAdminPanel');
+    if (!panel) return;
+    panel.hidden = false;
+    if (typeof window.scrollTo === 'function') {
+      setTimeout(() => panel.scrollIntoView({behavior:'smooth', block:'start'}), 50);
+    }
+  };
+
+  const shouldOpen = () => {
+    try {
+      const params = new URLSearchParams(location.search);
+      return params.get('nube') === 'admin' || location.hash === '#nube-admin';
+    } catch {
+      return false;
+    }
+  };
+
+  const tryOpen = () => {
+    if (!shouldOpen()) return;
+    const lock = document.querySelector('#pinLock');
+    if (lock && !lock.classList.contains('unlocked')) return;
+    openPanel();
+  };
+
+  document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(tryOpen, 500);
+  });
+
+  const observer = new MutationObserver(() => tryOpen());
+  const lock = document.querySelector('#pinLock');
+  if (lock) observer.observe(lock, {attributes:true, attributeFilter:['class']});
+
+  document.addEventListener('keydown', e => {
+    if ((e.metaKey || e.ctrlKey) && e.altKey && String(e.key).toLowerCase() === 'n') {
+      e.preventDefault();
+      openPanel();
+    }
+  });
+
+  let taps = 0;
+  let timer;
+  const title = document.querySelector('#settingsTitle');
+  title?.addEventListener('click', () => {
+    taps++;
+    clearTimeout(timer);
+    timer = setTimeout(() => taps = 0, 2200);
+    if (taps >= 5) {
+      taps = 0;
+      openPanel();
+    }
+  });
+})();
