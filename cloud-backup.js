@@ -300,56 +300,11 @@
     if (panel) panel.hidden = true;
   }
 
-  function requestCloudAdminAccess() {
-    const entered = prompt('PIN de administrador');
-    if (entered === null) return;
-    const auth = readAuth();
-    if (String(entered).trim() !== String(auth.pin || '1234')) {
-      alert('PIN incorrecto');
-      return;
-    }
-    const panel = $('#cloudAdminPanel');
-    if (!panel) return;
-    panel.hidden = false;
-    hydrate();
-    panel.scrollIntoView({behavior:'smooth', block:'start'});
-  }
-
   $('#cloudHidePanel')?.addEventListener('click', hideCloudPanel);
-
-  document.addEventListener('keydown', e => {
-    if ((e.ctrlKey || e.metaKey) && e.altKey && String(e.key).toLowerCase() === 'n') {
-      e.preventDefault();
-      requestCloudAdminAccess();
-    }
-  });
-
-  let settingsTapCount = 0;
-  let settingsTapTimer = null;
-  $('#settingsTitle')?.addEventListener('click', () => {
-    settingsTapCount += 1;
-    clearTimeout(settingsTapTimer);
-    settingsTapTimer = setTimeout(() => { settingsTapCount = 0; }, 2500);
-    if (settingsTapCount >= 5) {
-      settingsTapCount = 0;
-      requestCloudAdminAccess();
-    }
-  });
 
   bootstrapHiddenCloud().then(() => {
     hydrate();
     setTimeout(() => backupNow(true), 1800);
-
-    const params = new URLSearchParams(location.search);
-    const secretEntry = params.get('nube') === 'admin' || location.hash === '#nube-admin';
-    if (secretEntry) {
-      setTimeout(() => {
-        requestCloudAdminAccess();
-        try {
-          history.replaceState({}, document.title, location.pathname);
-        } catch {}
-      }, 900);
-    }
   }).catch(() => {});
 
   setTimeout(async () => {
