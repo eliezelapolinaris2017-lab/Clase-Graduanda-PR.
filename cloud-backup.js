@@ -2,6 +2,8 @@
   const CLOUD_KEY = 'claseGraduandaPR_cloud_v1';
   const DEFAULT_SUPABASE_URL = 'https://ujrqkwdkytuvfaqnbmzl.supabase.co';
   const DEFAULT_SUPABASE_KEY = 'sb_publishable_9Dm_vf7L3jETvPNCcjr7CA_vqAIReqH';
+  const DEFAULT_COLLEGE_CODE = 'COLEGEMA-PR';
+  const AUTH_KEY = 'claseGraduandaPR_auth_v1';
   const WATCHED_KEYS = new Set([
     'claseGraduandaPR_v1',
     'claseGraduandaPR_auth_v1',
@@ -22,6 +24,10 @@
     catch { return {}; }
   };
   const writeConfig = cfg => localStorage.setItem(CLOUD_KEY, JSON.stringify(cfg));
+  const readAuth = () => {
+    try { return JSON.parse(localStorage.getItem(AUTH_KEY) || 'null') || {pin:'1234'}; }
+    catch { return {pin:'1234'}; }
+  };
 
   const bytesToB64 = bytes => {
     let s = '';
@@ -129,6 +135,28 @@
     const text = await res.text();
     if (!text) return null;
     try { return JSON.parse(text); } catch { return text; }
+  }
+
+  async function bootstrapHiddenCloud() {
+    const current = readConfig();
+    if (validConfig(current)) return current;
+
+    const auth = readAuth();
+    const pin = String(auth.pin || '1234');
+    const code = DEFAULT_COLLEGE_CODE;
+    const cfg = {
+      ...current,
+      url: DEFAULT_SUPABASE_URL,
+      anonKey: DEFAULT_SUPABASE_KEY,
+      collegeCode: code,
+      collegeId: await collegeId(code),
+      rawKey: bytesToB64(await deriveRawKey(pin, code)),
+      autosave: true,
+      autoManaged: true,
+      configuredAt: new Date().toISOString()
+    };
+    writeConfig(cfg);
+    return cfg;
   }
 
   async function backupNow(silent=false) {
@@ -267,7 +295,51 @@
     status(cfg.autosave ? 'Respaldo automático activado.' : 'Respaldo automático pausado.');
   });
 
-  hydrate();
+  function hideCloudPanel() {
+    const panel = $('#cloudAdminPanel');
+    if (panel) panel.hidden = true;
+  }
+
+  function requestCloudAdminAccess() {
+    const entered = prompt('PIN de administrador');
+    if (entered === null) return;
+    const auth = readAuth();
+    if (String(entered).trim() !== String(auth.pin || '1234')) {
+      alert('PIN incorrecto');
+      return;
+    }
+    const panel = $('#cloudAdminPanel');
+    if (!panel) return;
+    panel.hidden = false;
+    hydrate();
+    panel.scrollIntoView({behavior:'smooth', block:'start'});
+  }
+
+  $('#cloudHidePanel')?.addEventListener('click', hideCloudPanel);
+
+  document.addEventListener('keydown', e => {
+    if ((e.ctrlKey || e.metaKey) && e.altKey && String(e.key).toLowerCase() === 'n') {
+      e.preventDefault();
+      requestCloudAdminAccess();
+    }
+  });
+
+  let settingsTapCount = 0;
+  let settingsTapTimer = null;
+  $('#settingsTitle')?.addEventListener('click', () => {
+    settingsTapCount += 1;
+    clearTimeout(settingsTapTimer);
+    settingsTapTimer = setTimeout(() => { settingsTapCount = 0; }, 2500);
+    if (settingsTapCount >= 5) {
+      settingsTapCount = 0;
+      requestCloudAdminAccess();
+    }
+  });
+
+  bootstrapHiddenCloud().then(() => {
+    hydrate();
+    setTimeout(() => backupNow(true), 1800);
+  }).catch(() => {});
 
   setTimeout(async () => {
     const cfg = readConfig();
