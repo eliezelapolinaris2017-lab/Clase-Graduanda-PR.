@@ -1,5 +1,7 @@
 (() => {
   const CLOUD_KEY = 'claseGraduandaPR_cloud_v1';
+  const DEFAULT_SUPABASE_URL = 'https://ujrqkwdkytuvfaqnbmzl.supabase.co';
+  const DEFAULT_SUPABASE_KEY = 'sb_publishable_9Dm_vf7L3jETvPNCcjr7CA_vqAIReqH';
   const WATCHED_KEYS = new Set([
     'claseGraduandaPR_v1',
     'claseGraduandaPR_auth_v1',
@@ -198,8 +200,8 @@
 
   async function saveCloudConfig() {
     const current = readConfig();
-    const url = ($('#cloudSupabaseUrl')?.value || '').trim();
-    const anonKey = ($('#cloudAnonKey')?.value || '').trim();
+    const url = ($('#cloudSupabaseUrl')?.value || DEFAULT_SUPABASE_URL).trim();
+    const anonKey = ($('#cloudAnonKey')?.value || DEFAULT_SUPABASE_KEY).trim();
     const code = normalizeCode($('#cloudCollegeCode')?.value || '');
     const pin = ($('#cloudPin')?.value || '').trim();
     const autosave = !!$('#cloudAutosave')?.checked;
@@ -232,8 +234,8 @@
 
   function hydrate() {
     const cfg = readConfig();
-    if ($('#cloudSupabaseUrl')) $('#cloudSupabaseUrl').value = cfg.url || '';
-    if ($('#cloudAnonKey')) $('#cloudAnonKey').value = cfg.anonKey || '';
+    if ($('#cloudSupabaseUrl')) $('#cloudSupabaseUrl').value = cfg.url || DEFAULT_SUPABASE_URL;
+    if ($('#cloudAnonKey')) $('#cloudAnonKey').value = cfg.anonKey || DEFAULT_SUPABASE_KEY;
     if ($('#cloudCollegeCode')) $('#cloudCollegeCode').value = cfg.collegeCode || '';
     if ($('#cloudAutosave')) $('#cloudAutosave').checked = cfg.autosave !== false;
     if (cfg.lastBackup) status('Último respaldo: ' + new Date(cfg.lastBackup).toLocaleString());
