@@ -1,11 +1,21 @@
 (() => {
   const openPanel = () => {
+    const settingsTab = document.querySelector('.tab[data-tab="settings"]');
+    if (settingsTab) settingsTab.click();
+
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelector('#settings')?.classList.add('active');
+
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    settingsTab?.classList.add('active');
+
     const panel = document.querySelector('#cloudAdminPanel');
     if (!panel) return;
     panel.hidden = false;
-    if (typeof window.scrollTo === 'function') {
-      setTimeout(() => panel.scrollIntoView({behavior:'smooth', block:'start'}), 50);
-    }
+
+    setTimeout(() => {
+      panel.scrollIntoView({behavior:'smooth', block:'start'});
+    }, 120);
   };
 
   const shouldOpen = () => {
