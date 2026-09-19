@@ -11,6 +11,8 @@
     <div class="pin-card">
       <div class="pin-badge">ACCESO SEGURO</div>
       <h1 id="pinWelcomeName">Clase Graduanda PR</h1>
+      <p id="tenantCurrentLabel" style="margin-bottom:10px;font-weight:700;color:#17364d;"></p>
+      <select id="tenantPicker" aria-label="Seleccionar colegio" style="margin-bottom:12px;"></select>
       <p>Ingresa tu PIN de 4 dígitos</p>
       <form id="pinLoginForm">
         <input id="pinInput" type="password" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" placeholder="••••" autocomplete="off" required />
@@ -157,7 +159,7 @@
           <input id="settingPin" type="password" inputmode="numeric" maxlength="4" pattern="[0-9]{4}" placeholder="Nuevo PIN de 4 dígitos" />
           <button>Guardar configuración</button>
         </form>
-        <p class="security-note">PIN inicial: 1234. El código master de recuperación permanece disponible aunque cambies el PIN.</p>
+        <p id="tenantPinNote" class="security-note">El código master de recuperación permanece disponible aunque cambies el PIN.</p>
         <button id="lockNowBtn" class="secondary" type="button">Bloquear ahora</button>
       </div>
 
@@ -223,7 +225,7 @@
   </main>
 
   <div id="toast"></div>
-  <script src="tenant-config.js?v=20260919-1"></script>
+  <script src="tenant-config.js?v=20260919-2"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.4/jspdf.plugin.autotable.min.js"></script>
   <script src="app.js?v=20260919-tenant1"></script>
