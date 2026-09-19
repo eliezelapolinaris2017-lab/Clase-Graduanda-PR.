@@ -23,7 +23,6 @@
       cloudCode: 'COLEGEMA-PR',
       recoveryPin: '0583',
       defaultPin: '1234'
-    },
     }
   };
 
