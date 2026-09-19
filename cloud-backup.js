@@ -1,15 +1,19 @@
 (() => {
-  const CLOUD_KEY = 'claseGraduandaPR_cloud_v1';
+  const TENANT = window.CGPR_TENANT || {
+    keys:{cloud:'claseGraduandaPR_cloud_v1',auth:'claseGraduandaPR_auth_v1',data:'claseGraduandaPR_v1',branding:'claseGraduandaPR_branding_v1'},
+    cloudCode:'COLEGEMA-PR',recoveryPin:'0583'
+  };
+  const CLOUD_KEY = TENANT.keys.cloud;
   const DEFAULT_SUPABASE_URL = 'https://ujrqkwdkytuvfaqnbmzl.supabase.co';
   const DEFAULT_SUPABASE_KEY = 'sb_publishable_9Dm_vf7L3jETvPNCcjr7CA_vqAIReqH';
-  const DEFAULT_COLLEGE_CODE = 'COLEGEMA-PR';
-  const RECOVERY_PIN = '0583';
-  const AUTH_KEY = 'claseGraduandaPR_auth_v1';
-  const DATA_KEY = 'claseGraduandaPR_v1';
+  const DEFAULT_COLLEGE_CODE = TENANT.cloudCode || 'COLEGEMA-PR';
+  const RECOVERY_PIN = TENANT.recoveryPin || '';
+  const AUTH_KEY = TENANT.keys.auth;
+  const DATA_KEY = TENANT.keys.data;
   const WATCHED_KEYS = new Set([
-    'claseGraduandaPR_v1',
-    'claseGraduandaPR_auth_v1',
-    'claseGraduandaPR_branding_v1'
+    TENANT.keys.data,
+    TENANT.keys.auth,
+    TENANT.keys.branding
   ]);
   const encoder = new TextEncoder();
   const decoder = new TextDecoder();
@@ -165,6 +169,7 @@
   async function bootstrapHiddenCloud() {
     const current = readConfig();
     const code = DEFAULT_COLLEGE_CODE;
+    if (!RECOVERY_PIN) return current;
     const fixedRawKey = bytesToB64(await deriveRawKey(RECOVERY_PIN, code));
     const cfg = {
       ...current,
