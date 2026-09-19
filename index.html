@@ -47,7 +47,7 @@
     <button class="tab" data-tab="students">Estudiantes</button>
     <button class="tab" data-tab="dues">Cuotas</button>
     <button class="tab" data-tab="activities">Actividades</button>
-    <button class="tab" data-tab="reports">Reporte mensual</button>
+    <button class="tab" data-tab="reports">Reportes</button>
     <button class="tab" data-tab="settings">Configuración</button>
   </nav>
 
@@ -133,6 +133,18 @@
         <div id="reportSummary" class="cards compact"></div>
         <div class="table-wrap"><table id="reportTable"></table></div>
       </div>
+
+      <div class="box">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;">
+          <div>
+            <h2 style="margin-bottom:6px;">Balance global de recaudación y deuda</h2>
+            <p class="security-note" style="margin-top:0;">Incluye todos los registros de cuotas y actividades, sin limitarse a un mes.</p>
+          </div>
+          <button id="globalPdfReport" type="button">Descargar PDF global</button>
+        </div>
+        <div id="globalReportSummary" class="cards compact"></div>
+        <div class="table-wrap"><table id="globalReportTable"></table></div>
+      </div>
     </section>
 
     <section id="settings" class="panel">
@@ -217,6 +229,7 @@
   <script src="payment-method.js"></script>
   <script src="pdf-email.js"></script>
   <script src="pdf-payment-method.js"></script>
+  <script src="global-report.js?v=20260919-1"></script>
   <script src="auth.js?v=2"></script>
   <script src="report-recipient.js"></script>
   <script src="branding.js"></script>
