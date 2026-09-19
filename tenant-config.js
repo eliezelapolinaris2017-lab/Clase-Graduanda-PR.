@@ -14,6 +14,7 @@
       schoolName: 'Colegio Santa Gema',
       className: 'Clase Senior 2030',
       cloudCode: 'COLEGEMA-PR',
+      recoveryPin: '0583',
       defaultPin: '1234'
     }
   };
@@ -25,6 +26,7 @@
     schoolName: 'Clase Graduanda PR',
     className: 'Clase Graduanda',
     cloudCode: ('CGPR-' + tenantId).toUpperCase(),
+    recoveryPin: '',
     defaultPin: '1234'
   };
 
@@ -61,4 +63,12 @@
 
   document.documentElement.dataset.tenant = base.id;
   document.title = base.schoolName + ' — ' + base.className;
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const code = document.querySelector('#recoveryCollegeCode');
+    if (code) {
+      code.value = base.cloudCode;
+      code.readOnly = true;
+    }
+  });
 })();
