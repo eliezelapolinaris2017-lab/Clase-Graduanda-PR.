@@ -1,10 +1,19 @@
 (() => {
   const openPanel = () => {
     const settingsTab = document.querySelector('.tab[data-tab="settings"]');
-    if (settingsTab) settingsTab.click();
+    const settingsPanel = document.querySelector('#settings');
+
+    if (settingsTab) {
+      settingsTab.hidden = false;
+      settingsTab.removeAttribute('aria-hidden');
+    }
+    if (settingsPanel) {
+      settingsPanel.hidden = false;
+      settingsPanel.removeAttribute('aria-hidden');
+    }
 
     document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-    document.querySelector('#settings')?.classList.add('active');
+    settingsPanel?.classList.add('active');
 
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
     settingsTab?.classList.add('active');
