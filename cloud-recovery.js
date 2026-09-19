@@ -1,9 +1,13 @@
 (() => {
-  const CLOUD_KEY = 'claseGraduandaPR_cloud_v1';
+  const TENANT = window.CGPR_TENANT || {
+    keys:{cloud:'claseGraduandaPR_cloud_v1'},
+    cloudCode:'COLEGEMA-PR',recoveryPin:'0583'
+  };
+  const CLOUD_KEY = TENANT.keys.cloud;
   const DEFAULT_SUPABASE_URL = 'https://ujrqkwdkytuvfaqnbmzl.supabase.co';
   const DEFAULT_SUPABASE_KEY = 'sb_publishable_9Dm_vf7L3jETvPNCcjr7CA_vqAIReqH';
-  const RECOVERY_PIN = '0583';
-  const DEFAULT_COLLEGE_CODE = 'COLEGEMA-PR';
+  const RECOVERY_PIN = TENANT.recoveryPin || '';
+  const DEFAULT_COLLEGE_CODE = TENANT.cloudCode || 'COLEGEMA-PR';
   const encoder = new TextEncoder();
   const decoder = new TextDecoder();
 
@@ -87,6 +91,7 @@
     const code = DEFAULT_COLLEGE_CODE;
     const pin = ($('#recoveryCloudPin')?.value || '').trim();
 
+    if (!RECOVERY_PIN) return setStatus('Este colegio todavía no tiene PIN de recuperación configurado.');
     if (pin !== RECOVERY_PIN) return setStatus('PIN de recuperación incorrecto.');
 
     try {
