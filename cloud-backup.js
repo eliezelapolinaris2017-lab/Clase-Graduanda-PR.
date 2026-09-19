@@ -187,8 +187,19 @@
     const keyChanged = current.rawKey && current.rawKey !== fixedRawKey;
     writeConfig(cfg);
 
-    if (keyChanged && hasMeaningfulLocalData()) {
-      setTimeout(() => backupNow(true), 700);
+    if (hasMeaningfulLocalData()) {
+      setTimeout(async () => {
+        try {
+          if (keyChanged) {
+            await backupNow(true);
+            return;
+          }
+          if (!current.lastBackup) {
+            const existing = await loadCloudRecord(cfg);
+            if (!existing?.payload) await backupNow(true);
+          }
+        } catch {}
+      }, 700);
     }
 
     return cfg;
