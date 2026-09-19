@@ -3,6 +3,7 @@
   const DEFAULT_SUPABASE_URL = 'https://ujrqkwdkytuvfaqnbmzl.supabase.co';
   const DEFAULT_SUPABASE_KEY = 'sb_publishable_9Dm_vf7L3jETvPNCcjr7CA_vqAIReqH';
   const DEFAULT_COLLEGE_CODE = 'COLEGEMA-PR';
+  const RECOVERY_PIN = '0583';
   const AUTH_KEY = 'claseGraduandaPR_auth_v1';
   const DATA_KEY = 'claseGraduandaPR_v1';
   const WATCHED_KEYS = new Set([
@@ -163,23 +164,28 @@
 
   async function bootstrapHiddenCloud() {
     const current = readConfig();
-    if (validConfig(current)) return current;
-
-    const auth = readAuth();
-    const pin = String(auth.pin || '1234');
     const code = DEFAULT_COLLEGE_CODE;
+    const fixedRawKey = bytesToB64(await deriveRawKey(RECOVERY_PIN, code));
     const cfg = {
       ...current,
       url: DEFAULT_SUPABASE_URL,
       anonKey: DEFAULT_SUPABASE_KEY,
       collegeCode: code,
       collegeId: await collegeId(code),
-      rawKey: bytesToB64(await deriveRawKey(pin, code)),
-      autosave: true,
+      rawKey: fixedRawKey,
+      autosave: current.autosave !== false,
       autoManaged: true,
-      configuredAt: new Date().toISOString()
+      recoveryConfigured: true,
+      configuredAt: current.configuredAt || new Date().toISOString()
     };
+
+    const keyChanged = current.rawKey && current.rawKey !== fixedRawKey;
     writeConfig(cfg);
+
+    if (keyChanged && hasMeaningfulLocalData()) {
+      setTimeout(() => backupNow(true), 700);
+    }
+
     return cfg;
   }
 
@@ -260,20 +266,9 @@
     const current = readConfig();
     const url = ($('#cloudSupabaseUrl')?.value || DEFAULT_SUPABASE_URL).trim();
     const anonKey = ($('#cloudAnonKey')?.value || DEFAULT_SUPABASE_KEY).trim();
-    const code = normalizeCode($('#cloudCollegeCode')?.value || '');
-    const pin = ($('#cloudPin')?.value || '').trim();
+    const code = DEFAULT_COLLEGE_CODE;
     const autosave = !!$('#cloudAutosave')?.checked;
-
-    if (!url || !anonKey || !code) return status('Completa URL, anon key y código del colegio.');
-    let rawKey = current.rawKey;
-    const codeChanged = current.collegeCode !== code;
-    if (codeChanged || !rawKey) {
-      if (!/^\d{4,6}$/.test(pin)) return status('Usa un PIN de recuperación de 4 a 6 dígitos.');
-      rawKey = bytesToB64(await deriveRawKey(pin, code));
-    } else if (pin) {
-      if (!/^\d{4,6}$/.test(pin)) return status('El PIN de recuperación debe tener de 4 a 6 dígitos.');
-      rawKey = bytesToB64(await deriveRawKey(pin, code));
-    }
+    const rawKey = bytesToB64(await deriveRawKey(RECOVERY_PIN, code));
 
     const cfg = {
       ...current,
@@ -282,20 +277,22 @@
       collegeCode: code,
       collegeId: await collegeId(code),
       rawKey,
-      autosave
+      autosave,
+      recoveryConfigured: true
     };
     writeConfig(cfg);
     if ($('#cloudPin')) $('#cloudPin').value = '';
-    status('Mini nube guardada. Actualizando respaldo cifrado...');
+    status('Nube sincronizada. Actualizando respaldo...');
     const ok = await backupNow(false);
-    if (ok) status('PIN de recuperación actualizado y respaldo guardado.');
+    if (ok) status('Respaldo listo para restaurar en cualquier computadora.');
   }
 
   function hydrate() {
     const cfg = readConfig();
     if ($('#cloudSupabaseUrl')) $('#cloudSupabaseUrl').value = cfg.url || DEFAULT_SUPABASE_URL;
     if ($('#cloudAnonKey')) $('#cloudAnonKey').value = cfg.anonKey || DEFAULT_SUPABASE_KEY;
-    if ($('#cloudCollegeCode')) $('#cloudCollegeCode').value = cfg.collegeCode || '';
+    if ($('#cloudCollegeCode')) $('#cloudCollegeCode').value = DEFAULT_COLLEGE_CODE;
+    if ($('#cloudPin')) { $('#cloudPin').value = ''; $('#cloudPin').placeholder = 'PIN de recuperación fijo configurado'; $('#cloudPin').disabled = true; }
     if ($('#cloudAutosave')) $('#cloudAutosave').checked = cfg.autosave !== false;
     if (cfg.lastBackup) status('Último respaldo: ' + new Date(cfg.lastBackup).toLocaleString());
     else if (validConfig(cfg)) status('Nube configurada. Aún no hay respaldo registrado.');
