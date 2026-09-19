@@ -16,6 +16,15 @@
       cloudCode: 'COLEGEMA-PR',
       recoveryPin: '0583',
       defaultPin: '1234'
+    },
+    santacruz: {
+      id: 'santacruz',
+      slug: 'santacruz',
+      schoolName: 'Colegio Santa Cruz',
+      className: 'Clase Monarca 2030',
+      cloudCode: 'SANTACRUZ-PR',
+      recoveryPin: '6417',
+      defaultPin: '2468'
     }
   };
 
