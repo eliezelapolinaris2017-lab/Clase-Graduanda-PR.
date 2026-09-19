@@ -81,8 +81,8 @@
   document.addEventListener('DOMContentLoaded', () => {
     const code = document.querySelector('#recoveryCollegeCode');
     if (code) {
-      code.value = base.cloudCode;
-      code.readOnly = true;
+      code.value = '';
+      code.readOnly = false;
     }
 
     const pinNote = document.querySelector('#tenantPinNote');
