@@ -3,10 +3,6 @@
     const settingsTab = document.querySelector('.tab[data-tab="settings"]');
     const settingsPanel = document.querySelector('#settings');
 
-    if (settingsTab) {
-      settingsTab.hidden = false;
-      settingsTab.removeAttribute('aria-hidden');
-    }
     if (settingsPanel) {
       settingsPanel.hidden = false;
       settingsPanel.removeAttribute('aria-hidden');
@@ -16,7 +12,11 @@
     settingsPanel?.classList.add('active');
 
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    settingsTab?.classList.add('active');
+    if (settingsTab) {
+      settingsTab.hidden = true;
+      settingsTab.setAttribute('aria-hidden','true');
+      settingsTab.classList.remove('active');
+    }
 
     const panel = document.querySelector('#cloudAdminPanel');
     const tenantPanel = document.querySelector('#tenantAdminPanel');
@@ -43,6 +43,12 @@
     const lock = document.querySelector('#pinLock');
     if (lock && !lock.classList.contains('unlocked')) return;
     openPanel();
+    try {
+      const clean = new URL(location.href);
+      clean.searchParams.delete('nube');
+      if (clean.hash === '#nube-admin') clean.hash = '';
+      history.replaceState({}, '', clean.pathname + clean.search + clean.hash);
+    } catch {}
   };
 
   document.addEventListener('DOMContentLoaded', () => {
