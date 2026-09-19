@@ -3,9 +3,10 @@ const $$ = s => [...document.querySelectorAll(s)];
 const money = n => `$${Number(n || 0).toFixed(2)}`;
 const uid = () => Date.now() + Math.floor(Math.random()*10000);
 
-const STORE = 'claseGraduandaPR_v1';
+const TENANT = window.CGPR_TENANT || {keys:{data:'claseGraduandaPR_v1'},schoolName:'Colegio de Puerto Rico',className:'Clase Graduanda 2027'};
+const STORE = TENANT.keys.data;
 let data = JSON.parse(localStorage.getItem(STORE) || 'null') || {
-  settings:{schoolName:'Colegio de Puerto Rico', className:'Clase Graduanda 2027'},
+  settings:{schoolName:TENANT.schoolName || 'Colegio de Puerto Rico', className:TENANT.className || 'Clase Graduanda 2027'},
   students:[], dues:[], activities:[]
 };
 const save = () => localStorage.setItem(STORE, JSON.stringify(data));
@@ -58,7 +59,7 @@ function render(){
 $('#studentForm').onsubmit=e=>{e.preventDefault(); const f=Object.fromEntries(new FormData(e.target)); data.students.push({id:uid(),...f}); save(); e.target.reset(); render(); toast('Estudiante guardado');};
 $('#duesForm').onsubmit=e=>{e.preventDefault(); const f=Object.fromEntries(new FormData(e.target)); data.dues.push({id:uid(),...f,amount:Number(f.amount||0),paid:Number(f.paid||0)}); save(); e.target.reset(); e.target.date.value=new Date().toISOString().slice(0,10); render(); toast('Cuota registrada');};
 $('#activitiesForm').onsubmit=e=>{e.preventDefault(); const f=Object.fromEntries(new FormData(e.target)); data.activities.push({id:uid(),...f,amount:Number(f.amount||0),paid:Number(f.paid||0)}); save(); e.target.reset(); e.target.date.value=new Date().toISOString().slice(0,10); render(); toast('Actividad registrada');};
-$('#settingsForm').onsubmit=e=>{e.preventDefault(); data.settings.schoolName=$('#settingSchool').value.trim()||'Colegio de Puerto Rico'; data.settings.className=$('#settingClass').value.trim()||'Clase Graduanda'; save(); render(); toast('Configuración guardada');};
+$('#settingsForm').onsubmit=e=>{e.preventDefault(); data.settings.schoolName=$('#settingSchool').value.trim()||TENANT.schoolName||'Colegio de Puerto Rico'; data.settings.className=$('#settingClass').value.trim()||TENANT.className||'Clase Graduanda'; save(); render(); toast('Configuración guardada');};
 
 window.deleteStudent=id=>{ if(confirm('¿Eliminar estudiante y todos sus movimientos?')){ data.students=data.students.filter(x=>x.id!==id); data.dues=data.dues.filter(x=>x.student_id!=id); data.activities=data.activities.filter(x=>x.student_id!=id); save(); render(); }};
 window.deleteDue=id=>{data.dues=data.dues.filter(x=>x.id!==id); save(); render();};
