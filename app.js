@@ -9,6 +9,9 @@ let data = JSON.parse(localStorage.getItem(STORE) || 'null') || {
   settings:{schoolName:TENANT.schoolName || 'Colegio de Puerto Rico', className:TENANT.className || 'Clase Graduanda 2027'},
   students:[], dues:[], activities:[]
 };
+if (!localStorage.getItem(STORE)) {
+  localStorage.setItem(STORE, JSON.stringify(data));
+}
 const save = () => localStorage.setItem(STORE, JSON.stringify(data));
 const toast = msg => { const el=$('#toast'); el.textContent=msg; el.classList.add('show'); setTimeout(()=>el.classList.remove('show'),2200); };
 const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
