@@ -82,13 +82,36 @@
     return Array.isArray(result) ? result[0] || null : result;
   }
 
-  function inferTenantId(records) {
+  function inferTenantId(records, code) {
     const keys = Object.keys(records || {});
     for (const key of keys) {
       const m = key.match(/^claseGraduandaPR_(.+)_data_v1$/);
       if (m?.[1]) return m[1];
     }
+
+    const normalized = normalizeCode(code);
+    if (normalized === 'COLEGEMA-PR') return 'colegema';
+
     return '';
+  }
+
+  function migrateLegacyRecords(records, tenantId) {
+    const migrated = {...records};
+    const prefix = 'claseGraduandaPR_' + tenantId;
+
+    const pairs = [
+      ['claseGraduandaPR_v1', prefix + '_data_v1'],
+      ['claseGraduandaPR_auth_v1', prefix + '_auth_v1'],
+      ['claseGraduandaPR_branding_v1', prefix + '_branding_v1']
+    ];
+
+    pairs.forEach(([legacyKey,newKey]) => {
+      if (migrated[legacyKey] != null && migrated[newKey] == null) {
+        migrated[newKey] = migrated[legacyKey];
+      }
+    });
+
+    return migrated;
   }
 
   function readJson(value) {
@@ -121,18 +144,20 @@
 
       if (!bundle?.records) return setStatus('El respaldo está incompleto.');
 
-      const tenantId = inferTenantId(bundle.records);
+      const tenantId = inferTenantId(bundle.records, code);
       if (!tenantId) return setStatus('No se pudo identificar el colegio dentro del respaldo.');
 
-      Object.entries(bundle.records).forEach(([key,value]) => {
+      const restoredRecords = migrateLegacyRecords(bundle.records, tenantId);
+
+      Object.entries(restoredRecords).forEach(([key,value]) => {
         localStorage.setItem(key, value);
       });
 
       const dataKey = 'claseGraduandaPR_' + tenantId + '_data_v1';
       const authKey = 'claseGraduandaPR_' + tenantId + '_auth_v1';
       const cloudKey = 'claseGraduandaPR_' + tenantId + '_cloud_v1';
-      const restoredData = readJson(bundle.records[dataKey]) || {};
-      const restoredAuth = readJson(bundle.records[authKey]) || {};
+      const restoredData = readJson(restoredRecords[dataKey]) || {};
+      const restoredAuth = readJson(restoredRecords[authKey]) || {};
 
       const profiles = readJson(localStorage.getItem(PROFILE_KEY)) || {};
       profiles[tenantId] = {
