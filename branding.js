@@ -1,5 +1,6 @@
 (() => {
-  const BRAND_KEY = 'claseGraduandaPR_branding_v1';
+  const TENANT = window.CGPR_TENANT || {keys:{branding:'claseGraduandaPR_branding_v1'}};
+  const BRAND_KEY = TENANT.keys.branding;
   const defaults = { color1:'#102d46', color2:'#1c5277', logo:'' };
 
   const readBrand = () => {
