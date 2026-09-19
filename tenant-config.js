@@ -9,6 +9,11 @@
 
   const GENERAL_HOSTS = new Set(['clase-graduanda','www','localhost','']);
 
+  const savedProfiles = (() => {
+    try { return JSON.parse(localStorage.getItem('claseGraduandaPR_tenant_profiles_v1') || '{}') || {}; }
+    catch { return {}; }
+  })();
+
   const registry = {
     colegema: {
       id: 'colegema',
@@ -19,16 +24,10 @@
       recoveryPin: '0583',
       defaultPin: '1234'
     },
-    santacruz: {
-      id: 'santacruz',
-      slug: 'santacruz',
-      schoolName: 'Colegio Santa Cruz',
-      className: 'Clase Monarca 2030',
-      cloudCode: 'SANTACRUZ-PR',
-      recoveryPin: '6417',
-      defaultPin: '2468'
     }
   };
+
+  Object.assign(registry, savedProfiles);
 
   const savedTenant = String(localStorage.getItem('claseGraduandaPR_active_tenant') || '').trim().toLowerCase();
   const tenantId = requested || (GENERAL_HOSTS.has(hostSlug) ? savedTenant : hostSlug) || 'colegema';
@@ -85,24 +84,6 @@
       code.value = base.cloudCode;
       code.readOnly = true;
     }
-
-    const picker = document.querySelector('#tenantPicker');
-    if (picker) {
-      picker.innerHTML = Object.values(registry)
-        .map(t => '<option value="' + t.id + '">' + t.schoolName + ' — ' + t.className + '</option>')
-        .join('');
-      picker.value = base.id;
-      picker.addEventListener('change', () => {
-        const next = picker.value;
-        localStorage.setItem('claseGraduandaPR_active_tenant', next);
-        const url = new URL(location.href);
-        url.searchParams.set('tenant', next);
-        location.href = url.toString();
-      });
-    }
-
-    const tenantLabel = document.querySelector('#tenantCurrentLabel');
-    if (tenantLabel) tenantLabel.textContent = base.schoolName + ' — ' + base.className;
 
     const pinNote = document.querySelector('#tenantPinNote');
     if (pinNote) pinNote.textContent = 'PIN inicial de este colegio: ' + base.defaultPin + '. El código master de recuperación permanece disponible aunque cambies el PIN.';
