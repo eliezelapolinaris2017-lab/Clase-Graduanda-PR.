@@ -52,6 +52,34 @@
       defaultPin:defaultPin || current.defaultPin || '1234'
     };
     localStorage.setItem(PROFILE_KEY,JSON.stringify(profiles));
+
+    const prefix='claseGraduandaPR_'+id;
+    const dataKey=prefix+'_data_v1';
+    const authKey=prefix+'_auth_v1';
+    const brandingKey=prefix+'_branding_v1';
+
+    if(!localStorage.getItem(dataKey)){
+      localStorage.setItem(dataKey,JSON.stringify({
+        settings:{schoolName:school,className},
+        students:[],
+        dues:[],
+        activities:[]
+      }));
+    }
+    if(!localStorage.getItem(authKey)){
+      localStorage.setItem(authKey,JSON.stringify({
+        pin:defaultPin || current.defaultPin || '1234',
+        adminName:''
+      }));
+    }
+    if(!localStorage.getItem(brandingKey)){
+      localStorage.setItem(brandingKey,JSON.stringify({
+        color1:'#102d46',
+        color2:'#1c5277',
+        logo:''
+      }));
+    }
+
     localStorage.setItem(ACTIVE_KEY,id);
     if(status) status.textContent='Colegio guardado. Reiniciando en su espacio independiente...';
     setTimeout(()=>{
