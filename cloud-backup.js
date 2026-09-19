@@ -346,8 +346,22 @@
 
   $('#cloudHidePanel')?.addEventListener('click', hideCloudPanel);
 
-  bootstrapHiddenCloud().then(() => {
+  bootstrapHiddenCloud().then(async cfg => {
     hydrate();
+
+    const pendingKey='claseGraduandaPR_pending_cloud_provision';
+    const pendingTenant=localStorage.getItem(pendingKey);
+    if(pendingTenant && pendingTenant===TENANT.id && validConfig(cfg) && hasMeaningfulLocalData()){
+      try{
+        const existing=await loadCloudRecord(cfg);
+        if(!existing?.payload){
+          const ok=await backupNow(true);
+          if(ok) localStorage.removeItem(pendingKey);
+        }else{
+          localStorage.removeItem(pendingKey);
+        }
+      }catch{}
+    }
   }).catch(() => {});
 
   setTimeout(async () => {
