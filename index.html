@@ -11,8 +11,6 @@
     <div class="pin-card">
       <div class="pin-badge">ACCESO SEGURO</div>
       <h1 id="pinWelcomeName">Clase Graduanda PR</h1>
-      <p id="tenantCurrentLabel" style="margin-bottom:10px;font-weight:700;color:#17364d;"></p>
-      <select id="tenantPicker" aria-label="Seleccionar colegio" style="margin-bottom:12px;"></select>
       <p>Ingresa tu PIN de 4 dígitos</p>
       <form id="pinLoginForm">
         <input id="pinInput" type="password" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" placeholder="••••" autocomplete="off" required />
@@ -188,6 +186,23 @@
       </div>
 
 
+      <div id="tenantAdminPanel" class="box" hidden>
+        <h2>Configuración oculta del colegio</h2>
+        <p class="security-note">Uso administrativo. Aquí se asigna esta computadora al colegio correcto.</p>
+        <div class="grid">
+          <input id="tenantAdminId" placeholder="Identificador, ej. santacruz" autocomplete="off" />
+          <input id="tenantAdminSchool" placeholder="Nombre del colegio" autocomplete="off" />
+          <input id="tenantAdminClass" placeholder="Clase graduanda" autocomplete="off" />
+          <input id="tenantAdminCloudCode" placeholder="Código interno/nube, ej. SANTACRUZ-PR" autocomplete="off" />
+          <input id="tenantAdminPin" type="password" inputmode="numeric" maxlength="4" pattern="[0-9]{4}" placeholder="PIN inicial de 4 dígitos" autocomplete="off" />
+          <input id="tenantAdminRecoveryPin" type="password" inputmode="numeric" maxlength="6" pattern="[0-9]{4,6}" placeholder="PIN recuperación nube" autocomplete="off" />
+        </div>
+        <div class="branding-actions">
+          <button id="tenantAdminSave" type="button">Guardar y asignar colegio</button>
+        </div>
+        <p id="tenantAdminStatus" class="security-note"></p>
+      </div>
+
       <div id="cloudAdminPanel" class="box" hidden>
         <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;">
           <h2 style="margin:0;">Mini nube automática</h2>
@@ -225,7 +240,7 @@
   </main>
 
   <div id="toast"></div>
-  <script src="tenant-config.js?v=20260919-2"></script>
+  <script src="tenant-config.js?v=20260919-3"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.4/jspdf.plugin.autotable.min.js"></script>
   <script src="app.js?v=20260919-tenant1"></script>
@@ -238,7 +253,8 @@
   <script src="branding.js?v=20260919-tenant1"></script>
   <script src="edit-records.js"></script>
   <script src="cloud-backup.js?v=20260919-tenant1"></script>
-  <script src="admin-cloud-access.js?v=20260918-3"></script>
+  <script src="tenant-admin.js?v=20260919-1"></script>
+  <script src="admin-cloud-access.js?v=20260919-4"></script>
   <script src="cloud-recovery.js?v=20260919-tenant1"></script>
 </body>
 </html>
