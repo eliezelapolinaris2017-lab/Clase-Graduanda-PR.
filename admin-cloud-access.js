@@ -10,8 +10,10 @@
     settingsTab?.classList.add('active');
 
     const panel = document.querySelector('#cloudAdminPanel');
-    if (!panel) return;
-    panel.hidden = false;
+    const tenantPanel = document.querySelector('#tenantAdminPanel');
+    if (panel) panel.hidden = false;
+    if (tenantPanel) tenantPanel.hidden = false;
+    if (!panel && !tenantPanel) return;
 
     setTimeout(() => {
       panel.scrollIntoView({behavior:'smooth', block:'start'});
