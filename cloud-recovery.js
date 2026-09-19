@@ -1,13 +1,8 @@
 (() => {
-  const TENANT = window.CGPR_TENANT || {
-    keys:{cloud:'claseGraduandaPR_cloud_v1'},
-    cloudCode:'COLEGEMA-PR',recoveryPin:'0583'
-  };
-  const CLOUD_KEY = TENANT.keys.cloud;
   const DEFAULT_SUPABASE_URL = 'https://ujrqkwdkytuvfaqnbmzl.supabase.co';
   const DEFAULT_SUPABASE_KEY = 'sb_publishable_9Dm_vf7L3jETvPNCcjr7CA_vqAIReqH';
-  const RECOVERY_PIN = TENANT.recoveryPin || '';
-  const DEFAULT_COLLEGE_CODE = TENANT.cloudCode || 'COLEGEMA-PR';
+  const PROFILE_KEY = 'claseGraduandaPR_tenant_profiles_v1';
+  const ACTIVE_KEY = 'claseGraduandaPR_active_tenant';
   const encoder = new TextEncoder();
   const decoder = new TextDecoder();
 
@@ -87,30 +82,72 @@
     return Array.isArray(result) ? result[0] || null : result;
   }
 
+  function inferTenantId(records) {
+    const keys = Object.keys(records || {});
+    for (const key of keys) {
+      const m = key.match(/^claseGraduandaPR_(.+)_data_v1$/);
+      if (m?.[1]) return m[1];
+    }
+    return '';
+  }
+
+  function readJson(value) {
+    try { return JSON.parse(value || 'null'); } catch { return null; }
+  }
+
   async function restoreFromCloud() {
-    const code = DEFAULT_COLLEGE_CODE;
+    const code = normalizeCode($('#recoveryCollegeCode')?.value || '');
     const pin = ($('#recoveryCloudPin')?.value || '').trim();
 
-    if (!RECOVERY_PIN) return setStatus('Este colegio todavía no tiene PIN de recuperación configurado.');
-    if (pin !== RECOVERY_PIN) return setStatus('PIN de recuperación incorrecto.');
+    if (!code) return setStatus('Escribe el código del colegio.');
+    if (!/^\d{4,6}$/.test(pin)) return setStatus('Escribe el PIN de recuperación de 4 a 6 dígitos.');
 
     try {
       setStatus('Buscando respaldo...');
       const id = await collegeId(code);
-      const rawKey = bytesToB64(await deriveRawKey(RECOVERY_PIN, code));
       const row = await loadCloudRecord(id);
-
       if (!row?.payload) return setStatus('No se encontró un respaldo para ese código.');
 
-      setStatus('Descifrando respaldo...');
-      const bundle = await decryptBundle(row.payload, rawKey);
-      if (!bundle?.records) throw new Error('Respaldo incompleto');
+      setStatus('Verificando código y PIN...');
+      const rawKeyBytes = await deriveRawKey(pin, code);
+      const rawKey = bytesToB64(rawKeyBytes);
+
+      let bundle;
+      try {
+        bundle = await decryptBundle(row.payload, rawKey);
+      } catch {
+        return setStatus('Código del colegio o PIN de recuperación incorrecto.');
+      }
+
+      if (!bundle?.records) return setStatus('El respaldo está incompleto.');
+
+      const tenantId = inferTenantId(bundle.records);
+      if (!tenantId) return setStatus('No se pudo identificar el colegio dentro del respaldo.');
 
       Object.entries(bundle.records).forEach(([key,value]) => {
         localStorage.setItem(key, value);
       });
 
-      localStorage.setItem(CLOUD_KEY, JSON.stringify({
+      const dataKey = 'claseGraduandaPR_' + tenantId + '_data_v1';
+      const authKey = 'claseGraduandaPR_' + tenantId + '_auth_v1';
+      const cloudKey = 'claseGraduandaPR_' + tenantId + '_cloud_v1';
+      const restoredData = readJson(bundle.records[dataKey]) || {};
+      const restoredAuth = readJson(bundle.records[authKey]) || {};
+
+      const profiles = readJson(localStorage.getItem(PROFILE_KEY)) || {};
+      profiles[tenantId] = {
+        id: tenantId,
+        slug: tenantId,
+        schoolName: restoredData.settings?.schoolName || 'Clase Graduanda PR',
+        className: restoredData.settings?.className || 'Clase Graduanda',
+        cloudCode: code,
+        recoveryPin: pin,
+        defaultPin: restoredAuth.pin || '1234'
+      };
+      localStorage.setItem(PROFILE_KEY, JSON.stringify(profiles));
+      localStorage.setItem(ACTIVE_KEY, tenantId);
+
+      localStorage.setItem(cloudKey, JSON.stringify({
         url: DEFAULT_SUPABASE_URL,
         anonKey: DEFAULT_SUPABASE_KEY,
         collegeCode: code,
@@ -123,10 +160,15 @@
         lastBackup: row.updated_at || bundle.savedAt || null
       }));
 
-      setStatus('Restauración completada. Reiniciando...');
-      setTimeout(() => location.reload(), 900);
+      setStatus('Restauración completada. Abriendo el colegio...');
+      setTimeout(() => {
+        const url = new URL(location.href);
+        url.search = '';
+        url.hash = '';
+        location.href = url.origin + url.pathname;
+      }, 900);
     } catch (err) {
-      setStatus('No se pudo restaurar. El respaldo todavía no está migrado o la conexión falló.');
+      setStatus('No se pudo restaurar. Verifica la conexión e inténtalo nuevamente.');
     }
   }
 
@@ -136,7 +178,12 @@
     box.hidden = false;
     $('#pinLoginForm')?.setAttribute('hidden','');
     $('#openCloudRecovery')?.setAttribute('hidden','');
-    $('#recoveryCloudPin')?.focus();
+    const code = $('#recoveryCollegeCode');
+    if (code) {
+      code.readOnly = false;
+      code.value = '';
+      code.focus();
+    }
   });
 
   $('#cancelCloudRecovery')?.addEventListener('click', () => {
