@@ -1,7 +1,8 @@
 (() => {
-  const AUTH_KEY='claseGraduandaPR_auth_v1';
-  const DATA_KEY='claseGraduandaPR_v1';
-  const DEFAULT_PIN='1234';
+  const TENANT=window.CGPR_TENANT||{keys:{auth:'claseGraduandaPR_auth_v1',data:'claseGraduandaPR_v1'},defaultPin:'1234'};
+  const AUTH_KEY=TENANT.keys.auth;
+  const DATA_KEY=TENANT.keys.data;
+  const DEFAULT_PIN=TENANT.defaultPin||'1234';
   const MASTER_HASH='8ad058a4cbcd36c770fa655d04b1241da93134f5040b862e49fe628b19a34790';
 
   const $=s=>document.querySelector(s);
