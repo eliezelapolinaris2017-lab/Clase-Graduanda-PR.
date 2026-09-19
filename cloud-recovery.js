@@ -2,6 +2,8 @@
   const CLOUD_KEY = 'claseGraduandaPR_cloud_v1';
   const DEFAULT_SUPABASE_URL = 'https://ujrqkwdkytuvfaqnbmzl.supabase.co';
   const DEFAULT_SUPABASE_KEY = 'sb_publishable_9Dm_vf7L3jETvPNCcjr7CA_vqAIReqH';
+  const RECOVERY_PIN = '0583';
+  const DEFAULT_COLLEGE_CODE = 'COLEGEMA-PR';
   const encoder = new TextEncoder();
   const decoder = new TextDecoder();
 
@@ -82,16 +84,15 @@
   }
 
   async function restoreFromCloud() {
-    const code = normalizeCode($('#recoveryCollegeCode')?.value || '');
+    const code = DEFAULT_COLLEGE_CODE;
     const pin = ($('#recoveryCloudPin')?.value || '').trim();
 
-    if (!code) return setStatus('Escribe el código del colegio.');
-    if (!/^\d{4,6}$/.test(pin)) return setStatus('El PIN debe tener de 4 a 6 dígitos.');
+    if (pin !== RECOVERY_PIN) return setStatus('PIN de recuperación incorrecto.');
 
     try {
       setStatus('Buscando respaldo...');
       const id = await collegeId(code);
-      const rawKey = bytesToB64(await deriveRawKey(pin, code));
+      const rawKey = bytesToB64(await deriveRawKey(RECOVERY_PIN, code));
       const row = await loadCloudRecord(id);
 
       if (!row?.payload) return setStatus('No se encontró un respaldo para ese código.');
@@ -120,7 +121,7 @@
       setStatus('Restauración completada. Reiniciando...');
       setTimeout(() => location.reload(), 900);
     } catch (err) {
-      setStatus('No se pudo restaurar. Verifica el código y el PIN de recuperación.');
+      setStatus('No se pudo restaurar. El respaldo todavía no está migrado o la conexión falló.');
     }
   }
 
