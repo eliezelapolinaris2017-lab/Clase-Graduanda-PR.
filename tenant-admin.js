@@ -57,7 +57,9 @@
     setTimeout(()=>{
       const url=new URL(location.href);
       url.searchParams.delete('tenant');
-      location.href=url.toString();
+      url.searchParams.delete('nube');
+      url.hash='';
+      location.href=url.origin + url.pathname;
     },500);
   });
 
