@@ -312,3 +312,5 @@ body.onboarding-open #onboarding,body.onboarding-open #onboarding *,body.onboard
   .onboarding-actions button{min-width:0;flex:1}
   .onboarding-summary-row{grid-template-columns:120px 1fr}
 }
+
+body.onboarding-open #pinLock{display:none!important}
