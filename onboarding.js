@@ -187,6 +187,7 @@
       const box = $('#onboardingSuccess');
       if(box) box.hidden = true;
       document.body.classList.remove('onboarding-open');
+      location.reload();
     });
 
     $('#obLogo')?.addEventListener('change', async e => {
