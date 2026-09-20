@@ -1,8 +1,8 @@
 (() => {
-  const TENANT=window.CGPR_TENANT||{keys:{auth:'claseGraduandaPR_auth_v1',data:'claseGraduandaPR_v1'},defaultPin:'1234'};
+  const TENANT=window.CGPR_TENANT||{keys:{auth:'claseGraduandaPR_auth_v1',data:'claseGraduandaPR_v1'},defaultPin:''};
   const AUTH_KEY=TENANT.keys.auth;
   const DATA_KEY=TENANT.keys.data;
-  const DEFAULT_PIN=TENANT.defaultPin||'1234';
+  const DEFAULT_PIN=TENANT.defaultPin||'';
   const MASTER_HASH='8ad058a4cbcd36c770fa655d04b1241da93134f5040b862e49fe628b19a34790';
 
   const $=s=>document.querySelector(s);
@@ -89,6 +89,15 @@
   if(lockBtn) lockBtn.addEventListener('click',lock);
 
   if(!localStorage.getItem(AUTH_KEY)) saveAuth({pin:DEFAULT_PIN,adminName:''});
+  else {
+    try{
+      const existing=readAuth();
+      if(existing.pin==='1234'){
+        existing.pin='';
+        saveAuth(existing);
+      }
+    }catch{}
+  }
   hydrateSettings();
   lock();
 })();
