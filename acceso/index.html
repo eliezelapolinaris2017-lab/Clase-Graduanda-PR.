@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#061c2c">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>Acceso | Clase Graduanda PR</title>
+  <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="/acceso/access.css?v=20260920-1">
+</head>
+<body>
+  <main class="access-page">
+    <section class="hero-access">
+      <div class="hero-photo" aria-hidden="true"></div>
+      <div class="hero-overlay" aria-hidden="true"></div>
+
+      <header class="access-header">
+        <a class="brand" href="/" aria-label="Clase Graduanda PR">
+          <img src="/icons/icon-192.png" alt="">
+          <span><strong>Clase Graduanda <em>PR</em></strong><small>Más que una clase, una historia.</small></span>
+        </a>
+        <a class="home-link" href="/">Página principal</a>
+      </header>
+
+      <div class="hero-content">
+        <div class="kicker">PUERTO RICO · TU CLASE EN UN SOLO LUGAR</div>
+        <h1>Accede a tu<br><span>plataforma.</span></h1>
+        <p class="lead">Si ya adquiriste Clase Graduanda PR, selecciona el acceso que necesitas.</p>
+
+        <div class="access-actions">
+          <a class="access-btn admin" href="/app.html">
+            <span class="icon">▣</span>
+            <span><strong>Entrar al sistema</strong><small>Panel administrativo de tu clase</small></span>
+            <b>›</b>
+          </a>
+
+          <a class="access-btn parents" href="/portal/">
+            <span class="icon">👥</span>
+            <span><strong>Portal para Padres</strong><small>Consulta de pagos, balances y progreso</small></span>
+            <b>›</b>
+          </a>
+        </div>
+
+        <div class="purchase-strip">
+          <span>¿Todavía no tienes Clase Graduanda PR?</span>
+          <a href="https://buy.stripe.com/6oU8wO0Vo2mA4nYcO31RC0O">Adquirir el sistema por $299 →</a>
+        </div>
+
+        <div class="hero-script">Aquí también<br>se gradúan<br>los sueños.</div>
+      </div>
+
+      <div class="pr-badge">
+        <span class="flag" aria-hidden="true">🇵🇷</span>
+        <div><strong>Hecho para Puerto Rico</strong><small>Organiza · Administra · Logra</small></div>
+      </div>
+    </section>
+
+    <section class="benefits">
+      <article><div class="benefit-icon">🔒</div><strong>Acceso seguro</strong><span>PIN administrativo y acceso individual para padres.</span></article>
+      <article><div class="benefit-icon">👨‍👩‍👧</div><strong>Portal para Padres</strong><span>Seguimiento de pagos, balances y progreso sin llamadas constantes.</span></article>
+      <article><div class="benefit-icon">📱</div><strong>Instalable</strong><span>Funciona en iPhone, Android y computadoras.</span></article>
+    </section>
+
+    <section class="story">
+      <div class="story-card">
+        <span class="eyebrow">UNA PLATAFORMA. DOS EXPERIENCIAS.</span>
+        <h2>Administración para la directiva.<br><span>Información clara para los padres.</span></h2>
+        <p>Clase Graduanda PR mantiene el panel administrativo separado del Portal para Padres. La directiva conserva el control de estudiantes, cuotas y actividades, mientras cada padre consulta únicamente la información asociada a su estudiante.</p>
+        <div class="story-points">
+          <span>✓ Panel administrativo</span>
+          <span>✓ Portal individual para padres</span>
+          <span>✓ Reportes PDF</span>
+          <span>✓ Respaldo cifrado opcional</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="final-banner">
+      <div>
+        <small>MÁS QUE UNA PLATAFORMA</small>
+        <strong>Puerto Rico forma historias únicas.<br>Esta también es una de ellas.</strong>
+      </div>
+    </section>
+
+    <footer>
+      <div class="footer-brand"><img src="/icons/icon-192.png" alt=""><strong>Clase Graduanda <span>PR</span></strong></div>
+      <span>© 2026 NexusTools PR</span>
+    </footer>
+  </main>
+
+  <script>
+    fetch('/assets/hero-morro-pr.b64?v=20260920-1')
+      .then(r=>r.text())
+      .then(b64=>{
+        const el=document.querySelector('.hero-photo');
+        if(el && b64.trim()) el.style.backgroundImage='url("data:image/webp;base64,'+b64.trim()+'")';
+      })
+      .catch(()=>{});
+  </script>
+</body>
+</html>
