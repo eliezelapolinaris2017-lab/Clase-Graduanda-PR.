@@ -1,5 +1,5 @@
 (() => {
-  const METHODS = ['', 'Efectivo', 'ATH Móvil', 'Tarjeta', 'Cheque', 'Transferencia', 'Otro'];
+  const METHODS = ['', 'Efectivo', 'ATH Móvil', 'Cheque'];
 
   const style = document.createElement('style');
   style.textContent = `
@@ -64,7 +64,11 @@
   }
 
   const studentOptions = selected => [{value:'',label:'Seleccionar estudiante'}, ...data.students.map(s=>({value:s.id,label:s.student_name}))];
-  const methodOptions = () => METHODS.map((m,i)=>({value:m,label:i===0?'No especificado':m}));
+  const methodOptions = current => {
+    const list=[...METHODS];
+    if(current && !list.includes(current)) list.push(current);
+    return list.map((m,i)=>({value:m,label:i===0?'No especificado':m}));
+  };
 
   function openDue(id){
     const item=data.dues.find(x=>x.id==id); if(!item) return;
@@ -74,7 +78,7 @@
       inputField('Concepto','concept',item.concept||'','text',true,'required')+
       inputField('Monto asignado','amount',item.amount,'number',false,'step="0.01" min="0" required')+
       inputField('Pagado','paid',item.paid,'number',false,'step="0.01" min="0"')+
-      selectField('Método de pago','payment_method',item.payment_method||'',methodOptions())+
+      selectField('Método de pago','payment_method',item.payment_method||'',methodOptions(item.payment_method||''))+
       inputField('Fecha','date',item.date||'','date',false,'required')+
       inputField('Notas','notes',item.notes||'','text',true);
     onSave = f => Object.assign(item,{student_id:f.student_id,concept:f.concept.trim(),amount:Number(f.amount||0),paid:Number(f.paid||0),payment_method:f.payment_method,date:f.date,notes:f.notes.trim()});
@@ -89,7 +93,7 @@
       inputField('Actividad','activity_name',item.activity_name||'','text',true,'required')+
       inputField('Cargo','amount',item.amount,'number',false,'step="0.01" min="0" required')+
       inputField('Pagado','paid',item.paid,'number',false,'step="0.01" min="0"')+
-      selectField('Método de pago','payment_method',item.payment_method||'',methodOptions())+
+      selectField('Método de pago','payment_method',item.payment_method||'',methodOptions(item.payment_method||''))+
       inputField('Fecha','date',item.date||'','date',false,'required')+
       inputField('Notas','notes',item.notes||'','text',true);
     onSave = f => Object.assign(item,{student_id:f.student_id,activity_name:f.activity_name.trim(),amount:Number(f.amount||0),paid:Number(f.paid||0),payment_method:f.payment_method,date:f.date,notes:f.notes.trim()});
