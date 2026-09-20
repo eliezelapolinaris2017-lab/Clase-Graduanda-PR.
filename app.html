@@ -13,7 +13,7 @@
   <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png?v=20260919-1" />
   <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png?v=20260919-1" />
   <title>Clase Graduanda PR | Sistema</title>
-  <link rel="stylesheet" href="styles.css?v=20260920-dashboard2" />
+  <link rel="stylesheet" href="styles.css?v=20260920-security1" />
 </head>
 <body>
 
@@ -57,7 +57,20 @@
           <p>Crea los códigos de acceso para proteger la información de tu clase.</p>
           <label>PIN principal (4 dígitos)<input id="obPin" type="password" inputmode="numeric" maxlength="4" pattern="[0-9]{4}" placeholder="••••"></label>
           <label>PIN de recuperación (4 a 6 dígitos)<input id="obRecoveryPin" type="password" inputmode="numeric" maxlength="6" pattern="[0-9]{4,6}" placeholder="••••"></label>
-          <div class="onboarding-info">Guarda estos códigos en un lugar seguro. El PIN de recuperación será necesario para restaurar desde la nube.</div>
+
+          <div class="onboarding-security-value">
+            <div class="security-value-head">
+              <span>🔒</span>
+              <div><strong>Tus datos, protegidos desde el comienzo</strong><small>Seguridad integrada en Clase Graduanda PR.</small></div>
+            </div>
+            <div class="security-value-grid">
+              <div><b>🔐</b><strong>Acceso por PIN</strong><small>Protege el panel administrativo de tu clase.</small></div>
+              <div><b>🏫</b><strong>Datos separados</strong><small>Cada colegio utiliza su propio espacio de información.</small></div>
+              <div><b>👤</b><strong>Portal individual</strong><small>Cada padre consulta únicamente el estudiante asociado a su código.</small></div>
+            </div>
+          </div>
+
+          <div class="onboarding-info">Guarda tus PIN en un lugar seguro. El PIN de recuperación será necesario si activas la recuperación desde la nube.</div>
         </div>
 
         <div class="onboarding-step" data-step="3">
@@ -81,14 +94,18 @@
           <label class="backup-choice selected">
             <input type="radio" name="obBackup" value="cloud" checked>
             <span class="backup-choice-icon">☁</span>
-            <span><strong>Respaldo en la nube</strong><em>RECOMENDADO</em><small>Tu información segura, disponible desde cualquier dispositivo. Cargo adicional.</small></span>
+            <span><strong>Respaldo cifrado en la nube</strong><em>RECOMENDADO</em><small>La información del respaldo se cifra con AES-GCM de 256 bits antes de enviarse a la nube. Cargo adicional.</small></span>
           </label>
           <label class="backup-choice">
             <input type="radio" name="obBackup" value="local">
             <span class="backup-choice-icon">▰</span>
             <span><strong>Solo en este dispositivo</strong><small>La información se guardará únicamente en este dispositivo.</small></span>
           </label>
-          <div class="onboarding-info">El respaldo en la nube es opcional y tiene un cargo adicional.</div>
+          <div class="onboarding-cloud-security">
+            <span>🔒</span>
+            <div><strong>Cifrado AES-256 antes de salir del dispositivo</strong><small>La llave se deriva de tu PIN de recuperación mediante PBKDF2 con SHA-256. El respaldo se almacena cifrado, no como datos administrativos legibles.</small></div>
+          </div>
+          <div class="onboarding-info">El respaldo en la nube es opcional y tiene un cargo adicional. No anunciamos cifrado de extremo a extremo para toda la aplicación; esta protección aplica al respaldo administrativo en la nube.</div>
         </div>
 
         <div class="onboarding-step" data-step="5">
