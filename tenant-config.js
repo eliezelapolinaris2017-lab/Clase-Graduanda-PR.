@@ -29,7 +29,9 @@
   Object.assign(registry, savedProfiles);
 
   const savedTenant = String(localStorage.getItem('claseGraduandaPR_active_tenant') || '').trim().toLowerCase();
-  const tenantId = requested || (GENERAL_HOSTS.has(hostSlug) ? savedTenant : hostSlug) || 'colegema';
+  const isGeneralHost = GENERAL_HOSTS.has(hostSlug);
+  const needsOnboarding = !requested && isGeneralHost && !savedTenant;
+  const tenantId = requested || (isGeneralHost ? savedTenant : hostSlug) || 'setup';
   const base = registry[tenantId] || {
     id: tenantId,
     slug: tenantId,
@@ -64,14 +66,15 @@
     });
   }
 
-  localStorage.setItem('claseGraduandaPR_active_tenant', base.id);
+  if (!needsOnboarding) localStorage.setItem('claseGraduandaPR_active_tenant', base.id);
 
   window.CGPR_TENANT = Object.freeze({
     ...base,
     keys,
     legacyKeys: legacy,
     storagePrefix: prefix,
-    registry
+    registry,
+    needsOnboarding
   });
 
   document.documentElement.dataset.tenant = base.id;
