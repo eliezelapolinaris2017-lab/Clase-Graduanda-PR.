@@ -314,3 +314,35 @@ body.onboarding-open #onboarding,body.onboarding-open #onboarding *,body.onboard
 }
 
 body.onboarding-open #pinLock{display:none!important}
+
+
+/* iPhone/iOS: forzar onboarding móvil incluso si Safari solicita vista de escritorio */
+@media (hover:none) and (pointer:coarse) and (max-device-width:1024px){
+  .onboarding{padding:0!important;background:#fff!important}
+  .onboarding-shell{
+    display:block!important;
+    width:100%!important;
+    max-width:none!important;
+    min-height:100dvh!important;
+    margin:0!important;
+    border:0!important;
+    border-radius:0!important;
+    box-shadow:none!important;
+  }
+  .onboarding-brand{display:none!important}
+  .onboarding-card{
+    width:100%!important;
+    min-height:100dvh!important;
+    padding:20px 18px calc(28px + env(safe-area-inset-bottom))!important;
+    border-radius:0!important;
+  }
+  .onboarding-step h2{font-size:26px!important}
+  .onboarding-actions{
+    position:sticky!important;
+    bottom:0!important;
+    background:linear-gradient(180deg,rgba(255,255,255,0),#fff 22%)!important;
+    padding-top:24px!important;
+  }
+  .onboarding-actions button{min-width:0!important;flex:1!important}
+  .onboarding-summary-row{grid-template-columns:120px 1fr!important}
+}
