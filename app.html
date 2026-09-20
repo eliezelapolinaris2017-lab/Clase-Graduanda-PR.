@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#102d46" />
+  <meta name="application-name" content="Clase Graduanda PR" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Graduanda PR" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <link rel="manifest" href="/manifest.webmanifest?v=20260919-1" />
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png?v=20260919-1" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png?v=20260919-1" />
+  <title>Clase Graduanda PR | Sistema</title>
+  <link rel="stylesheet" href="styles.css?v=20260920-4" />
+</head>
+<body>
+
+  <div id="onboarding" class="onboarding" hidden>
+    <div class="onboarding-shell">
+      <aside class="onboarding-brand">
+        <img src="/icons/icon-192.png" alt="Clase Graduanda PR" />
+        <div class="onboarding-brand-title">Clase<br>Graduanda <span>PR</span></div>
+        <div class="onboarding-brand-rule"></div>
+        <div class="onboarding-brand-script">Más que una clase,<br>una historia.</div>
+        <div class="onboarding-brand-copy">
+          <strong>Configuremos tu<br>Clase Graduanda</strong>
+          <small>Te tomará menos de 3 minutos.</small>
+        </div>
+        <div class="onboarding-brand-foot">ORGANIZA · ADMINISTRA · LOGRA</div>
+      </aside>
+
+      <section class="onboarding-card">
+        <div class="onboarding-top">
+          <div class="onboarding-mini-brand"><img src="/icons/icon-192.png" alt=""><strong>Clase Graduanda <span>PR</span></strong></div>
+          <button id="onboardingClose" type="button" class="onboarding-close" aria-label="Cerrar">×</button>
+        </div>
+
+        <div class="onboarding-progress" aria-label="Progreso">
+          <span class="active"></span><span></span><span></span><span></span><span></span>
+        </div>
+
+        <div class="onboarding-step active" data-step="1">
+          <div class="onboarding-step-label">Paso 1 de 5</div>
+          <h2>Información del Colegio</h2>
+          <p>Comencemos con los datos principales de tu clase.</p>
+          <label>Nombre del colegio<input id="obSchool" placeholder="Ej. Colegio Santa Cruz" autocomplete="organization"></label>
+          <label>Nombre de la clase<input id="obClass" placeholder="Ej. Clase Monarca"></label>
+          <label>Año de graduación<input id="obYear" type="number" min="2026" max="2100" placeholder="2030"></label>
+          <div class="onboarding-info">Con esta información se generará tu código interno automáticamente.</div>
+        </div>
+
+        <div class="onboarding-step" data-step="2">
+          <div class="onboarding-step-label">Paso 2 de 5</div>
+          <h2>Acceso y Seguridad</h2>
+          <p>Crea los códigos de acceso para proteger la información de tu clase.</p>
+          <label>PIN principal (4 dígitos)<input id="obPin" type="password" inputmode="numeric" maxlength="4" pattern="[0-9]{4}" placeholder="••••"></label>
+          <label>PIN de recuperación (4 a 6 dígitos)<input id="obRecoveryPin" type="password" inputmode="numeric" maxlength="6" pattern="[0-9]{4,6}" placeholder="••••"></label>
+          <div class="onboarding-info">Guarda estos códigos en un lugar seguro. El PIN de recuperación será necesario para restaurar desde la nube.</div>
+        </div>
+
+        <div class="onboarding-step" data-step="3">
+          <div class="onboarding-step-label">Paso 3 de 5</div>
+          <h2>Diseño y Personalización</h2>
+          <p>Hazlo tuyo. Puedes subir el logo de tu colegio y elegir los colores.</p>
+          <label class="onboarding-upload">Logo del colegio (opcional)
+            <input id="obLogo" type="file" accept="image/png,image/jpeg,image/webp">
+            <span>Sube el logo de tu colegio<br><small>PNG, JPG o WEBP</small></span>
+          </label>
+          <div class="onboarding-colors">
+            <label>Color principal<input id="obColor1" type="color" value="#102d46"></label>
+            <label>Color secundario<input id="obColor2" type="color" value="#1c5277"></label>
+          </div>
+        </div>
+
+        <div class="onboarding-step" data-step="4">
+          <div class="onboarding-step-label">Paso 4 de 5</div>
+          <h2>Respaldo de Información</h2>
+          <p>Elige cómo deseas proteger los datos de tu clase.</p>
+          <label class="backup-choice selected">
+            <input type="radio" name="obBackup" value="cloud" checked>
+            <span class="backup-choice-icon">☁</span>
+            <span><strong>Respaldo en la nube</strong><em>RECOMENDADO</em><small>Tu información segura, disponible desde cualquier dispositivo. Cargo adicional.</small></span>
+          </label>
+          <label class="backup-choice">
+            <input type="radio" name="obBackup" value="local">
+            <span class="backup-choice-icon">▰</span>
+            <span><strong>Solo en este dispositivo</strong><small>La información se guardará únicamente en este dispositivo.</small></span>
+          </label>
+          <div class="onboarding-info">El respaldo en la nube es opcional y tiene un cargo adicional.</div>
+        </div>
+
+        <div class="onboarding-step" data-step="5">
+          <div class="onboarding-step-label">Paso 5 de 5</div>
+          <h2>Revisa y Crea tu Clase</h2>
+          <p>Confirma la información antes de crear tu clase graduanda.</p>
+          <div id="onboardingSummary" class="onboarding-summary"></div>
+        </div>
+
+        <p id="onboardingStatus" class="onboarding-status"></p>
+        <div class="onboarding-actions">
+          <button id="onboardingBack" type="button" class="secondary" hidden>← Atrás</button>
+          <button id="onboardingNext" type="button">Siguiente →</button>
+          <button id="onboardingCreate" type="button" hidden>Crear mi Clase 🎓</button>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <div id="onboardingSuccess" class="onboarding-success" hidden>
+    <div class="onboarding-success-card">
+      <img src="/icons/icon-192.png" alt="Clase Graduanda PR">
+      <div class="success-check">✓</div>
+      <h2>¡Tu Clase Graduanda está lista!</h2>
+      <p>Todo configurado y listo para comenzar.</p>
+      <div id="onboardingSuccessCode" class="success-code"></div>
+      <button id="onboardingEnter" type="button">Entrar al sistema →</button>
+      <small>Juntos llegamos más lejos.</small>
+    </div>
+  </div>
+
+  <div id="pinLock" class="pin-lock">
+    <div class="pin-card">
+      <img class="pin-app-logo" src="/icons/icon-192.png" alt="Clase Graduanda PR" />
+      <div class="pin-badge">ACCESO SEGURO</div>
+      <h1 id="pinWelcomeName">Clase Graduanda PR</h1>
+      <p>Ingresa tu PIN de 4 dígitos</p>
+      <form id="pinLoginForm">
+        <input id="pinInput" type="password" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" placeholder="••••" autocomplete="off" required />
+        <button type="submit">Entrar</button>
+      </form>
+      <button id="openCloudRecovery" type="button" class="secondary" style="width:100%;margin-top:10px;">Recuperar desde nube</button>
+      <div id="cloudRecoveryBox" hidden style="margin-top:16px;text-align:left;">
+        <input id="recoveryCollegeCode" value="COLEGEMA-PR" placeholder="Código del colegio" autocomplete="off" />
+        <input id="recoveryCloudPin" type="password" inputmode="numeric" maxlength="6" pattern="[0-9]{4,6}" placeholder="PIN de recuperación de nube" autocomplete="off" style="margin-top:10px;" />
+        <button id="runCloudRecovery" type="button" style="width:100%;margin-top:10px;">Restaurar respaldo</button>
+        <button id="cancelCloudRecovery" type="button" class="secondary" style="width:100%;margin-top:8px;">Cancelar</button>
+        <p id="cloudRecoveryStatus" class="security-note" style="text-align:center;"></p>
+      </div>
+      <p id="pinError" class="pin-error"></p>
+      <small>También puedes usar el código master de recuperación.</small>
+    </div>
+  </div>
+
+  <header id="mainHeader">
+    <div class="header-inner">
+      <div class="app-brand-mark">
+        <img src="/icons/icon-192.png" alt="Clase Graduanda PR" />
+      </div>
+      <div id="headerLogoWrap" class="header-logo-wrap" hidden>
+        <img id="headerLogo" alt="Logo del colegio" />
+      </div>
+      <div class="header-copy">
+        <span class="eyebrow">CLASE GRADUANDA PR</span>
+        <h1 id="schoolName">Clase Graduanda PR</h1>
+        <p id="className"></p>
+      </div>
+      <div class="header-tagline">Más que una clase,<br><strong>una historia.</strong></div>
+    </div>
+  </header>
+
+  <nav aria-label="Navegación principal">
+    <div class="nav-brand">
+      <img src="/icons/icon-192.png" alt="" />
+      <div><strong>Clase Graduanda</strong><span>PR</span></div>
+    </div>
+    <button class="tab active" data-tab="dashboard"><span class="nav-icon">⌂</span><span>Inicio</span></button>
+    <button class="tab" data-tab="students"><span class="nav-icon">♟</span><span>Estudiantes</span></button>
+    <button class="tab" data-tab="dues"><span class="nav-icon">$</span><span>Cuotas</span></button>
+    <button class="tab" data-tab="activities"><span class="nav-icon">▣</span><span>Actividades</span></button>
+    <button class="tab" data-tab="reports"><span class="nav-icon">▤</span><span>Reportes</span></button>
+    <button class="tab" data-tab="settings" hidden aria-hidden="true"><span class="nav-icon">⚙</span><span>Configuración</span></button>
+    <div class="nav-footer">ORGANIZA · ADMINISTRA · LOGRA</div>
+  </nav>
+
+  <main>
+    <section id="dashboard" class="panel active">
+      <div class="dashboard-hero">
+        <div>
+          <span class="hero-kicker">BIENVENIDOS</span>
+          <h2>Todo lo que tu clase necesita,<br><strong>en un solo lugar.</strong></h2>
+          <p>Administra estudiantes, cuotas, actividades y reportes desde una sola plataforma.</p>
+        </div>
+        <div class="hero-cap">🎓</div>
+      </div>
+      <div class="cards">
+        <div class="card"><small>Estudiantes</small><strong id="kpiStudents">0</strong></div>
+        <div class="card"><small>Balance cuotas</small><strong id="kpiDues">$0.00</strong></div>
+        <div class="card"><small>Balance actividades</small><strong id="kpiActivities">$0.00</strong></div>
+        <div class="card"><small>Balance total</small><strong id="kpiTotal">$0.00</strong></div>
+      </div>
+      <div class="box">
+        <h2>Balances por estudiante</h2>
+        <div class="table-wrap"><table id="studentBalanceTable"></table></div>
+      </div>
+    </section>
+
+    <section id="students" class="panel">
+      <div class="box">
+        <h2>Nuevo estudiante</h2>
+        <form id="studentForm" class="grid">
+          <input name="student_name" placeholder="Nombre del estudiante" required />
+          <input name="phone" placeholder="Teléfono" />
+          <input name="parent_name" placeholder="Nombre padre/madre/encargado" />
+          <input name="email" type="email" placeholder="Email" />
+          <button>Guardar estudiante</button>
+        </form>
+      </div>
+      <div class="box">
+        <h2>Estudiantes</h2>
+        <div class="table-wrap"><table id="studentsTable"></table></div>
+      </div>
+    </section>
+
+    <section id="dues" class="panel">
+      <div class="box">
+        <h2>Registrar cuota</h2>
+        <form id="duesForm" class="grid">
+          <select name="student_id" required></select>
+          <input name="concept" placeholder="Concepto de cuota" required />
+          <input name="amount" type="number" step="0.01" placeholder="Monto asignado" required />
+          <input name="paid" type="number" step="0.01" placeholder="Pagado" value="0" />
+          <input name="date" type="date" required />
+          <input name="notes" placeholder="Notas" />
+          <button>Guardar cuota</button>
+        </form>
+      </div>
+      <div class="box">
+        <h2>Cuotas</h2>
+        <div class="table-wrap"><table id="duesTable"></table></div>
+      </div>
+    </section>
+
+    <section id="activities" class="panel">
+      <div class="box">
+        <h2>Registrar actividad</h2>
+        <form id="activitiesForm" class="grid">
+          <select name="student_id" required></select>
+          <input name="activity_name" placeholder="Nombre de actividad" required />
+          <input name="amount" type="number" step="0.01" placeholder="Cargo" required />
+          <input name="paid" type="number" step="0.01" placeholder="Pagado" value="0" />
+          <input name="date" type="date" required />
+          <input name="notes" placeholder="Notas" />
+          <button>Guardar actividad</button>
+        </form>
+      </div>
+      <div class="box">
+        <h2>Actividades</h2>
+        <div class="table-wrap"><table id="activitiesTable"></table></div>
+      </div>
+    </section>
+
+    <section id="reports" class="panel">
+      <div class="box">
+        <h2>Reporte mensual consolidado</h2>
+        <div class="report-controls">
+          <input id="reportMonth" type="month" />
+          <select id="reportEmail"><option value="">Seleccionar estudiante — email</option></select>
+          <button id="loadReport">Generar reporte</button>
+          <button id="pdfReport" class="secondary">Descargar PDF</button>
+          <button id="sendReport" class="secondary">Enviar PDF</button>
+        </div>
+        <div id="reportSummary" class="cards compact"></div>
+        <div class="table-wrap"><table id="reportTable"></table></div>
+      </div>
+
+      <div class="box">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;">
+          <div>
+            <h2 style="margin-bottom:6px;">Balance global de recaudación y deuda</h2>
+            <p class="security-note" style="margin-top:0;">Incluye todos los registros de cuotas y actividades, sin limitarse a un mes.</p>
+          </div>
+          <button id="globalPdfReport" type="button">Descargar PDF global</button>
+        </div>
+        <div id="globalReportSummary" class="cards compact"></div>
+        <div class="table-wrap"><table id="globalReportTable"></table></div>
+      </div>
+    </section>
+
+    <section id="settings" class="panel" hidden aria-hidden="true">
+      <div class="box">
+        <h2 id="settingsTitle">Configuración</h2>
+        <form id="settingsForm" class="grid">
+          <input id="settingSchool" placeholder="Nombre del colegio" />
+          <input id="settingClass" placeholder="Nombre de la clase graduanda" />
+          <input id="settingAdminName" placeholder="Nombre que aparecerá en el inicio" />
+          <input id="settingPin" type="password" inputmode="numeric" maxlength="4" pattern="[0-9]{4}" placeholder="Nuevo PIN de 4 dígitos" />
+          <button>Guardar configuración</button>
+        </form>
+        <p id="tenantPinNote" class="security-note">El código master de recuperación permanece disponible aunque cambies el PIN.</p>
+        <button id="lockNowBtn" class="secondary" type="button">Bloquear ahora</button>
+      </div>
+
+      <div class="box">
+        <h2>Logo y colores del header</h2>
+        <div class="branding-grid">
+          <div class="branding-field">
+            <label for="headerLogoFile">Logo JPG/PNG</label>
+            <input id="headerLogoFile" type="file" accept="image/jpeg,image/png,image/webp" />
+            <small>El logo se guarda en este navegador.</small>
+          </div>
+          <div class="branding-field">
+            <label for="headerColor1">Color principal</label>
+            <input id="headerColor1" type="color" value="#102d46" />
+          </div>
+          <div class="branding-field">
+            <label for="headerColor2">Color secundario</label>
+            <input id="headerColor2" type="color" value="#1c5277" />
+          </div>
+        </div>
+        <div class="branding-actions">
+          <button id="saveBrandingBtn" type="button">Guardar diseño</button>
+          <button id="removeLogoBtn" type="button" class="secondary">Quitar logo</button>
+          <button id="resetHeaderBtn" type="button" class="secondary">Colores originales</button>
+        </div>
+      </div>
+
+
+      <div id="tenantAdminPanel" class="box" hidden>
+        <h2>Configuración oculta del colegio</h2>
+        <p class="security-note">Uso administrativo. Aquí se asigna esta computadora al colegio correcto.</p>
+        <div class="grid">
+          <input id="tenantAdminId" placeholder="Identificador, ej. santacruz" autocomplete="off" />
+          <input id="tenantAdminSchool" placeholder="Nombre del colegio" autocomplete="off" />
+          <input id="tenantAdminClass" placeholder="Clase graduanda" autocomplete="off" />
+          <input id="tenantAdminCloudCode" placeholder="Código interno/nube, ej. SANTACRUZ-PR" autocomplete="off" />
+          <input id="tenantAdminPin" type="password" inputmode="numeric" maxlength="4" pattern="[0-9]{4}" placeholder="PIN inicial de 4 dígitos" autocomplete="off" />
+          <input id="tenantAdminRecoveryPin" type="password" inputmode="numeric" maxlength="6" pattern="[0-9]{4,6}" placeholder="PIN recuperación nube" autocomplete="off" />
+        </div>
+        <div class="branding-actions">
+          <button id="tenantAdminSave" type="button">Guardar y asignar colegio</button>
+        </div>
+        <p id="tenantAdminStatus" class="security-note"></p>
+      </div>
+
+      <div id="cloudAdminPanel" class="box" hidden>
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;">
+          <h2 style="margin:0;">Mini nube automática</h2>
+          <button id="cloudHidePanel" type="button" class="secondary">Cerrar</button>
+        </div>
+        <p>Respaldo cifrado en Supabase. Define aquí un PIN de recuperación independiente para poder restaurar en otra computadora.</p>
+        <div class="grid">
+          <input id="cloudSupabaseUrl" type="url" placeholder="Supabase Project URL" />
+          <input id="cloudAnonKey" type="password" placeholder="Supabase publishable key" autocomplete="off" />
+          <input id="cloudCollegeCode" placeholder="Código del colegio, ej. GEMA-4821" autocomplete="off" />
+          <input id="cloudPin" type="password" inputmode="numeric" maxlength="6" pattern="[0-9]{4,6}" placeholder="PIN de recuperación de nube (4 a 6 dígitos)" autocomplete="off" />
+          <label style="display:flex;align-items:center;gap:8px;padding:10px 0;">
+            <input id="cloudAutosave" type="checkbox" style="width:auto;" checked />
+            Respaldo automático
+          </label>
+        </div>
+        <div class="branding-actions" style="margin-top:14px;">
+          <button id="cloudSaveConfig" type="button">Guardar nube</button>
+          <button id="cloudBackupNow" type="button" class="secondary">Respaldar ahora</button>
+          <button id="cloudRestore" type="button" class="secondary">Restaurar desde nube</button>
+          <button id="cloudTest" type="button" class="secondary">Probar conexión</button>
+        </div>
+        <p id="cloudStatus" class="security-note">Nube no configurada.</p>
+      </div>
+
+      <div class="box">
+        <h2>Backup local</h2>
+        <p>Los datos se guardan en este navegador. Puedes descargar una copia y restaurarla luego.</p>
+        <div class="report-controls">
+          <button id="backupBtn">Descargar backup</button>
+          <label class="secondary" style="padding:12px 16px;border-radius:10px;cursor:pointer;text-align:center;background:#e9eef2;color:#17364d;font-weight:700;">Restaurar backup<input id="restoreFile" type="file" accept="application/json" hidden></label>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast"></div>
+  <script src="tenant-config.js?v=20260920-onboarding1"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.4/jspdf.plugin.autotable.min.js"></script>
+  <script src="app.js?v=20260919-tenant2"></script>
+  <script src="payment-method.js"></script>
+  <script src="pdf-email.js"></script>
+  <script src="pdf-payment-method.js"></script>
+  <script src="global-report.js?v=20260919-2"></script>
+  <script src="auth.js?v=20260919-tenant1"></script>
+  <script src="report-recipient.js"></script>
+  <script src="branding.js?v=20260919-tenant1"></script>
+  <script src="edit-records.js"></script>
+  <script src="cloud-backup.js?v=20260919-tenant3"></script>
+  <script src="tenant-admin.js?v=20260919-3"></script>
+  <script src="admin-cloud-access.js?v=20260919-6"></script>
+  <script src="cloud-recovery.js?v=20260919-tenant4"></script>
+  <script src="onboarding.js?v=20260920-2"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js?v=20260919-1').catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>
