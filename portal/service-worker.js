@@ -1,10 +1,9 @@
-const CACHE='cgpr-parent-portal-v1';
+const CACHE='cgpr-parent-portal-v2';
 const SHELL=[
   '/portal/',
   '/portal/index.html',
   '/portal/styles.css?v=20260920-2',
-  '/portal/data-demo.js?v=20260920-2',
-  '/portal/app.js?v=20260920-2',
+  '/portal/app.js?v=20260920-secure1',
   '/portal/manifest.webmanifest',
   '/icons/icon-192.png',
   '/icons/icon-512.png'
