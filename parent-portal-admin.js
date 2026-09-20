@@ -5,6 +5,7 @@
   const DATA_KEY=TENANT.keys.data;
   let autoTimer=null;
   let busy=false;
+  let suppressSchedule=false;
 
   const readCloud=()=>{
     try{return JSON.parse(localStorage.getItem(CLOUD_KEY)||'null')||{};}catch{return {};}
@@ -113,7 +114,8 @@
     student.parent_portal_enabled=true;
     student.parent_portal_code=result.accessCode;
     student.parent_portal_last_sync=new Date().toISOString();
-    save();
+    suppressSchedule=true;
+    try{ save(); } finally { suppressSchedule=false; }
     if(!silent) toast('Portal del estudiante sincronizado');
     return result;
   }
@@ -123,7 +125,8 @@
     await api({action:'disable',studentRef:String(student.id)});
     student.parent_portal_enabled=false;
     student.parent_portal_last_sync=new Date().toISOString();
-    save();
+    suppressSchedule=true;
+    try{ save(); } finally { suppressSchedule=false; }
     if(!silent) toast('Acceso de padres desactivado');
   }
 
@@ -281,7 +284,7 @@
   const previousSetItem=Storage.prototype.setItem;
   Storage.prototype.setItem=function(key,value){
     const result=previousSetItem.call(this,key,value);
-    if(this===localStorage && String(key)===String(DATA_KEY)) scheduleSync();
+    if(this===localStorage && String(key)===String(DATA_KEY) && !suppressSchedule) scheduleSync();
     return result;
   };
 
