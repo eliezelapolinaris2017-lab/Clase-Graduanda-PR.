@@ -20,7 +20,7 @@ $('.tab').forEach(btn => btn.onclick = () => {
   $('.tab').forEach(x=>x.classList.remove('active'));
   $('.panel').forEach(x=>x.classList.remove('active'));
   btn.classList.add('active');
-  $('#'+btn.dataset.tab).classList.add('active');
+  $('#'+btn.dataset.tab)?.classList.add('active');
 });
 
 function goToTab(tabName){
