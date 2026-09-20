@@ -39,4 +39,36 @@ footer{padding:30px 0;background:#061725;color:#9fb0bd}.footer-row{display:flex;
   .hero-features{gap:7px;margin:27px -4px 25px;max-width:none}.circle-icon{width:58px;height:58px;font-size:24px}.hero-features strong{font-size:12px}.hero-features small{font-size:10px;line-height:1.15}.hero-actions .btn{font-size:20px;min-height:65px;border-radius:18px}.hero-note{font-size:12px;line-height:1.35}.hero-script{right:-6px;bottom:-117px;font-size:39px}
   .device-mock{margin:112px auto -302px;padding:12px;border-radius:28px;transform:rotate(-1deg)}.mock-screen{border-radius:21px}.mock-head{padding:14px;font-size:14px}.mock-head img{width:30px;height:30px}.mock-body{grid-template-columns:88px 1fr;min-height:330px}.mock-nav{padding:15px 8px;font-size:9px;gap:10px}.mock-nav b{padding:8px}.mock-main{padding:17px}.mock-main h3{font-size:20px}.mock-main>p{font-size:13px}.mock-cards{grid-template-columns:1fr 1fr;gap:8px;margin-top:18px}.mock-card{padding:11px}.mock-card strong{font-size:18px}.mock-card small{font-size:10px}
   .hero-wave{bottom:-70px;height:105px;border-top-width:5px}.section:first-of-type{padding-top:245px}.features{grid-template-columns:1fr}.section{padding:70px 0}.faq{grid-template-columns:1fr}.price-card .price{font-size:58px}.footer-row{flex-direction:column;text-align:center}.footer-links{justify-content:center}
+  .steps{grid-template-columns:1fr!important}
+  .pricing-wrap{grid-template-columns:1fr!important}
+  .steps,.pricing-wrap{width:100%;max-width:100%;overflow:visible}
+  .step,.price-card,.cloud-note{width:100%;max-width:100%;min-width:0}
+}
+
+/* mobile-stack-fix */
+@media (max-width: 700px){
+  html,body{overflow-x:hidden}
+  #como-funciona .steps{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    gap:16px!important;
+    width:100%!important;
+  }
+  #como-funciona .step{
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+  }
+  #precio .pricing-wrap{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    gap:18px!important;
+    width:100%!important;
+  }
+  #precio .price-card,
+  #precio .cloud-note{
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+  }
 }
