@@ -7,7 +7,7 @@
     ? host.split('.')[0].replace(/[^a-z0-9-]/g,'')
     : '';
 
-  const GENERAL_HOSTS = new Set(['clase-graduanda','www','localhost','']);
+  const GENERAL_HOSTS = new Set(['clase-graduanda','clasegraduandapr','www','localhost','']);
 
   const savedProfiles = (() => {
     try { return JSON.parse(localStorage.getItem('claseGraduandaPR_tenant_profiles_v1') || '{}') || {}; }
@@ -57,7 +57,6 @@
     cloud: 'claseGraduandaPR_cloud_v1'
   };
 
-  // Migración segura para el colegio actual. Copia; no elimina los datos viejos.
   if (base.id === 'colegema') {
     Object.keys(keys).forEach(name => {
       if (!localStorage.getItem(keys[name]) && localStorage.getItem(legacy[name])) {
