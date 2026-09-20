@@ -75,10 +75,14 @@
     });
 
     $('#activationRecovery')?.addEventListener('click',()=>{
-      location.href='/app.html#recovery';
+      hideActivation();
       const pin=$('#pinLock');
       if(pin) pin.classList.remove('unlocked');
-      setTimeout(()=>$('#openCloudRecovery')?.click(),50);
+      $('#cloudRecoveryBox')?.removeAttribute('hidden');
+      $('#pinLoginForm')?.setAttribute('hidden','');
+      $('#openCloudRecovery')?.setAttribute('hidden','');
+      const code=$('#recoveryCollegeCode');
+      if(code){code.value='';code.readOnly=false;setTimeout(()=>code.focus(),50);}
     });
   });
 })();
