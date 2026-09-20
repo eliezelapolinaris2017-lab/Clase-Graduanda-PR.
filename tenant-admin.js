@@ -101,7 +101,7 @@
       className,
       cloudCode,
       recoveryPin:recoveryPin || current.recoveryPin || '',
-      defaultPin:defaultPin || current.defaultPin || '1234'
+      defaultPin:defaultPin || current.defaultPin || ''
     };
     localStorage.setItem(PROFILE_KEY,JSON.stringify(profiles));
 
@@ -120,7 +120,7 @@
     }
     if(!localStorage.getItem(authKey)){
       localStorage.setItem(authKey,JSON.stringify({
-        pin:defaultPin || current.defaultPin || '1234',
+        pin:defaultPin || current.defaultPin || '',
         adminName:''
       }));
     }
