@@ -346,3 +346,39 @@ body.onboarding-open #pinLock{display:none!important}
   .onboarding-actions button{min-width:0!important;flex:1!important}
   .onboarding-summary-row{grid-template-columns:120px 1fr!important}
 }
+
+
+/* Onboarding móvil: acciones fijas al fondo, estilo app nativa */
+@media (hover:none) and (pointer:coarse) and (max-device-width:1024px){
+  .onboarding-card{
+    display:flex!important;
+    flex-direction:column!important;
+    min-height:100dvh!important;
+    padding-bottom:calc(118px + env(safe-area-inset-bottom))!important;
+  }
+  .onboarding-step.active{
+    display:block!important;
+    flex:1 0 auto!important;
+  }
+  .onboarding-actions{
+    position:fixed!important;
+    left:16px!important;
+    right:16px!important;
+    bottom:calc(16px + env(safe-area-inset-bottom))!important;
+    z-index:2147483647!important;
+    display:flex!important;
+    gap:10px!important;
+    margin:0!important;
+    padding:12px 0 0!important;
+    background:linear-gradient(180deg,rgba(255,255,255,0),rgba(255,255,255,.96) 28%,#fff 55%)!important;
+  }
+  .onboarding-actions button{
+    min-height:52px!important;
+    border-radius:13px!important;
+    font-size:16px!important;
+    box-shadow:0 10px 28px rgba(8,29,45,.13)!important;
+  }
+  .onboarding-status{
+    margin-bottom:12px!important;
+  }
+}
