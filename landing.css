@@ -72,3 +72,9 @@ footer{padding:30px 0;background:#061725;color:#9fb0bd}.footer-row{display:flex;
     min-width:0!important;
   }
 }
+
+
+/* security FAQ */
+.faq details[open]{border-color:#cfdae3;box-shadow:0 10px 26px rgba(8,29,45,.05)}
+.faq summary::after{content:"+";float:right;color:#a6791d;font-size:20px;line-height:1}
+.faq details[open] summary::after{content:"−"}
