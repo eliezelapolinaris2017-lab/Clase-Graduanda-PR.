@@ -158,6 +158,13 @@
     let successData = null;
     try { successData = JSON.parse(localStorage.getItem(SUCCESS_KEY) || 'null'); } catch {}
 
+    $('#onboardingEnter')?.addEventListener('click', () => {
+      const box = $('#onboardingSuccess');
+      if(box) box.hidden = true;
+      document.body.classList.remove('onboarding-open');
+      location.reload();
+    });
+
     if(successData){
       localStorage.removeItem(SUCCESS_KEY);
       showSuccess(successData);
@@ -182,13 +189,6 @@
       const box = $('#onboarding');
       if(box) box.hidden = true;
       document.body.classList.remove('onboarding-open');
-    });
-
-    $('#onboardingEnter')?.addEventListener('click', () => {
-      const box = $('#onboardingSuccess');
-      if(box) box.hidden = true;
-      document.body.classList.remove('onboarding-open');
-      location.reload();
     });
 
     $('#obLogo')?.addEventListener('change', async e => {
