@@ -5,45 +5,66 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover" />
   <meta name="theme-color" content="#071d2d" />
   <meta name="description" content="Clase Graduanda PR: administra estudiantes, cuotas, actividades, balances y reportes desde un solo lugar." />
-  <link rel="manifest" href="/manifest.webmanifest?v=20260920-landing1" />
+  <link rel="manifest" href="/manifest.webmanifest?v=20260920-landing2" />
   <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
   <link rel="icon" type="image/png" href="/icons/icon-192.png" />
-  <link rel="stylesheet" href="/landing.css?v=20260920-1" />
+  <link rel="stylesheet" href="/landing.css?v=20260920-2" />
   <title>Clase Graduanda PR | Sistema para clases graduandas</title>
 </head>
 <body>
   <header class="topbar">
-    <div class="wrap">
-      <a class="brand" href="/"><img src="/icons/icon-192.png" alt=""><div>Clase Graduanda <span>PR</span></div></a>
+    <div class="wrap header-wrap">
+      <a class="brand" href="/" aria-label="Clase Graduanda PR">
+        <img src="/icons/icon-192.png" alt="">
+        <div class="brand-copy">
+          <strong>Clase<br class="mobile-break"> Graduanda <span>PR</span></strong>
+          <em>Más que una clase, una historia.</em>
+        </div>
+      </a>
+      <button class="menu-toggle" type="button" aria-label="Abrir menú" onclick="document.body.classList.toggle('menu-open')">☰</button>
       <nav class="nav">
-        <a href="#funciones">Funciones</a><a href="#como-funciona">Cómo funciona</a><a href="#precio">Precio</a>
-        
+        <a href="#funciones">Funciones</a>
+        <a href="#como-funciona">Cómo funciona</a>
+        <a href="#precio">Precio</a>
       </nav>
     </div>
   </header>
 
   <section class="hero">
-    <div class="wrap">
-      <div>
-        <div class="kicker">HECHO PARA PUERTO RICO</div>
-        <h1>Administra tu clase.<br><span>Disfruta el proceso.</span></h1>
+    <div class="hero-photo" aria-hidden="true"></div>
+    <div class="hero-shade" aria-hidden="true"></div>
+    <div class="wrap hero-wrap">
+      <div class="hero-content">
+        <div class="kicker">HECHO PARA PUERTO RICO <span>🇵🇷</span></div>
+        <h1>Administra<br class="mobile-only"> tu clase.<br><span>Disfruta el proceso.</span></h1>
         <p>Estudiantes, cuotas, actividades, balances y reportes en un sistema sencillo, moderno e instalable en iPhone y Android.</p>
+
+        <div class="hero-features" aria-label="Funciones principales">
+          <div><span class="circle-icon">👥</span><strong>Estudiantes</strong><small>Todo organizado</small></div>
+          <div><span class="circle-icon">$</span><strong>Cuotas</strong><small>Sin complicaciones</small></div>
+          <div><span class="circle-icon">▣</span><strong>Actividades</strong><small>Siempre al día</small></div>
+          <div><span class="circle-icon">▥</span><strong>Reportes</strong><small>Decisiones más fáciles</small></div>
+        </div>
+
         <div class="hero-actions">
           <a class="btn btn-primary buy-btn" href="#precio">Obtener por $299 →</a>
-          
         </div>
-        <div class="hero-note">Pago único por la plataforma. Respaldo en la nube disponible como opción adicional.</div>
+        <div class="hero-note">☁ Pago único por la plataforma. Respaldo en la nube disponible como opción adicional.</div>
+        <div class="hero-script">Más que<br>una clase,<br>una historia.</div>
       </div>
-      <div class="mock" aria-label="Vista previa del sistema">
+
+      <div class="mock device-mock" aria-label="Vista previa del sistema">
         <div class="mock-screen">
           <div class="mock-head"><img src="/icons/icon-192.png" alt="">Clase Graduanda PR</div>
           <div class="mock-body">
             <div class="mock-nav"><b>⌂ Inicio</b><span>👥 Estudiantes</span><span>$ Cuotas</span><span>▣ Actividades</span><span>▤ Reportes</span></div>
-            <div class="mock-main"><h3>¡Bienvenidos!</h3><p>Todo lo que tu clase necesita, en un solo lugar.</p>
+            <div class="mock-main">
+              <h3>¡Bienvenidos!</h3>
+              <p>Todo lo que tu clase necesita,<br>en un solo lugar.</p>
               <div class="mock-cards">
                 <div class="mock-card"><small>Estudiantes</small><strong>120</strong></div>
-                <div class="mock-card"><small>Recaudado</small><strong>$2,850</strong></div>
-                <div class="mock-card"><small>Actividades</small><strong>5</strong></div>
+                <div class="mock-card"><small>Recaudado</small><strong>$8,750</strong></div>
+                <div class="mock-card"><small>Actividades</small><strong>12</strong></div>
                 <div class="mock-card"><small>Reportes</small><strong>PDF</strong></div>
               </div>
             </div>
@@ -51,14 +72,8 @@
         </div>
       </div>
     </div>
+    <div class="hero-wave" aria-hidden="true"></div>
   </section>
-
-  <div class="trust"><div class="wrap">
-    <div class="trust-item"><span>👥</span>Estudiantes</div>
-    <div class="trust-item"><span>💵</span>Cuotas y balances</div>
-    <div class="trust-item"><span>📄</span>Reportes PDF</div>
-    <div class="trust-item"><span>☁️</span>Nube opcional</div>
-  </div></div>
 
   <section class="section alt" id="funciones"><div class="wrap center">
     <div class="eyebrow">TODO EN UN SOLO LUGAR</div><h2>Menos hojas. Más control.</h2>
@@ -111,7 +126,7 @@
 
   <section class="cta"><div class="wrap"><h2>Más que una clase, una historia.</h2><p>Organiza hoy lo que tu clase recordará mañana.</p><a class="btn btn-primary" href="#precio">Obtener Clase Graduanda PR →</a></div></section>
 
-  <footer><div class="wrap footer-row"><div class="footer-brand"><img src="/icons/icon-192.png" alt="">Clase Graduanda PR</div><div class="footer-links"><a href="/app.html">Acceso clientes</a><span>© 2026 NexusTools PR</span></div></div></footer>
+  <footer><div class="wrap footer-row"><div class="footer-brand"><img src="/icons/icon-192.png" alt="">Clase Graduanda PR</div><div class="footer-links"><a href="/app.html">Acceso clientes</a><span>© 2026 NexusTools PR</span><a href="https://commons.wikimedia.org/wiki/File:La_Garita_del_Diablo_en_VJS.jpg" target="_blank" rel="noopener">Foto: Maryamarce / CC BY-SA 4.0</a></div></div></footer>
 
   <script>
     const STRIPE_PAYMENT_LINK = "https://buy.stripe.com/6oU8wO0Vo2mA4nYcO31RC0O";
@@ -124,6 +139,7 @@
         buy.textContent = 'Pago Stripe pendiente de enlace';
       }
     });
+    document.querySelectorAll('.nav a').forEach(a=>a.addEventListener('click',()=>document.body.classList.remove('menu-open')));
     if ('serviceWorker' in navigator) window.addEventListener('load',()=>navigator.serviceWorker.register('/service-worker.js?v=20260920-2').catch(()=>{}));
   </script>
 </body>
