@@ -382,3 +382,124 @@ body.onboarding-open #pinLock{display:none!important}
     margin-bottom:12px!important;
   }
 }
+
+
+/* ===== PREMIUM LOGIN + DASHBOARD 2026-09-20 ===== */
+.pin-lock{
+  padding:0!important;
+  background:
+    linear-gradient(180deg,rgba(4,19,33,.28),rgba(3,20,35,.84) 46%,rgba(3,19,32,.96)),
+    url("https://images.unsplash.com/photo-1775623606645-470e04a881cb?auto=format&fit=crop&fm=jpg&q=82&w=1800") center/cover no-repeat!important;
+}
+.pin-card{
+  width:min(100%,560px)!important;
+  min-height:100dvh!important;
+  padding:clamp(64px,10vh,112px) 34px 42px!important;
+  border:0!important;border-radius:0!important;
+  background:linear-gradient(180deg,rgba(5,27,46,.12),rgba(5,27,46,.56) 58%,rgba(5,27,46,.75))!important;
+  box-shadow:none!important;backdrop-filter:none!important;
+  display:flex!important;flex-direction:column!important;justify-content:center!important;
+}
+.login-brand{display:grid;justify-items:center;margin-bottom:42px}
+.login-brand .pin-app-logo{width:116px;height:116px;margin:0 0 13px;border-radius:0;box-shadow:none;object-fit:contain;background:transparent}
+.login-brand-title{font-family:Georgia,"Times New Roman",serif;font-size:46px;line-height:.82;letter-spacing:-2px;font-weight:700;color:#fff;text-align:center}
+.login-brand-title span{color:#efc14c}
+.login-brand-sub{margin-top:17px;color:#f4f5f6;font-size:10px;font-weight:800;letter-spacing:3.2px}
+.pin-card h1{font-size:34px!important;margin:0 0 8px!important}
+.login-subtitle{font-size:18px!important;margin:0 0 28px!important;color:#e3e9ee!important}
+#pinLoginForm{gap:16px;margin-top:0}
+.login-input-wrap{position:relative}
+.login-input-wrap>span{position:absolute;left:19px;top:50%;transform:translateY(-50%);z-index:2;color:#d9e1e8;font-size:20px}
+#pinInput{
+  min-height:66px!important;padding:0 18px 0 56px!important;
+  text-align:left!important;font-size:17px!important;letter-spacing:0!important;font-weight:600!important;
+  background:rgba(18,48,72,.54)!important;border:1.5px solid rgba(223,232,239,.60)!important;border-radius:15px!important;
+}
+#pinInput::placeholder{color:#99a9b7}
+#pinLoginForm button[type="submit"]{
+  min-height:64px;border-radius:15px;background:linear-gradient(100deg,#dca729,#f2ce69)!important;
+  color:#092238!important;font-size:20px;box-shadow:0 14px 28px rgba(0,0,0,.16)!important;
+}
+.login-recovery{margin:16px auto 0!important;background:transparent!important;box-shadow:none!important;color:#d1dce5!important;font-size:13px;padding:6px 12px!important;min-height:auto!important}
+#cloudRecoveryBox{margin-top:12px;text-align:left;background:rgba(4,22,37,.68);padding:14px;border-radius:16px}
+#cloudRecoveryBox input{margin-top:8px}
+#cloudRecoveryBox button{width:100%;margin-top:8px}
+.login-script{margin-top:auto;padding-top:52px;color:#fff;font-family:"Brush Script MT","Segoe Script",cursive;font-size:33px;transform:rotate(-4deg);text-align:center;text-shadow:0 3px 12px rgba(0,0,0,.3)}
+.login-script:after{content:"";display:block;width:160px;height:4px;background:#e7b23e;border-radius:99px;margin:7px auto 0;transform:rotate(-4deg)}
+.login-hidden-name{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+.pin-card>small{display:none!important}
+
+.dashboard-welcome{margin:0 0 22px}
+.dashboard-welcome h2{font-size:38px;letter-spacing:-1.4px;margin:0;color:#09233b}
+.dashboard-welcome p{margin:5px 0 0;color:#718197;font-size:17px}
+.dashboard-actions{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px;margin-bottom:18px}
+.dash-action{
+  position:relative;display:grid;grid-template-columns:58px 1fr 20px;grid-template-rows:auto auto;column-gap:13px;
+  align-items:center;text-align:left;background:#fff!important;color:#09233b!important;border:1px solid #e3e8ee;
+  border-radius:22px;padding:22px 18px!important;min-height:126px;box-shadow:0 12px 32px rgba(8,29,45,.07)!important;
+}
+.dash-action:hover{transform:translateY(-2px)}
+.dash-icon{grid-row:1/3;width:56px;height:56px;border-radius:17px;display:grid;place-items:center;background:#f3f6f9;color:#092b4c;font-size:28px;font-weight:900}
+.dash-action strong{font-size:18px;align-self:end}.dash-action small{font-size:13px;color:#77879a;align-self:start;margin-top:3px}.dash-action em{grid-column:3;grid-row:1/3;font-style:normal;font-size:30px;color:#8190a0}
+.cloud-action{
+  width:100%;display:grid;grid-template-columns:64px 1fr 28px;align-items:center;text-align:left;
+  background:#fff!important;color:#09233b!important;border:1px solid #e2e8ee;border-radius:20px;padding:18px 22px!important;
+  box-shadow:0 12px 32px rgba(8,29,45,.06)!important;margin-bottom:18px;
+}
+.cloud-action-icon{font-size:38px;color:#0b3154}.cloud-action span:nth-child(2){display:grid}.cloud-action strong{font-size:18px}.cloud-action small{color:#7c8b9b;margin-top:3px}.cloud-action em{font-style:normal;font-size:30px;color:#8292a2}
+.dashboard-motivation{
+  position:relative;height:230px;border-radius:24px;overflow:hidden;margin-bottom:24px;
+  background:url("https://images.unsplash.com/photo-1775623606645-470e04a881cb?auto=format&fit=crop&fm=jpg&q=82&w=1800") center 42%/cover no-repeat;box-shadow:0 18px 42px rgba(8,29,45,.12);
+}
+.dashboard-motivation-shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(3,22,38,.70),rgba(3,22,38,.26))}
+.dashboard-motivation-copy{position:absolute;left:32px;bottom:32px;color:#fff;font-family:Georgia,"Times New Roman",serif;font-size:33px;line-height:1.05}
+.dashboard-motivation-copy strong{font-weight:500}.dashboard-motivation-copy span{display:block;width:180px;height:4px;background:#e6b23d;border-radius:99px;margin-top:15px}
+.dashboard-summary{margin-top:4px}.summary-title span{font-size:10px;letter-spacing:2px;color:#ab7c18;font-weight:900}.summary-title h3{font-size:24px;margin:4px 0 14px;color:#112b42}
+
+@media(max-width:860px){
+  body:not(.app-locked){background:#f7f8fa}
+  #mainHeader{
+    min-height:160px;padding:22px 18px 34px;border-radius:0;
+    background:
+      linear-gradient(90deg,rgba(4,29,49,.97),rgba(5,40,66,.78)),
+      url("https://images.unsplash.com/photo-1775623606645-470e04a881cb?auto=format&fit=crop&fm=jpg&q=82&w=1800") center 40%/cover no-repeat!important;
+  }
+  .header-inner{align-items:flex-start}
+  .app-brand-mark{width:60px;height:60px;border-radius:0;box-shadow:none}
+  .header-copy .eyebrow{display:none}
+  #mainHeader h1{font-family:Georgia,"Times New Roman",serif;font-size:27px;line-height:.92;white-space:normal;max-width:62vw}
+  #mainHeader #schoolName::after{content:" PR";color:#e7b43e}
+  #mainHeader p{display:none}
+  main{
+    margin-top:-28px;padding:0 12px calc(102px + env(safe-area-inset-bottom));position:relative;z-index:2;
+    background:#fff;border-radius:26px 26px 0 0;
+  }
+  #dashboard{padding-top:28px}
+  .dashboard-welcome{padding:0 8px;margin-bottom:20px}
+  .dashboard-welcome h2{font-size:34px}.dashboard-welcome p{font-size:15px}
+  .dashboard-actions{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .dash-action{
+    display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:5px;
+    min-height:174px;padding:18px!important;border-radius:20px;
+  }
+  .dash-icon{width:52px;height:52px;font-size:26px;margin-bottom:5px}
+  .dash-action strong{font-size:17px}.dash-action small{font-size:12px}.dash-action em{position:absolute;right:15px;bottom:15px}
+  .cloud-action{grid-template-columns:54px 1fr 20px;padding:16px!important;border-radius:18px}.cloud-action-icon{font-size:34px}.cloud-action strong{font-size:16px}.cloud-action small{font-size:12px}
+  .dashboard-motivation{height:190px;border-radius:20px}.dashboard-motivation-copy{left:22px;bottom:24px;font-size:28px}
+  .dashboard-summary{padding:0 2px}.dashboard-summary .cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .balance-box{margin-top:2px}
+  nav{
+    left:0;right:0;bottom:0;height:78px;border-radius:0;border:0;border-top:1px solid #e7ebef;
+    box-shadow:0 -8px 30px rgba(8,29,45,.06);background:rgba(255,255,255,.98);padding-bottom:max(7px,env(safe-area-inset-bottom));
+  }
+  .tab.active{background:transparent;color:#c9951e}
+  .tab.active .nav-icon{color:#d3a124}
+  .pin-card{padding:70px 26px 34px!important}
+  .login-brand{margin-bottom:34px}.login-brand .pin-app-logo{width:102px;height:102px}.login-brand-title{font-size:40px}.login-brand-sub{font-size:8px;letter-spacing:2.4px}
+}
+@media(max-width:390px){
+  .dash-action{min-height:160px;padding:15px!important}
+  .dashboard-motivation{height:172px}
+  .dashboard-motivation-copy{font-size:25px}
+  .login-brand-title{font-size:36px}
+}
