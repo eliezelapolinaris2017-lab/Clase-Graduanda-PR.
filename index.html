@@ -13,11 +13,12 @@
   <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png?v=20260919-1" />
   <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png?v=20260919-1" />
   <title>Clase Graduanda PR</title>
-  <link rel="stylesheet" href="styles.css?v=20260919-2" />
+  <link rel="stylesheet" href="styles.css?v=20260920-1" />
 </head>
 <body>
   <div id="pinLock" class="pin-lock">
     <div class="pin-card">
+      <img class="pin-app-logo" src="/icons/icon-192.png" alt="Clase Graduanda PR" />
       <div class="pin-badge">ACCESO SEGURO</div>
       <h1 id="pinWelcomeName">Clase Graduanda PR</h1>
       <p>Ingresa tu PIN de 4 dígitos</p>
@@ -40,28 +41,45 @@
 
   <header id="mainHeader">
     <div class="header-inner">
+      <div class="app-brand-mark">
+        <img src="/icons/icon-192.png" alt="Clase Graduanda PR" />
+      </div>
       <div id="headerLogoWrap" class="header-logo-wrap" hidden>
         <img id="headerLogo" alt="Logo del colegio" />
       </div>
-      <div>
-        <span class="eyebrow">ADMINISTRACIÓN ESCOLAR</span>
+      <div class="header-copy">
+        <span class="eyebrow">CLASE GRADUANDA PR</span>
         <h1 id="schoolName">Clase Graduanda PR</h1>
         <p id="className"></p>
       </div>
+      <div class="header-tagline">Más que una clase,<br><strong>una historia.</strong></div>
     </div>
   </header>
 
-  <nav>
-    <button class="tab active" data-tab="dashboard">Resumen</button>
-    <button class="tab" data-tab="students">Estudiantes</button>
-    <button class="tab" data-tab="dues">Cuotas</button>
-    <button class="tab" data-tab="activities">Actividades</button>
-    <button class="tab" data-tab="reports">Reportes</button>
-    <button class="tab" data-tab="settings" hidden aria-hidden="true">Configuración</button>
+  <nav aria-label="Navegación principal">
+    <div class="nav-brand">
+      <img src="/icons/icon-192.png" alt="" />
+      <div><strong>Clase Graduanda</strong><span>PR</span></div>
+    </div>
+    <button class="tab active" data-tab="dashboard"><span class="nav-icon">⌂</span><span>Inicio</span></button>
+    <button class="tab" data-tab="students"><span class="nav-icon">♟</span><span>Estudiantes</span></button>
+    <button class="tab" data-tab="dues"><span class="nav-icon">$</span><span>Cuotas</span></button>
+    <button class="tab" data-tab="activities"><span class="nav-icon">▣</span><span>Actividades</span></button>
+    <button class="tab" data-tab="reports"><span class="nav-icon">▤</span><span>Reportes</span></button>
+    <button class="tab" data-tab="settings" hidden aria-hidden="true"><span class="nav-icon">⚙</span><span>Configuración</span></button>
+    <div class="nav-footer">ORGANIZA · ADMINISTRA · LOGRA</div>
   </nav>
 
   <main>
     <section id="dashboard" class="panel active">
+      <div class="dashboard-hero">
+        <div>
+          <span class="hero-kicker">BIENVENIDOS</span>
+          <h2>Todo lo que tu clase necesita,<br><strong>en un solo lugar.</strong></h2>
+          <p>Administra estudiantes, cuotas, actividades y reportes desde una sola plataforma.</p>
+        </div>
+        <div class="hero-cap">🎓</div>
+      </div>
       <div class="cards">
         <div class="card"><small>Estudiantes</small><strong id="kpiStudents">0</strong></div>
         <div class="card"><small>Balance cuotas</small><strong id="kpiDues">$0.00</strong></div>
