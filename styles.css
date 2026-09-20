@@ -529,3 +529,22 @@ body.onboarding-open #pinLock{display:none!important}
   .security-value-grid strong{align-self:end}
   .security-value-grid small{margin-top:2px}
 }
+
+
+/* ===== PURCHASE ACTIVATION GATE ===== */
+.purchase-activation{position:fixed;inset:0;z-index:2147483647;display:grid;place-items:center;padding:20px;background:linear-gradient(180deg,rgba(4,20,34,.62),rgba(4,20,34,.94)),url("https://images.unsplash.com/photo-1775623606645-470e04a881cb?auto=format&fit=crop&fm=jpg&q=82&w=1800") center/cover no-repeat}
+.purchase-activation[hidden]{display:none!important}
+.purchase-activation-card{width:min(100%,470px);padding:32px 28px;border-radius:28px;background:rgba(6,30,49,.94);border:1px solid rgba(255,255,255,.14);box-shadow:0 30px 90px rgba(0,0,0,.35);color:#fff;text-align:center}
+.purchase-activation-card>img{width:92px;height:92px;object-fit:contain}
+.activation-kicker{margin-top:10px;color:#efc65a;font-size:10px;letter-spacing:2.4px;font-weight:900}
+.purchase-activation-card h1{font-family:Georgia,"Times New Roman",serif;font-size:32px;margin:14px 0 8px}
+.purchase-activation-card>p{color:#c7d4de;line-height:1.5;font-size:14px}
+#purchaseActivationForm{display:grid;gap:10px;margin-top:22px}
+#purchaseActivationForm input{min-height:56px;border:1px solid rgba(255,255,255,.22);border-radius:14px;background:rgba(255,255,255,.08);color:#fff;text-align:center;text-transform:uppercase;letter-spacing:1px}
+#purchaseActivationForm button{min-height:54px;border-radius:14px;background:linear-gradient(100deg,#dba92d,#f0ce68);color:#092238;font-weight:900}
+.activation-recovery{margin-top:14px;background:transparent!important;box-shadow:none!important;color:#d6e0e7!important;font-size:12px}
+.activation-status{min-height:20px!important;color:#f4d27a!important;font-weight:800}
+.purchase-activation-card>small{display:block;color:#92a6b5;font-size:10px;line-height:1.4;margin-top:12px}
+body.activation-open{overflow:hidden!important}
+body.activation-open > :not(#purchaseActivation){visibility:hidden!important}
+body.activation-open #purchaseActivation,body.activation-open #purchaseActivation *{visibility:visible!important}
