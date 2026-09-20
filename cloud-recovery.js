@@ -167,7 +167,7 @@
         className: restoredData.settings?.className || 'Clase Graduanda',
         cloudCode: code,
         recoveryPin: pin,
-        defaultPin: restoredAuth.pin || '1234'
+        defaultPin: restoredAuth.pin && restoredAuth.pin !== '1234' ? restoredAuth.pin : ''
       };
       localStorage.setItem(PROFILE_KEY, JSON.stringify(profiles));
       localStorage.setItem(ACTIVE_KEY, tenantId);
