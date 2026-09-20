@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#08243a">
+  <title>Portal para Padres | Clase Graduanda PR</title>
+  <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
+  <link rel="stylesheet" href="/portal/styles.css?v=20260920-1">
+</head>
+<body>
+  <div id="portalLogin" class="portal-login">
+    <div class="login-shell">
+      <img class="login-logo" src="/icons/icon-192.png" alt="Clase Graduanda PR">
+      <div class="login-brand">Clase Graduanda <span>PR</span></div>
+      <p class="login-kicker">PORTAL PARA PADRES</p>
+      <h1>Consulta la información de tu estudiante</h1>
+      <p class="login-copy">Ingresa el código único provisto por la directiva de la clase.</p>
+
+      <form id="portalLoginForm">
+        <label for="accessCode">Código de acceso</label>
+        <input id="accessCode" autocomplete="off" placeholder="Ej. MR-2030-4821" required>
+        <button type="submit">Entrar al portal</button>
+      </form>
+
+      <p class="demo-note">Prototipo de evaluación · Usa <strong>MR-2030-4821</strong></p>
+      <p id="loginError" class="login-error" aria-live="polite"></p>
+    </div>
+  </div>
+
+  <div id="portalApp" class="portal-app" hidden>
+    <header class="portal-header">
+      <div class="header-brand">
+        <img src="/icons/icon-192.png" alt="">
+        <div>
+          <strong>Clase Graduanda <span>PR</span></strong>
+          <small>Portal para Padres</small>
+        </div>
+      </div>
+      <button id="logoutBtn" type="button" class="logout-btn">Salir</button>
+    </header>
+
+    <main class="portal-main">
+      <section class="student-hero">
+        <div class="student-top">
+          <div class="student-avatar">MR</div>
+          <div>
+            <span class="eyebrow">ESTUDIANTE</span>
+            <h1>María Rodríguez</h1>
+            <p>Clase Monarca 2030 · Colegio Santa Cruz</p>
+          </div>
+        </div>
+        <div class="hero-stats">
+          <div><small>Balance pendiente</small><strong id="heroBalance">$185.00</strong></div>
+          <div><small>Pagado este año</small><strong id="heroPaid">$615.00</strong></div>
+        </div>
+      </section>
+
+      <nav class="portal-tabs" aria-label="Secciones del portal">
+        <button class="portal-tab active" type="button" data-tab="inicio"><span>⌂</span>Inicio</button>
+        <button class="portal-tab" type="button" data-tab="pagos"><span>$</span>Pagos</button>
+        <button class="portal-tab" type="button" data-tab="actividades"><span>▣</span>Actividades</button>
+        <button class="portal-tab" type="button" data-tab="documentos"><span>▤</span>Documentos</button>
+        <button class="portal-tab" type="button" data-tab="avisos"><span>●</span>Avisos</button>
+      </nav>
+
+      <section id="inicio" class="portal-panel active">
+        <div class="summary-grid">
+          <article class="summary-card">
+            <span>Cuotas pendientes</span>
+            <strong id="dueAmount">$125.00</strong>
+            <small>2 conceptos abiertos</small>
+          </article>
+          <article class="summary-card">
+            <span>Actividades</span>
+            <strong id="activityAmount">$60.00</strong>
+            <small>1 balance pendiente</small>
+          </article>
+        </div>
+
+        <article class="content-card">
+          <div class="card-head">
+            <div>
+              <span class="eyebrow dark">META DE GRADUACIÓN</span>
+              <h2>Cuota general</h2>
+            </div>
+            <span class="badge">76% completado</span>
+          </div>
+          <div class="progress"><span></span></div>
+          <div class="progress-labels"><span>$375 pagados</span><span>$500 total</span></div>
+        </article>
+
+        <article class="content-card">
+          <span class="eyebrow dark">PRÓXIMO VENCIMIENTO</span>
+          <div class="list-row">
+            <div>
+              <strong>Cuota de graduación</strong>
+              <small>Fecha límite: 30 septiembre 2026</small>
+            </div>
+            <div class="row-amount">
+              <strong>$75.00</strong>
+              <span class="badge">Pendiente</span>
+            </div>
+          </div>
+          <button id="quickPay" type="button" class="primary-btn">Pagar ahora</button>
+        </article>
+
+        <article class="notice-card">
+          <strong>Reunión de padres</strong>
+          <p>25 de septiembre a las 6:30 p. m. en el salón multiusos.</p>
+        </article>
+      </section>
+
+      <section id="pagos" class="portal-panel">
+        <article class="content-card">
+          <div class="card-head">
+            <div>
+              <span class="eyebrow dark">ESTADO DE CUENTA</span>
+              <h2>Balances pendientes</h2>
+            </div>
+            <button id="exportState" type="button" class="secondary-btn">Exportar</button>
+          </div>
+
+          <div id="balancesList">
+            <div class="list-row" data-balance="graduacion">
+              <div><strong>Cuota de graduación</strong><small>Vence 30 sep 2026</small></div>
+              <div class="row-amount"><strong>$75.00</strong><span class="badge">Pendiente</span></div>
+            </div>
+            <div class="list-row" data-balance="mensual">
+              <div><strong>Cuota mensual</strong><small>Vence 15 oct 2026</small></div>
+              <div class="row-amount"><strong>$50.00</strong><span class="badge">Pendiente</span></div>
+            </div>
+            <div class="list-row" data-balance="actividad">
+              <div><strong>Senior Picnic</strong><small>Actividad · 18 oct</small></div>
+              <div class="row-amount"><strong>$60.00</strong><span class="badge">Pendiente</span></div>
+            </div>
+          </div>
+
+          <button id="openPay" type="button" class="primary-btn">Pagar balance</button>
+
+          <div id="payPanel" class="pay-panel" hidden>
+            <span class="eyebrow dark">PAGO DE DEMOSTRACIÓN</span>
+            <p>Este prototipo no procesa dinero real.</p>
+
+            <label for="payConcept">Concepto</label>
+            <select id="payConcept">
+              <option value="75" data-key="graduacion">Cuota de graduación — $75.00</option>
+              <option value="50" data-key="mensual">Cuota mensual — $50.00</option>
+              <option value="60" data-key="actividad">Senior Picnic — $60.00</option>
+            </select>
+
+            <div class="mock-card">
+              <strong>Tarjeta</strong>
+              <small>•••• 4242 · Demo</small>
+            </div>
+
+            <div class="pay-actions">
+              <button id="confirmPay" type="button" class="primary-btn">Confirmar pago</button>
+              <button id="cancelPay" type="button" class="secondary-btn">Cancelar</button>
+            </div>
+            <p id="payStatus" class="status" aria-live="polite"></p>
+          </div>
+        </article>
+
+        <article class="content-card">
+          <span class="eyebrow dark">HISTORIAL Y RECIBOS</span>
+          <div id="historyList">
+            <div class="list-row">
+              <div><strong>Cuota mensual</strong><small>5 sep 2026 · Recibo #1028</small></div>
+              <div class="row-amount"><strong>$50.00</strong><button class="mini-btn receipt-btn" type="button" data-receipt="1028" data-concept="Cuota mensual" data-amount="50.00">Ver recibo</button></div>
+            </div>
+            <div class="list-row">
+              <div><strong>Senior Night</strong><small>21 ago 2026 · Recibo #1017</small></div>
+              <div class="row-amount"><strong>$75.00</strong><button class="mini-btn receipt-btn" type="button" data-receipt="1017" data-concept="Senior Night" data-amount="75.00">Ver recibo</button></div>
+            </div>
+          </div>
+          <div id="receiptPreview" class="receipt-preview" hidden></div>
+        </article>
+      </section>
+
+      <section id="actividades" class="portal-panel">
+        <article class="content-card">
+          <span class="eyebrow dark">CALENDARIO DE LA CLASE</span>
+          <div class="list-row"><div><strong>Reunión de padres</strong><small>25 sep 2026 · 6:30 p. m. · Salón multiusos</small></div><span class="badge">Reunión</span></div>
+          <div class="list-row"><div><strong>Senior Picnic</strong><small>18 oct 2026 · 10:00 a. m. · Balance pendiente $60</small></div><span class="badge">Actividad</span></div>
+          <div class="list-row"><div><strong>Fotos de graduación</strong><small>7 nov 2026 · 8:00 a. m. · Uniforme formal</small></div><span class="badge">Importante</span></div>
+          <div class="list-row"><div><strong>Ensayo de graduación</strong><small>20 may 2030 · 9:00 a. m.</small></div><span class="badge">Graduación</span></div>
+        </article>
+      </section>
+
+      <section id="documentos" class="portal-panel">
+        <article class="content-card">
+          <span class="eyebrow dark">DOCUMENTOS DISPONIBLES</span>
+          <div class="document-row"><div class="doc-icon">PDF</div><div><strong>Calendario de actividades</strong><small>Actualizado septiembre 2026</small></div><button class="mini-btn doc-btn" type="button" data-doc="Calendario de actividades">Ver</button></div>
+          <div class="document-row"><div class="doc-icon">PDF</div><div><strong>Reglamento de la clase</strong><small>Normas y responsabilidades</small></div><button class="mini-btn doc-btn" type="button" data-doc="Reglamento de la clase">Ver</button></div>
+          <div class="document-row"><div class="doc-icon">DOC</div><div><strong>Autorización Senior Picnic</strong><small>Documento para padres</small></div><button class="mini-btn doc-btn" type="button" data-doc="Autorización Senior Picnic">Ver</button></div>
+          <div id="docPreview" class="receipt-preview" hidden></div>
+        </article>
+      </section>
+
+      <section id="avisos" class="portal-panel">
+        <article class="content-card">
+          <span class="eyebrow dark">COMUNICACIONES DE LA DIRECTIVA</span>
+          <div class="notice-item"><div class="notice-title"><strong>Recordatorio de cuota</strong><span class="badge">Nuevo</span></div><p>La próxima fecha límite de pago es el 30 de septiembre.</p><small>Publicado 18 sep 2026</small></div>
+          <div class="notice-item"><div class="notice-title"><strong>Cambio de horario</strong></div><p>La reunión de padres comenzará a las 6:30 p. m.</p><small>Publicado 17 sep 2026</small></div>
+          <div class="notice-item"><div class="notice-title"><strong>Fotos de graduación</strong></div><p>Las fotos oficiales serán el 7 de noviembre. Próximamente se publicarán los detalles de vestimenta.</p><small>Publicado 12 sep 2026</small></div>
+        </article>
+      </section>
+
+      <div class="prototype-note">
+        <strong>Prototipo separado del panel administrativo.</strong>
+        <span>Los datos son demostrativos. No está conectado todavía a estudiantes reales, Supabase ni Stripe.</span>
+      </div>
+    </main>
+  </div>
+
+  <script src="/portal/app.js?v=20260920-1"></script>
+</body>
+</html>
