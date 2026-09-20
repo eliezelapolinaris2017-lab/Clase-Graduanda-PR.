@@ -118,7 +118,15 @@
     <div class="eyebrow">PREGUNTAS FRECUENTES</div><h2>Antes de comenzar.</h2>
     <div class="faq">
       <details><summary>¿Es una aplicación?</summary><p>Es una PWA: funciona desde el navegador y puede instalarse en la pantalla de inicio como una app.</p></details>
-      <details><summary>¿El precio incluye nube?</summary><p>No. El respaldo en la nube es opcional y tiene un cargo adicional.</p></details>
+      <details><summary>¿Mis datos están protegidos?</summary><p>Sí. Clase Graduanda PR utiliza acceso por PIN, separación de información por colegio y controles de acceso independientes para el Portal para Padres.</p></details>
+      <details><summary>¿Cómo se protege el respaldo en la nube?</summary><p>Si activas el respaldo opcional, la información administrativa se cifra en el dispositivo con AES-GCM de 256 bits antes de enviarse a Supabase.</p></details>
+      <details><summary>¿Cómo se genera la llave de cifrado?</summary><p>La llave del respaldo se deriva del PIN de recuperación mediante PBKDF2 con SHA-256 y 180,000 iteraciones. Por eso es importante conservar ese PIN en un lugar seguro.</p></details>
+      <details><summary>¿El respaldo se guarda como información legible?</summary><p>No. El respaldo administrativo se almacena cifrado; no se guarda en la tabla de respaldos como el JSON administrativo original en texto legible.</p></details>
+      <details><summary>¿Los padres pueden ver otros estudiantes?</summary><p>No mediante el funcionamiento normal del portal. Cada código individual está asociado a un estudiante y el servidor devuelve únicamente el expediente relacionado con ese acceso.</p></details>
+      <details><summary>¿Los padres pueden modificar pagos o balances?</summary><p>No. El Portal para Padres es de solo consulta. Los pagos y balances son registrados por la directiva desde el panel administrativo.</p></details>
+      <details><summary>¿Guardan información de tarjetas?</summary><p>No. Actualmente el sistema trabaja con Efectivo, ATH Móvil y Cheque; no se almacenan números de tarjetas de crédito o débito.</p></details>
+      <details><summary>¿El precio incluye nube?</summary><p>No. El respaldo cifrado en la nube es opcional y tiene un cargo adicional.</p></details>
+      <details><summary>¿Qué pasa si pierdo el dispositivo?</summary><p>Si tu clase tiene activo el respaldo opcional en la nube, la información puede recuperarse utilizando la configuración y credenciales de recuperación correspondientes.</p></details>
       <details><summary>¿Puedo usarla en iPhone y Android?</summary><p>Sí. El sistema está diseñado para funcionar en ambos y también en computadoras.</p></details>
       <details><summary>¿Puedo generar reportes?</summary><p>Sí. Incluye reportes mensuales y globales en PDF.</p></details>
     </div>
