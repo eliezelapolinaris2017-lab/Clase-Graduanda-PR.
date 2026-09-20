@@ -1,10 +1,10 @@
-const CACHE='cgpr-parent-portal-v2';
+const CACHE='cgpr-parent-portal-v3';
 const SHELL=[
   '/portal/',
   '/portal/index.html',
-  '/portal/styles.css?v=20260920-2',
-  '/portal/app.js?v=20260920-secure1',
-  '/portal/manifest.webmanifest',
+  '/portal/styles.css?v=20260920-final1',
+  '/portal/app.js?v=20260920-final1',
+  '/portal/manifest.webmanifest?v=20260920-3',
   '/icons/icon-192.png',
   '/icons/icon-512.png'
 ];
@@ -20,7 +20,7 @@ self.addEventListener('fetch',e=>{
     return;
   }
   e.respondWith(caches.match(req).then(cached=>cached||fetch(req).then(res=>{
-    if(res&&res.ok) caches.open(CACHE).then(c=>c.put(req,res.clone()));
+    if(res&&res.ok)caches.open(CACHE).then(c=>c.put(req,res.clone()));
     return res;
   })));
 });
