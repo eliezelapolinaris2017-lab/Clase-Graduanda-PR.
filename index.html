@@ -13,9 +13,113 @@
   <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png?v=20260919-1" />
   <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png?v=20260919-1" />
   <title>Clase Graduanda PR</title>
-  <link rel="stylesheet" href="styles.css?v=20260920-1" />
+  <link rel="stylesheet" href="styles.css?v=20260920-2" />
 </head>
 <body>
+
+  <div id="onboarding" class="onboarding" hidden>
+    <div class="onboarding-shell">
+      <aside class="onboarding-brand">
+        <img src="/icons/icon-192.png" alt="Clase Graduanda PR" />
+        <div class="onboarding-brand-title">Clase<br>Graduanda <span>PR</span></div>
+        <div class="onboarding-brand-rule"></div>
+        <div class="onboarding-brand-script">Más que una clase,<br>una historia.</div>
+        <div class="onboarding-brand-copy">
+          <strong>Configuremos tu<br>Clase Graduanda</strong>
+          <small>Te tomará menos de 3 minutos.</small>
+        </div>
+        <div class="onboarding-brand-foot">ORGANIZA · ADMINISTRA · LOGRA</div>
+      </aside>
+
+      <section class="onboarding-card">
+        <div class="onboarding-top">
+          <div class="onboarding-mini-brand"><img src="/icons/icon-192.png" alt=""><strong>Clase Graduanda <span>PR</span></strong></div>
+          <button id="onboardingClose" type="button" class="onboarding-close" aria-label="Cerrar">×</button>
+        </div>
+
+        <div class="onboarding-progress" aria-label="Progreso">
+          <span class="active"></span><span></span><span></span><span></span><span></span>
+        </div>
+
+        <div class="onboarding-step active" data-step="1">
+          <div class="onboarding-step-label">Paso 1 de 5</div>
+          <h2>Información del Colegio</h2>
+          <p>Comencemos con los datos principales de tu clase.</p>
+          <label>Nombre del colegio<input id="obSchool" placeholder="Ej. Colegio Santa Cruz" autocomplete="organization"></label>
+          <label>Nombre de la clase<input id="obClass" placeholder="Ej. Clase Monarca"></label>
+          <label>Año de graduación<input id="obYear" type="number" min="2026" max="2100" placeholder="2030"></label>
+          <div class="onboarding-info">Con esta información se generará tu código interno automáticamente.</div>
+        </div>
+
+        <div class="onboarding-step" data-step="2">
+          <div class="onboarding-step-label">Paso 2 de 5</div>
+          <h2>Acceso y Seguridad</h2>
+          <p>Crea los códigos de acceso para proteger la información de tu clase.</p>
+          <label>PIN principal (4 dígitos)<input id="obPin" type="password" inputmode="numeric" maxlength="4" pattern="[0-9]{4}" placeholder="••••"></label>
+          <label>PIN de recuperación (4 a 6 dígitos)<input id="obRecoveryPin" type="password" inputmode="numeric" maxlength="6" pattern="[0-9]{4,6}" placeholder="••••"></label>
+          <div class="onboarding-info">Guarda estos códigos en un lugar seguro. El PIN de recuperación será necesario para restaurar desde la nube.</div>
+        </div>
+
+        <div class="onboarding-step" data-step="3">
+          <div class="onboarding-step-label">Paso 3 de 5</div>
+          <h2>Diseño y Personalización</h2>
+          <p>Hazlo tuyo. Puedes subir el logo de tu colegio y elegir los colores.</p>
+          <label class="onboarding-upload">Logo del colegio (opcional)
+            <input id="obLogo" type="file" accept="image/png,image/jpeg,image/webp">
+            <span>Sube el logo de tu colegio<br><small>PNG, JPG o WEBP</small></span>
+          </label>
+          <div class="onboarding-colors">
+            <label>Color principal<input id="obColor1" type="color" value="#102d46"></label>
+            <label>Color secundario<input id="obColor2" type="color" value="#1c5277"></label>
+          </div>
+        </div>
+
+        <div class="onboarding-step" data-step="4">
+          <div class="onboarding-step-label">Paso 4 de 5</div>
+          <h2>Respaldo de Información</h2>
+          <p>Elige cómo deseas proteger los datos de tu clase.</p>
+          <label class="backup-choice selected">
+            <input type="radio" name="obBackup" value="cloud" checked>
+            <span class="backup-choice-icon">☁</span>
+            <span><strong>Respaldo en la nube</strong><em>RECOMENDADO</em><small>Tu información segura, disponible desde cualquier dispositivo. Cargo adicional.</small></span>
+          </label>
+          <label class="backup-choice">
+            <input type="radio" name="obBackup" value="local">
+            <span class="backup-choice-icon">▰</span>
+            <span><strong>Solo en este dispositivo</strong><small>La información se guardará únicamente en este dispositivo.</small></span>
+          </label>
+          <div class="onboarding-info">El respaldo en la nube es opcional y tiene un cargo adicional.</div>
+        </div>
+
+        <div class="onboarding-step" data-step="5">
+          <div class="onboarding-step-label">Paso 5 de 5</div>
+          <h2>Revisa y Crea tu Clase</h2>
+          <p>Confirma la información antes de crear tu clase graduanda.</p>
+          <div id="onboardingSummary" class="onboarding-summary"></div>
+        </div>
+
+        <p id="onboardingStatus" class="onboarding-status"></p>
+        <div class="onboarding-actions">
+          <button id="onboardingBack" type="button" class="secondary" hidden>← Atrás</button>
+          <button id="onboardingNext" type="button">Siguiente →</button>
+          <button id="onboardingCreate" type="button" hidden>Crear mi Clase 🎓</button>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <div id="onboardingSuccess" class="onboarding-success" hidden>
+    <div class="onboarding-success-card">
+      <img src="/icons/icon-192.png" alt="Clase Graduanda PR">
+      <div class="success-check">✓</div>
+      <h2>¡Tu Clase Graduanda está lista!</h2>
+      <p>Todo configurado y listo para comenzar.</p>
+      <div id="onboardingSuccessCode" class="success-code"></div>
+      <button id="onboardingEnter" type="button">Entrar al sistema →</button>
+      <small>Juntos llegamos más lejos.</small>
+    </div>
+  </div>
+
   <div id="pinLock" class="pin-lock">
     <div class="pin-card">
       <img class="pin-app-logo" src="/icons/icon-192.png" alt="Clase Graduanda PR" />
@@ -267,7 +371,7 @@
   </main>
 
   <div id="toast"></div>
-  <script src="tenant-config.js?v=20260919-5"></script>
+  <script src="tenant-config.js?v=20260920-onboarding1"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.4/jspdf.plugin.autotable.min.js"></script>
   <script src="app.js?v=20260919-tenant2"></script>
@@ -283,6 +387,7 @@
   <script src="tenant-admin.js?v=20260919-3"></script>
   <script src="admin-cloud-access.js?v=20260919-6"></script>
   <script src="cloud-recovery.js?v=20260919-tenant4"></script>
+  <script src="onboarding.js?v=20260920-1"></script>
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
