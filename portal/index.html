@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#08243a">
+  <meta name="theme-color" content="#08243a">\n  <meta name="apple-mobile-web-app-capable" content="yes">\n  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>Portal para Padres | Clase Graduanda PR</title>
-  <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
-  <link rel="stylesheet" href="/portal/styles.css?v=20260920-1">
+  <link rel="manifest" href="/portal/manifest.webmanifest?v=20260920-2">\n  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">\n  <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
+  <link rel="stylesheet" href="/portal/styles.css?v=20260920-2">
 </head>
 <body>
   <div id="portalLogin" class="portal-login">
@@ -23,7 +23,7 @@
         <button type="submit">Entrar al portal</button>
       </form>
 
-      <p class="demo-note">Prototipo de evaluación · Usa <strong>MR-2030-4821</strong></p>
+      <p class="demo-note">Prueba con <strong>MR-2030-4821</strong> o <strong>JL-2030-1934</strong></p>
       <p id="loginError" class="login-error" aria-live="polite"></p>
     </div>
   </div>
@@ -43,11 +43,11 @@
     <main class="portal-main">
       <section class="student-hero">
         <div class="student-top">
-          <div class="student-avatar">MR</div>
+          <div id="studentInitials" class="student-avatar">MR</div>
           <div>
             <span class="eyebrow">ESTUDIANTE</span>
-            <h1>María Rodríguez</h1>
-            <p>Clase Monarca 2030 · Colegio Santa Cruz</p>
+            <h1 id="studentName">María Rodríguez</h1>
+            <p id="studentMeta">Clase Monarca 2030 · Colegio Santa Cruz</p>
           </div>
         </div>
         <div class="hero-stats">
@@ -84,24 +84,15 @@
               <span class="eyebrow dark">META DE GRADUACIÓN</span>
               <h2>Cuota general</h2>
             </div>
-            <span class="badge">76% completado</span>
+            <span id="progressPercent" class="badge">76% completado</span>
           </div>
-          <div class="progress"><span></span></div>
-          <div class="progress-labels"><span>$375 pagados</span><span>$500 total</span></div>
+          <div class="progress"><span id="progressBar"></span></div>
+          <div class="progress-labels"><span id="progressPaid">$375 pagados</span><span id="progressTotal">$500 total</span></div>
         </article>
 
         <article class="content-card">
           <span class="eyebrow dark">PRÓXIMO VENCIMIENTO</span>
-          <div class="list-row">
-            <div>
-              <strong>Cuota de graduación</strong>
-              <small>Fecha límite: 30 septiembre 2026</small>
-            </div>
-            <div class="row-amount">
-              <strong>$75.00</strong>
-              <span class="badge">Pendiente</span>
-            </div>
-          </div>
+          <div id="nextPaymentRow" class="list-row"></div>
           <button id="quickPay" type="button" class="primary-btn">Pagar ahora</button>
         </article>
 
@@ -178,34 +169,11 @@
         </article>
       </section>
 
-      <section id="actividades" class="portal-panel">
-        <article class="content-card">
-          <span class="eyebrow dark">CALENDARIO DE LA CLASE</span>
-          <div class="list-row"><div><strong>Reunión de padres</strong><small>25 sep 2026 · 6:30 p. m. · Salón multiusos</small></div><span class="badge">Reunión</span></div>
-          <div class="list-row"><div><strong>Senior Picnic</strong><small>18 oct 2026 · 10:00 a. m. · Balance pendiente $60</small></div><span class="badge">Actividad</span></div>
-          <div class="list-row"><div><strong>Fotos de graduación</strong><small>7 nov 2026 · 8:00 a. m. · Uniforme formal</small></div><span class="badge">Importante</span></div>
-          <div class="list-row"><div><strong>Ensayo de graduación</strong><small>20 may 2030 · 9:00 a. m.</small></div><span class="badge">Graduación</span></div>
-        </article>
-      </section>
+      <section id="actividades" class="portal-panel"><article class="content-card"><span class="eyebrow dark">CALENDARIO DE LA CLASE</span><div id="activitiesList"></div></article></section>
 
-      <section id="documentos" class="portal-panel">
-        <article class="content-card">
-          <span class="eyebrow dark">DOCUMENTOS DISPONIBLES</span>
-          <div class="document-row"><div class="doc-icon">PDF</div><div><strong>Calendario de actividades</strong><small>Actualizado septiembre 2026</small></div><button class="mini-btn doc-btn" type="button" data-doc="Calendario de actividades">Ver</button></div>
-          <div class="document-row"><div class="doc-icon">PDF</div><div><strong>Reglamento de la clase</strong><small>Normas y responsabilidades</small></div><button class="mini-btn doc-btn" type="button" data-doc="Reglamento de la clase">Ver</button></div>
-          <div class="document-row"><div class="doc-icon">DOC</div><div><strong>Autorización Senior Picnic</strong><small>Documento para padres</small></div><button class="mini-btn doc-btn" type="button" data-doc="Autorización Senior Picnic">Ver</button></div>
-          <div id="docPreview" class="receipt-preview" hidden></div>
-        </article>
-      </section>
+      <section id="documentos" class="portal-panel"><article class="content-card"><span class="eyebrow dark">DOCUMENTOS DISPONIBLES</span><div id="documentsList"></div><div id="docPreview" class="receipt-preview" hidden></div></article></section>
 
-      <section id="avisos" class="portal-panel">
-        <article class="content-card">
-          <span class="eyebrow dark">COMUNICACIONES DE LA DIRECTIVA</span>
-          <div class="notice-item"><div class="notice-title"><strong>Recordatorio de cuota</strong><span class="badge">Nuevo</span></div><p>La próxima fecha límite de pago es el 30 de septiembre.</p><small>Publicado 18 sep 2026</small></div>
-          <div class="notice-item"><div class="notice-title"><strong>Cambio de horario</strong></div><p>La reunión de padres comenzará a las 6:30 p. m.</p><small>Publicado 17 sep 2026</small></div>
-          <div class="notice-item"><div class="notice-title"><strong>Fotos de graduación</strong></div><p>Las fotos oficiales serán el 7 de noviembre. Próximamente se publicarán los detalles de vestimenta.</p><small>Publicado 12 sep 2026</small></div>
-        </article>
-      </section>
+      <section id="avisos" class="portal-panel"><article class="content-card"><span class="eyebrow dark">COMUNICACIONES DE LA DIRECTIVA</span><div id="noticesList"></div></article></section>
 
       <div class="prototype-note">
         <strong>Prototipo separado del panel administrativo.</strong>
@@ -214,6 +182,6 @@
     </main>
   </div>
 
-  <script src="/portal/app.js?v=20260920-1"></script>
+  <script src="/portal/data-demo.js?v=20260920-2"></script>\n  <script src="/portal/app.js?v=20260920-2"></script>\n  <script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("/portal/service-worker.js?v=20260920-2").catch(()=>{}));}</script>
 </body>
 </html>
