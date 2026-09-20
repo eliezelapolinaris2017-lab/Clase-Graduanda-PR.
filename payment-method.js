@@ -1,5 +1,5 @@
 (() => {
-  const methods = ['','Efectivo','ATH Móvil','Tarjeta','Cheque','Transferencia','Otro'];
+  const methods = ['','Efectivo','ATH Móvil','Cheque'];
   const methodSelect = () => {
     const select = document.createElement('select');
     select.name = 'payment_method';
