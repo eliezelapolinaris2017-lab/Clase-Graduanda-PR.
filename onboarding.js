@@ -110,6 +110,8 @@
       const color1 = $('#obColor1')?.value || '#102d46';
       const color2 = $('#obColor2')?.value || '#1c5277';
 
+      await window.CGPR_PURCHASE_ACTIVATION?.consume?.(id);
+
       const profiles = readProfiles();
       profiles[id] = {
         id,
@@ -171,7 +173,7 @@
       return;
     }
 
-    const needsOnboarding = Boolean(window.CGPR_TENANT?.needsOnboarding);
+    const needsOnboarding = Boolean(window.CGPR_TENANT?.needsOnboarding) && Boolean(window.CGPR_PURCHASE_ACTIVATION?.hasValidSession?.());
     const onboarding = $('#onboarding');
     if(needsOnboarding && onboarding){
       document.body.classList.add('onboarding-open');
