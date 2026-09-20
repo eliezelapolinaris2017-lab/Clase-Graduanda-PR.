@@ -157,6 +157,7 @@
   document.addEventListener('DOMContentLoaded', () => {
     let successData = null;
     try { successData = JSON.parse(localStorage.getItem(SUCCESS_KEY) || 'null'); } catch {}
+
     if(successData){
       localStorage.removeItem(SUCCESS_KEY);
       showSuccess(successData);
