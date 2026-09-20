@@ -3,10 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#08243a">\n  <meta name="apple-mobile-web-app-capable" content="yes">\n  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#08243a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Portal Padres">
   <title>Portal para Padres | Clase Graduanda PR</title>
-  <link rel="manifest" href="/portal/manifest.webmanifest?v=20260920-2">\n  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">\n  <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
-  <link rel="stylesheet" href="/portal/styles.css?v=20260920-2">
+  <link rel="manifest" href="/portal/manifest.webmanifest?v=20260920-3">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
+  <link rel="stylesheet" href="/portal/styles.css?v=20260920-final1">
 </head>
 <body>
   <div id="portalLogin" class="portal-login">
@@ -14,16 +19,14 @@
       <img class="login-logo" src="/icons/icon-192.png" alt="Clase Graduanda PR">
       <div class="login-brand">Clase Graduanda <span>PR</span></div>
       <p class="login-kicker">PORTAL PARA PADRES</p>
-      <h1>Consulta la información de tu estudiante</h1>
-      <p class="login-copy">Ingresa el código único provisto por la directiva de la clase.</p>
-
+      <h1>Consulta el progreso de tu estudiante</h1>
+      <p class="login-copy">Ingresa el código individual provisto por la directiva de la clase.</p>
       <form id="portalLoginForm">
         <label for="accessCode">Código de acceso</label>
-        <input id="accessCode" autocomplete="off" placeholder="Ej. MR-2030-4821" required>
+        <input id="accessCode" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="PR-XXXX-XXXX-XXXX" required>
         <button type="submit">Entrar al portal</button>
       </form>
-
-      <p class="demo-note">Prueba con <strong>MR-2030-4821</strong> o <strong>JL-2030-1934</strong></p>
+      <p class="privacy-note">Acceso de solo consulta. Cada código muestra únicamente la información del estudiante asociado.</p>
       <p id="loginError" class="login-error" aria-live="polite"></p>
     </div>
   </div>
@@ -43,16 +46,16 @@
     <main class="portal-main">
       <section class="student-hero">
         <div class="student-top">
-          <div id="studentInitials" class="student-avatar">MR</div>
+          <div id="studentInitials" class="student-avatar">CG</div>
           <div>
             <span class="eyebrow">ESTUDIANTE</span>
-            <h1 id="studentName">María Rodríguez</h1>
-            <p id="studentMeta">Clase Monarca 2030 · Colegio Santa Cruz</p>
+            <h1 id="studentName">Estudiante</h1>
+            <p id="studentMeta"></p>
           </div>
         </div>
         <div class="hero-stats">
-          <div><small>Balance pendiente</small><strong id="heroBalance">$185.00</strong></div>
-          <div><small>Pagado este año</small><strong id="heroPaid">$615.00</strong></div>
+          <div><small>Balance pendiente</small><strong id="heroBalance">$0.00</strong></div>
+          <div><small>Total pagado</small><strong id="heroPaid">$0.00</strong></div>
         </div>
       </section>
 
@@ -60,45 +63,43 @@
         <button class="portal-tab active" type="button" data-tab="inicio"><span>⌂</span>Inicio</button>
         <button class="portal-tab" type="button" data-tab="pagos"><span>$</span>Pagos</button>
         <button class="portal-tab" type="button" data-tab="actividades"><span>▣</span>Actividades</button>
-        <button class="portal-tab" type="button" data-tab="documentos"><span>▤</span>Documentos</button>
-        <button class="portal-tab" type="button" data-tab="avisos"><span>●</span>Avisos</button>
       </nav>
 
       <section id="inicio" class="portal-panel active">
         <div class="summary-grid">
           <article class="summary-card">
             <span>Cuotas pendientes</span>
-            <strong id="dueAmount">$125.00</strong>
-            <small>2 conceptos abiertos</small>
+            <strong id="dueAmount">$0.00</strong>
+            <small id="dueCount">0 conceptos pendientes</small>
           </article>
           <article class="summary-card">
-            <span>Actividades</span>
-            <strong id="activityAmount">$60.00</strong>
-            <small>1 balance pendiente</small>
+            <span>Actividades pendientes</span>
+            <strong id="activityAmount">$0.00</strong>
+            <small id="activityCount">0 actividades pendientes</small>
           </article>
         </div>
 
         <article class="content-card">
           <div class="card-head">
             <div>
-              <span class="eyebrow dark">META DE GRADUACIÓN</span>
-              <h2>Cuota general</h2>
+              <span class="eyebrow dark">PROGRESO DE PAGOS</span>
+              <h2>Estado general</h2>
             </div>
-            <span id="progressPercent" class="badge">76% completado</span>
+            <span id="progressPercent" class="badge">0% completado</span>
           </div>
           <div class="progress"><span id="progressBar"></span></div>
-          <div class="progress-labels"><span id="progressPaid">$375 pagados</span><span id="progressTotal">$500 total</span></div>
+          <div class="progress-labels"><span id="progressPaid">$0.00 pagados</span><span id="progressTotal">$0.00 asignados</span></div>
         </article>
 
         <article class="content-card">
-          <span class="eyebrow dark">PRÓXIMO VENCIMIENTO</span>
+          <span class="eyebrow dark">BALANCE PENDIENTE</span>
           <div id="nextPaymentRow" class="list-row"></div>
-          <button id="quickPay" type="button" class="primary-btn">Pagar ahora</button>
         </article>
 
         <article class="notice-card">
-          <strong>Reunión de padres</strong>
-          <p>25 de septiembre a las 6:30 p. m. en el salón multiusos.</p>
+          <strong>Métodos de pago aceptados</strong>
+          <p>Efectivo · ATH Móvil · Cheque</p>
+          <small>Los pagos son registrados por la directiva y luego se reflejan automáticamente en este portal.</small>
         </article>
       </section>
 
@@ -109,80 +110,40 @@
               <span class="eyebrow dark">ESTADO DE CUENTA</span>
               <h2>Balances pendientes</h2>
             </div>
-            <button id="exportState" type="button" class="secondary-btn">Exportar</button>
+            <button id="exportState" type="button" class="secondary-btn">Descargar PDF</button>
           </div>
-
-          <div id="balancesList">
-            <div class="list-row" data-balance="graduacion">
-              <div><strong>Cuota de graduación</strong><small>Vence 30 sep 2026</small></div>
-              <div class="row-amount"><strong>$75.00</strong><span class="badge">Pendiente</span></div>
-            </div>
-            <div class="list-row" data-balance="mensual">
-              <div><strong>Cuota mensual</strong><small>Vence 15 oct 2026</small></div>
-              <div class="row-amount"><strong>$50.00</strong><span class="badge">Pendiente</span></div>
-            </div>
-            <div class="list-row" data-balance="actividad">
-              <div><strong>Senior Picnic</strong><small>Actividad · 18 oct</small></div>
-              <div class="row-amount"><strong>$60.00</strong><span class="badge">Pendiente</span></div>
-            </div>
-          </div>
-
-          <button id="openPay" type="button" class="primary-btn">Pagar balance</button>
-
-          <div id="payPanel" class="pay-panel" hidden>
-            <span class="eyebrow dark">PAGO DE DEMOSTRACIÓN</span>
-            <p>Este prototipo no procesa dinero real.</p>
-
-            <label for="payConcept">Concepto</label>
-            <select id="payConcept">
-              <option value="75" data-key="graduacion">Cuota de graduación — $75.00</option>
-              <option value="50" data-key="mensual">Cuota mensual — $50.00</option>
-              <option value="60" data-key="actividad">Senior Picnic — $60.00</option>
-            </select>
-
-            <div class="mock-card">
-              <strong>Tarjeta</strong>
-              <small>•••• 4242 · Demo</small>
-            </div>
-
-            <div class="pay-actions">
-              <button id="confirmPay" type="button" class="primary-btn">Confirmar pago</button>
-              <button id="cancelPay" type="button" class="secondary-btn">Cancelar</button>
-            </div>
-            <p id="payStatus" class="status" aria-live="polite"></p>
-          </div>
+          <div id="balancesList"></div>
         </article>
 
         <article class="content-card">
-          <span class="eyebrow dark">HISTORIAL Y RECIBOS</span>
-          <div id="historyList">
-            <div class="list-row">
-              <div><strong>Cuota mensual</strong><small>5 sep 2026 · Recibo #1028</small></div>
-              <div class="row-amount"><strong>$50.00</strong><button class="mini-btn receipt-btn" type="button" data-receipt="1028" data-concept="Cuota mensual" data-amount="50.00">Ver recibo</button></div>
-            </div>
-            <div class="list-row">
-              <div><strong>Senior Night</strong><small>21 ago 2026 · Recibo #1017</small></div>
-              <div class="row-amount"><strong>$75.00</strong><button class="mini-btn receipt-btn" type="button" data-receipt="1017" data-concept="Senior Night" data-amount="75.00">Ver recibo</button></div>
-            </div>
-          </div>
+          <span class="eyebrow dark">HISTORIAL DE PAGOS</span>
+          <div id="historyList"></div>
           <div id="receiptPreview" class="receipt-preview" hidden></div>
         </article>
       </section>
 
-      <section id="actividades" class="portal-panel"><article class="content-card"><span class="eyebrow dark">CALENDARIO DE LA CLASE</span><div id="activitiesList"></div></article></section>
+      <section id="actividades" class="portal-panel">
+        <article class="content-card">
+          <span class="eyebrow dark">ACTIVIDADES DEL ESTUDIANTE</span>
+          <div id="activitiesList"></div>
+        </article>
+      </section>
 
-      <section id="documentos" class="portal-panel"><article class="content-card"><span class="eyebrow dark">DOCUMENTOS DISPONIBLES</span><div id="documentsList"></div><div id="docPreview" class="receipt-preview" hidden></div></article></section>
-
-      <section id="avisos" class="portal-panel"><article class="content-card"><span class="eyebrow dark">COMUNICACIONES DE LA DIRECTIVA</span><div id="noticesList"></div></article></section>
-
-      <div class="prototype-note">
-        <strong>Portal separado del panel administrativo.</strong>
-        <span id="portalModeNote">Acceso seguro por código individual. Los pagos continúan en modo demostración mientras se evalúa Stripe.</span>
+      <div class="portal-note">
+        <strong>Portal de consulta para padres y encargados.</strong>
+        <span>La información se actualiza desde el panel administrativo de la clase.</span>
         <span id="portalUpdated"></span>
       </div>
     </main>
   </div>
 
-  <script src="/portal/app.js?v=20260920-secure1"></script>\n  <script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("/portal/service-worker.js?v=20260920-2").catch(()=>{}));}</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.4/jspdf.plugin.autotable.min.js"></script>
+  <script src="/portal/app.js?v=20260920-final1"></script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => navigator.serviceWorker.register("/portal/service-worker.js?v=20260920-final1").catch(() => {}));
+    }
+  </script>
 </body>
 </html>
