@@ -176,12 +176,13 @@
       <section id="avisos" class="portal-panel"><article class="content-card"><span class="eyebrow dark">COMUNICACIONES DE LA DIRECTIVA</span><div id="noticesList"></div></article></section>
 
       <div class="prototype-note">
-        <strong>Prototipo separado del panel administrativo.</strong>
-        <span>Los datos son demostrativos. No está conectado todavía a estudiantes reales, Supabase ni Stripe.</span>
+        <strong>Portal separado del panel administrativo.</strong>
+        <span id="portalModeNote">Acceso seguro por código individual. Los pagos continúan en modo demostración mientras se evalúa Stripe.</span>
+        <span id="portalUpdated"></span>
       </div>
     </main>
   </div>
 
-  <script src="/portal/data-demo.js?v=20260920-2"></script>\n  <script src="/portal/app.js?v=20260920-2"></script>\n  <script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("/portal/service-worker.js?v=20260920-2").catch(()=>{}));}</script>
+  <script src="/portal/app.js?v=20260920-secure1"></script>\n  <script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("/portal/service-worker.js?v=20260920-2").catch(()=>{}));}</script>
 </body>
 </html>
