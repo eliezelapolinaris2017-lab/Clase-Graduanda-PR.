@@ -10,7 +10,7 @@
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:52px;padding:0 25px;border-radius:16px;font-weight:950;border:0;cursor:pointer}.btn-primary{background:linear-gradient(100deg,#dfa92e,#f6d16b);color:#0b2740;box-shadow:0 14px 30px rgba(213,168,63,.30)}
 
 .hero{position:relative;overflow:hidden;color:#fff;background:#061c2c;isolation:isolate}
-.hero-photo{position:absolute;inset:0;z-index:0;background-image:url("https://upload.wikimedia.org/wikipedia/commons/a/a7/Flags_Castillo_San_Felipe_del_Morro_SJU_06_2019_6051.jpg");background-size:cover;background-position:72% 44%;transform:scale(1.02)}
+.hero-photo{position:absolute;inset:0;z-index:0;background-image:none;background-size:cover;background-position:68% center;transform:scale(1.01)}
 
 
 .hero-shade{position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(3,25,42,.97) 0%,rgba(3,30,50,.94) 43%,rgba(3,31,50,.62) 68%,rgba(3,23,38,.18) 100%)}
@@ -32,10 +32,10 @@ footer{padding:30px 0;background:#061725;color:#9fb0bd}.footer-row{display:flex;
 
 @media(max-width:900px){
   .header-wrap{min-height:118px}.brand-copy strong{font-size:27px}.brand-copy em{font-size:21px}.menu-toggle{display:block}.nav{position:absolute;top:100%;left:0;right:0;background:#fff;display:none;flex-direction:column;padding:18px 22px;border-top:1px solid var(--line);box-shadow:0 12px 30px rgba(6,28,44,.12)}body.menu-open .nav{display:flex}
-  .mobile-only,.mobile-break{display:block}.hero-wrap{display:block;min-height:auto;padding:52px 0 250px}.hero-photo{background-position:72% 42%}}
+  .mobile-only,.mobile-break{display:block}.hero-wrap{display:block;min-height:auto;padding:52px 0 250px}.hero-photo{background-position:68% center}}
 @media(max-width:560px){
   .wrap{width:min(100% - 28px,1180px)}.header-wrap{min-height:124px}.brand img{width:70px;height:70px}.brand{gap:12px}.brand-copy strong{font-size:29px;line-height:.82}.brand-copy em{font-size:18px;margin-top:9px}.menu-toggle{font-size:31px}
-  .hero-wrap{padding:62px 0 212px}.hero-photo{background-position:74% 40%;transform:scale(1.04)}  .kicker{font-size:11px;padding:10px 15px;letter-spacing:2.1px}.hero h1{font-size:55px;letter-spacing:-2.8px;line-height:.92;margin-top:29px;max-width:90%}.hero p{font-size:17px;line-height:1.45;max-width:88%}
+  .hero-wrap{padding:62px 0 212px}.hero-photo{background-position:68% center;transform:scale(1.02)}  .kicker{font-size:11px;padding:10px 15px;letter-spacing:2.1px}.hero h1{font-size:55px;letter-spacing:-2.8px;line-height:.92;margin-top:29px;max-width:90%}.hero p{font-size:17px;line-height:1.45;max-width:88%}
   .hero-features{gap:7px;margin:27px -4px 25px;max-width:none}.circle-icon{width:58px;height:58px;font-size:24px}.hero-features strong{font-size:12px}.hero-features small{font-size:10px;line-height:1.15}.hero-actions .btn{font-size:20px;min-height:65px;border-radius:18px}.hero-note{font-size:12px;line-height:1.35}.hero-script{right:-6px;bottom:-117px;font-size:39px}
   .device-mock{margin:112px auto -302px;padding:12px;border-radius:28px;transform:rotate(-1deg)}.mock-screen{border-radius:21px}.mock-head{padding:14px;font-size:14px}.mock-head img{width:30px;height:30px}.mock-body{grid-template-columns:88px 1fr;min-height:330px}.mock-nav{padding:15px 8px;font-size:9px;gap:10px}.mock-nav b{padding:8px}.mock-main{padding:17px}.mock-main h3{font-size:20px}.mock-main>p{font-size:13px}.mock-cards{grid-template-columns:1fr 1fr;gap:8px;margin-top:18px}.mock-card{padding:11px}.mock-card strong{font-size:18px}.mock-card small{font-size:10px}
   .hero-wave{bottom:-70px;height:105px;border-top-width:5px}.section:first-of-type{padding-top:245px}.features{grid-template-columns:1fr}.section{padding:70px 0}.faq{grid-template-columns:1fr}.price-card .price{font-size:58px}.footer-row{flex-direction:column;text-align:center}.footer-links{justify-content:center}
