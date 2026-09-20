@@ -13,9 +13,25 @@
   <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png?v=20260919-1" />
   <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png?v=20260919-1" />
   <title>Clase Graduanda PR | Sistema</title>
-  <link rel="stylesheet" href="styles.css?v=20260920-security1" />
+  <link rel="stylesheet" href="styles.css?v=20260920-activation1" />
 </head>
 <body>
+
+  <div id="purchaseActivation" class="purchase-activation" hidden>
+    <div class="purchase-activation-card">
+      <img src="/icons/icon-192.png" alt="Clase Graduanda PR">
+      <div class="activation-kicker">ACTIVACIÓN DE COMPRA</div>
+      <h1>Activa Clase Graduanda PR</h1>
+      <p>Ingresa el código de compra recibido para comenzar la configuración de tu clase.</p>
+      <form id="purchaseActivationForm">
+        <input id="purchaseCode" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="CGPR-XXXX-XXXX-XXXX" required>
+        <button type="submit">Validar y continuar</button>
+      </form>
+      <button id="activationRecovery" type="button" class="activation-recovery">Ya tengo una clase · Recuperar desde la nube</button>
+      <p id="purchaseActivationStatus" class="activation-status"></p>
+      <small>El código de compra se utiliza una sola vez para crear una nueva clase.</small>
+    </div>
+  </div>
 
   <div id="onboarding" class="onboarding" hidden>
     <div class="onboarding-shell">
@@ -422,7 +438,7 @@
   </main>
 
   <div id="toast"></div>
-  <script src="tenant-config.js?v=20260920-onboarding1"></script>
+  <script src="tenant-config.js?v=20260920-activation1"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.4/jspdf.plugin.autotable.min.js"></script>
   <script src="app.js?v=20260920-fix2"></script>
@@ -430,16 +446,17 @@
   <script src="pdf-email.js"></script>
   <script src="pdf-payment-method.js"></script>
   <script src="global-report.js?v=20260919-2"></script>
-  <script src="auth.js?v=20260919-tenant1"></script>
+  <script src="auth.js?v=20260920-nobasepin1"></script>
   <script src="report-recipient.js?v=20260920-tenantfix1"></script>
   <script src="branding.js?v=20260919-tenant1"></script>
   <script src="edit-records.js?v=20260920-final1"></script>
   <script src="cloud-backup.js?v=20260919-tenant3"></script>
   <script src="parent-portal-admin.js?v=20260920-final1"></script>
-  <script src="tenant-admin.js?v=20260919-3"></script>
+  <script src="tenant-admin.js?v=20260920-nobasepin1"></script>
   <script src="admin-cloud-access.js?v=20260919-6"></script>
-  <script src="cloud-recovery.js?v=20260919-tenant4"></script>
-  <script src="onboarding.js?v=20260920-fix2"></script>
+  <script src="cloud-recovery.js?v=20260920-nobasepin1"></script>
+  <script src="activation.js?v=20260920-1"></script>
+  <script src="onboarding.js?v=20260920-activation1"></script>
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
