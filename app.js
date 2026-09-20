@@ -16,12 +16,25 @@ const save = () => localStorage.setItem(STORE, JSON.stringify(data));
 const toast = msg => { const el=$('#toast'); el.textContent=msg; el.classList.add('show'); setTimeout(()=>el.classList.remove('show'),2200); };
 const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
-$$('.tab').forEach(btn => btn.onclick = () => {
-  $$('.tab').forEach(x=>x.classList.remove('active'));
-  $$('.panel').forEach(x=>x.classList.remove('active'));
+$('.tab').forEach(btn => btn.onclick = () => {
+  $('.tab').forEach(x=>x.classList.remove('active'));
+  $('.panel').forEach(x=>x.classList.remove('active'));
   btn.classList.add('active');
   $('#'+btn.dataset.tab).classList.add('active');
 });
+
+function goToTab(tabName){
+  const btn=$(`.tab[data-tab="${tabName}"]`);
+  const panel=$('#'+tabName);
+  if(!btn || !panel) return;
+  $('.tab').forEach(x=>x.classList.remove('active'));
+  $('.panel').forEach(x=>x.classList.remove('active'));
+  btn.classList.add('active');
+  panel.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+$('[data-go]').forEach(btn=>btn.addEventListener('click',()=>goToTab(btn.dataset.go)));
+$('#dashboardCloudAction')?.addEventListener('click',()=>goToTab('settings'));
 
 function studentById(id){ return data.students.find(s=>String(s.id)===String(id)); }
 function studentBalances(id){
