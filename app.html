@@ -13,7 +13,7 @@
   <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png?v=20260919-1" />
   <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png?v=20260919-1" />
   <title>Clase Graduanda PR | Sistema</title>
-  <link rel="stylesheet" href="styles.css?v=20260920-4" />
+  <link rel="stylesheet" href="styles.css?v=20260920-dashboard2" />
 </head>
 <body>
 
@@ -122,24 +122,31 @@
 
   <div id="pinLock" class="pin-lock">
     <div class="pin-card">
-      <img class="pin-app-logo" src="/icons/icon-192.png" alt="Clase Graduanda PR" />
-      <div class="pin-badge">ACCESO SEGURO</div>
-      <h1 id="pinWelcomeName">Clase Graduanda PR</h1>
-      <p>Ingresa tu PIN de 4 dígitos</p>
+      <div class="login-brand">
+        <img class="pin-app-logo" src="/icons/icon-192.png" alt="Clase Graduanda PR" />
+        <div class="login-brand-title">Clase<br>Graduanda <span>PR</span></div>
+        <div class="login-brand-sub">ORGANIZA&nbsp;&nbsp;•&nbsp;&nbsp;ADMINISTRA&nbsp;&nbsp;•&nbsp;&nbsp;LOGRA</div>
+      </div>
+      <h1>Bienvenido</h1>
+      <p class="login-subtitle">Ingresa tu código de acceso</p>
       <form id="pinLoginForm">
-        <input id="pinInput" type="password" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" placeholder="••••" autocomplete="off" required />
+        <div class="login-input-wrap">
+          <span aria-hidden="true">▣</span>
+          <input id="pinInput" type="password" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" placeholder="Código de acceso" autocomplete="off" required />
+        </div>
         <button type="submit">Entrar</button>
       </form>
-      <button id="openCloudRecovery" type="button" class="secondary" style="width:100%;margin-top:10px;">Recuperar desde nube</button>
-      <div id="cloudRecoveryBox" hidden style="margin-top:16px;text-align:left;">
+      <button id="openCloudRecovery" type="button" class="login-recovery">Recuperar desde nube</button>
+      <div id="cloudRecoveryBox" hidden>
         <input id="recoveryCollegeCode" value="COLEGEMA-PR" placeholder="Código del colegio" autocomplete="off" />
-        <input id="recoveryCloudPin" type="password" inputmode="numeric" maxlength="6" pattern="[0-9]{4,6}" placeholder="PIN de recuperación de nube" autocomplete="off" style="margin-top:10px;" />
-        <button id="runCloudRecovery" type="button" style="width:100%;margin-top:10px;">Restaurar respaldo</button>
-        <button id="cancelCloudRecovery" type="button" class="secondary" style="width:100%;margin-top:8px;">Cancelar</button>
-        <p id="cloudRecoveryStatus" class="security-note" style="text-align:center;"></p>
+        <input id="recoveryCloudPin" type="password" inputmode="numeric" maxlength="6" pattern="[0-9]{4,6}" placeholder="PIN de recuperación de nube" autocomplete="off" />
+        <button id="runCloudRecovery" type="button">Restaurar respaldo</button>
+        <button id="cancelCloudRecovery" type="button" class="secondary">Cancelar</button>
+        <p id="cloudRecoveryStatus" class="security-note"></p>
       </div>
       <p id="pinError" class="pin-error"></p>
-      <small>También puedes usar el código master de recuperación.</small>
+      <div class="login-script">Juntos llegamos más lejos.</div>
+      <div id="pinWelcomeName" class="login-hidden-name" aria-hidden="true">Clase Graduanda PR</div>
     </div>
   </div>
 
@@ -176,21 +183,48 @@
 
   <main>
     <section id="dashboard" class="panel active">
-      <div class="dashboard-hero">
-        <div>
-          <span class="hero-kicker">BIENVENIDOS</span>
-          <h2>Todo lo que tu clase necesita,<br><strong>en un solo lugar.</strong></h2>
-          <p>Administra estudiantes, cuotas, actividades y reportes desde una sola plataforma.</p>
+      <div class="dashboard-welcome">
+        <h2>Hola,</h2>
+        <p>Aquí tienes un resumen de tu clase.</p>
+      </div>
+
+      <div class="dashboard-actions">
+        <button type="button" class="dash-action" data-go="students">
+          <span class="dash-icon">♟</span><strong>Estudiantes</strong><small>Ver y administrar</small><em>›</em>
+        </button>
+        <button type="button" class="dash-action" data-go="dues">
+          <span class="dash-icon">$</span><strong>Cuotas</strong><small>Seguimiento de pagos</small><em>›</em>
+        </button>
+        <button type="button" class="dash-action" data-go="activities">
+          <span class="dash-icon">▣</span><strong>Actividades</strong><small>Planifica tu clase</small><em>›</em>
+        </button>
+        <button type="button" class="dash-action" data-go="reports">
+          <span class="dash-icon">▤</span><strong>Reportes</strong><small>Genera y comparte</small><em>›</em>
+        </button>
+      </div>
+
+      <button type="button" class="cloud-action" id="dashboardCloudAction">
+        <span class="cloud-action-icon">☁</span>
+        <span><strong>Respaldo en la nube</strong><small>Opcional · Cargo adicional</small></span>
+        <em>›</em>
+      </button>
+
+      <div class="dashboard-motivation">
+        <div class="dashboard-motivation-shade"></div>
+        <div class="dashboard-motivation-copy">Disciplina hoy,<br><strong>grandeza mañana.</strong><span></span></div>
+      </div>
+
+      <div class="dashboard-summary">
+        <div class="summary-title"><span>RESUMEN</span><h3>Estado de tu clase</h3></div>
+        <div class="cards">
+          <div class="card"><small>Estudiantes</small><strong id="kpiStudents">0</strong></div>
+          <div class="card"><small>Balance cuotas</small><strong id="kpiDues">$0.00</strong></div>
+          <div class="card"><small>Balance actividades</small><strong id="kpiActivities">$0.00</strong></div>
+          <div class="card"><small>Balance total</small><strong id="kpiTotal">$0.00</strong></div>
         </div>
-        <div class="hero-cap">🎓</div>
       </div>
-      <div class="cards">
-        <div class="card"><small>Estudiantes</small><strong id="kpiStudents">0</strong></div>
-        <div class="card"><small>Balance cuotas</small><strong id="kpiDues">$0.00</strong></div>
-        <div class="card"><small>Balance actividades</small><strong id="kpiActivities">$0.00</strong></div>
-        <div class="card"><small>Balance total</small><strong id="kpiTotal">$0.00</strong></div>
-      </div>
-      <div class="box">
+
+      <div class="box balance-box">
         <h2>Balances por estudiante</h2>
         <div class="table-wrap"><table id="studentBalanceTable"></table></div>
       </div>
