@@ -22,7 +22,7 @@
       className: 'Clase Senior 2030',
       cloudCode: 'COLEGEMA-PR',
       recoveryPin: '0583',
-      defaultPin: '1234'
+      defaultPin: ''
     }
   };
 
@@ -39,7 +39,7 @@
     className: 'Clase Graduanda',
     cloudCode: ('CGPR-' + tenantId).toUpperCase(),
     recoveryPin: '',
-    defaultPin: '1234'
+    defaultPin: ''
   };
 
   const prefix = 'claseGraduandaPR_' + base.id;
@@ -87,6 +87,6 @@
     }
 
     const pinNote = document.querySelector('#tenantPinNote');
-    if (pinNote) pinNote.textContent = 'PIN inicial de este colegio: ' + base.defaultPin + '. El código master de recuperación permanece disponible aunque cambies el PIN.';
+    if (pinNote) pinNote.textContent = 'El PIN principal lo define la clase durante la configuración. El código master de recuperación permanece disponible.';
   });
 })();
