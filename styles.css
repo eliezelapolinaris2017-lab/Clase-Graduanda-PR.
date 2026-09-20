@@ -545,6 +545,25 @@ body.onboarding-open #pinLock{display:none!important}
 .activation-recovery{margin-top:14px;background:transparent!important;box-shadow:none!important;color:#d6e0e7!important;font-size:12px}
 .activation-status{min-height:20px!important;color:#f4d27a!important;font-weight:800}
 .purchase-activation-card>small{display:block;color:#92a6b5;font-size:10px;line-height:1.4;margin-top:12px}
-body.activation-open{overflow:hidden!important}
-body.activation-open > :not(#purchaseActivation){visibility:hidden!important}
-body.activation-open #purchaseActivation,body.activation-open #purchaseActivation *{visibility:visible!important}
+body.activation-open{overflow:hidden!important;background:#061c2c!important}
+body.activation-open #pinLock,
+body.activation-open #onboarding,
+body.activation-open #onboardingSuccess,
+body.activation-open #mainHeader,
+body.activation-open nav,
+body.activation-open main,
+body.activation-open #toast{display:none!important}
+body.activation-open #purchaseActivation{display:grid!important;visibility:visible!important}
+body.activation-open #purchaseActivation *{visibility:visible!important}
+body.activation-open .purchase-activation-card{background:#061f34!important;opacity:1!important;backdrop-filter:none!important}
+@media(max-width:600px){
+  .purchase-activation{padding:0!important;align-items:stretch!important;background:linear-gradient(180deg,rgba(4,20,34,.80),rgba(4,20,34,.97)),url("https://images.unsplash.com/photo-1775623606645-470e04a881cb?auto=format&fit=crop&fm=jpg&q=82&w=1200") center/cover no-repeat!important}
+  .purchase-activation-card{width:100%!important;min-height:100dvh!important;border-radius:0!important;border:0!important;padding:calc(54px + env(safe-area-inset-top)) 28px 34px!important;display:flex!important;flex-direction:column!important;justify-content:center!important}
+  .purchase-activation-card>img{width:104px!important;height:104px!important;margin:0 auto 10px!important}
+  .purchase-activation-card h1{font-size:38px!important;line-height:1.05!important;margin:12px 0 10px!important}
+  .purchase-activation-card>p{font-size:15px!important;margin:0 auto 16px!important;max-width:340px}
+  #purchaseActivationForm{width:100%;max-width:360px;margin:18px auto 0!important}
+  #purchaseActivationForm input{font-size:16px!important;min-height:62px!important}
+  #purchaseActivationForm button{font-size:18px!important;min-height:60px!important}
+  .activation-recovery{margin-top:18px!important}
+}
