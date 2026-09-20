@@ -26,14 +26,14 @@
         type:'Cuota',
         concept:x.concept||'Cuota',
         amount:Math.max(0,num(x.amount)-num(x.paid)),
-        due:fmtDate(x.date)
+        date:fmtDate(x.date)
       })),
       ...acts.map(x=>({
         id:'activity-'+x.id,
         type:'Actividad',
         concept:x.activity_name||'Actividad',
         amount:Math.max(0,num(x.amount)-num(x.paid)),
-        due:fmtDate(x.date)
+        date:fmtDate(x.date)
       }))
     ].filter(x=>x.amount>0);
 
@@ -76,9 +76,7 @@
       summary:{paid:totalPaid,totalGoal:totalAssigned},
       balances,
       history,
-      activities,
-      documents:[],
-      notices:[]
+      activities
     };
   }
 
