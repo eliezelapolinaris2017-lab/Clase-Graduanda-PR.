@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#061c2c">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>Padres | Clase Graduanda PR</title>
+  <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="/padres/parents.css?v=20260921-1">
+</head>
+<body>
+  <main class="parents-page">
+    <section class="parents-hero">
+      <div class="parents-photo" aria-hidden="true"></div>
+      <div class="parents-overlay" aria-hidden="true"></div>
+
+      <header class="parents-header">
+        <div class="parents-brand">
+          <img src="/icons/icon-192.png" alt="">
+          <span><strong>Clase Graduanda <em>PR</em></strong><small>Portal para Padres</small></span>
+        </div>
+        <span class="parents-chip">ACCESO PARA PADRES</span>
+      </header>
+
+      <div class="parents-content">
+        <div class="parents-kicker">ACOMPAÑA · CONOCE · CELEBRA</div>
+        <h1>El progreso de tu estudiante,<br><span>siempre más claro.</span></h1>
+        <p>Consulta pagos registrados, balances pendientes, actividades y el progreso de tu estudiante sin tener que solicitar la información cada vez.</p>
+
+        <a class="parents-entry" href="/portal/">
+          <span class="parents-entry-icon">👨‍👩‍👧</span>
+          <span><strong>Entrar al Portal para Padres</strong><small>Usa el código individual provisto por la directiva</small></span>
+          <b>›</b>
+        </a>
+
+        <div class="parents-help">
+          <strong>¿No tienes tu código?</strong>
+          <span>Solicítalo directamente a la directiva de tu clase graduanda.</span>
+        </div>
+
+        <div class="parents-script">Juntos llegamos<br>más lejos.</div>
+      </div>
+
+      <div class="parents-pr">
+        <span>🇵🇷</span>
+        <div><strong>Una herramienta hecha para nuestra gente</strong><small>Información clara para las familias.</small></div>
+      </div>
+    </section>
+
+    <section class="parents-benefits">
+      <article>
+        <div>💰</div>
+        <strong>Pagos y balances</strong>
+        <p>Consulta cuánto se ha registrado como pagado y qué conceptos permanecen pendientes.</p>
+      </article>
+      <article>
+        <div>📈</div>
+        <strong>Progreso</strong>
+        <p>Visualiza de forma sencilla el avance general de los pagos de tu estudiante.</p>
+      </article>
+      <article>
+        <div>🧾</div>
+        <strong>Recibos y estado de cuenta</strong>
+        <p>Consulta el historial registrado y descarga documentos disponibles desde el portal.</p>
+      </article>
+    </section>
+
+    <section class="parents-info">
+      <div class="parents-info-card">
+        <span class="parents-eyebrow">TRANQUILIDAD PARA LAS FAMILIAS</span>
+        <h2>Menos preguntas.<br><span>Más información disponible.</span></h2>
+        <p>El Portal para Padres es de <strong>solo consulta</strong>. La directiva registra los pagos y balances desde su sistema administrativo, y esa información se refleja en el portal del estudiante correspondiente.</p>
+
+        <div class="parents-facts">
+          <div><span>🔐</span><strong>Acceso individual</strong><small>Cada código está asociado a un estudiante.</small></div>
+          <div><span>👁️</span><strong>Solo consulta</strong><small>No permite modificar pagos, balances ni datos administrativos.</small></div>
+          <div><span>💵</span><strong>Métodos actuales</strong><small>Efectivo, ATH Móvil y Cheque.</small></div>
+          <div><span>📱</span><strong>Desde tu dispositivo</strong><small>Compatible con iPhone, Android y computadoras.</small></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="parents-message">
+      <div>
+        <small>PORQUE CADA ETAPA CUENTA</small>
+        <strong>Estar informado también es<br>parte de acompañarlos.</strong>
+      </div>
+    </section>
+
+    <footer>
+      <div class="parents-footer-brand"><img src="/icons/icon-192.png" alt=""><strong>Clase Graduanda <span>PR</span></strong></div>
+      <span>Portal exclusivo para padres y encargados · © 2026 NexusTools PR</span>
+    </footer>
+  </main>
+
+  <script>
+    fetch('/assets/hero-morro-pr.b64?v=20260920-1')
+      .then(r=>r.text())
+      .then(b64=>{
+        const el=document.querySelector('.parents-photo');
+        if(el && b64.trim()) el.style.backgroundImage='url("data:image/webp;base64,'+b64.trim()+'")';
+      })
+      .catch(()=>{});
+  </script>
+</body>
+</html>
