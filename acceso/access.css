@@ -112,3 +112,31 @@ footer{display:flex;justify-content:space-between;align-items:center;gap:18px;pa
   .story-points{grid-template-columns:1fr}
   footer{flex-direction:column;text-align:center}
 }
+
+
+/* ===== ADMIN ACCESS ONLY 2026-09-21 ===== */
+.admin-chip{font-size:10px;letter-spacing:1.8px;font-weight:900;color:#f1ca62;padding:9px 13px;border:1px solid rgba(241,202,98,.42);border-radius:999px;background:rgba(5,28,46,.42);backdrop-filter:blur(8px)}
+.access-actions.admin-only{grid-template-columns:minmax(0,620px);max-width:620px}
+.primary-admin{background:linear-gradient(110deg,#dca72d,#f2ce67)!important;color:#0b2942!important;border:0!important;box-shadow:0 18px 38px rgba(216,165,43,.28)!important}
+.primary-admin .icon{background:rgba(7,31,51,.12)!important;color:#0b2942!important}
+.admin-note{display:grid;gap:4px;width:min(100%,620px);margin-top:16px;padding:13px 15px;border:1px solid rgba(255,255,255,.14);border-radius:14px;background:rgba(4,27,45,.48);backdrop-filter:blur(8px);color:#d4dee6;font-size:12px;line-height:1.45}
+.admin-note strong{color:#f2ca61;font-size:12px}
+.admin-growth{padding:68px 20px;background:#f5f8fa}
+.admin-growth-head{max-width:950px;margin:0 auto 28px;text-align:center}
+.admin-growth-head h2{font-family:Georgia,serif;font-size:40px;line-height:1.08;margin:9px 0 12px;color:#0b2a45}
+.admin-growth-head p{max-width:700px;margin:auto;color:var(--muted);line-height:1.55}
+.growth-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:1050px;margin:auto}
+.growth-grid article{padding:24px;border:1px solid var(--line);border-radius:20px;background:#fff;box-shadow:0 12px 30px rgba(8,29,45,.05)}
+.growth-grid article>span{width:50px;height:50px;display:grid;place-items:center;border-radius:15px;background:#eef4f8;font-size:24px;margin-bottom:14px}
+.growth-grid strong{display:block;font-size:18px;color:#12324b}
+.growth-grid p{font-size:13px;line-height:1.5;color:var(--muted);min-height:58px}
+.growth-grid em{display:inline-block;font-style:normal;font-size:10px;font-weight:900;letter-spacing:.8px;color:#9a731b;background:#fbf4df;padding:6px 9px;border-radius:999px}
+@media(max-width:820px){
+  .growth-grid{grid-template-columns:1fr}
+  .growth-grid p{min-height:0}
+}
+@media(max-width:600px){
+  .admin-chip{display:none}
+  .admin-growth{padding:46px 14px}
+  .admin-growth-head h2{font-size:32px}
+}
