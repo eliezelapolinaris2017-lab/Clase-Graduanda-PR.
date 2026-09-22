@@ -7,7 +7,7 @@
   <meta name="robots" content="noindex,nofollow,noarchive">
   <title>Control de Activaciones | Clase Graduanda PR</title>
   <link rel="icon" href="/icons/icon-192.png">
-  <link rel="stylesheet" href="/control/activaciones/control.css?v=20260921-1">
+  <link rel="stylesheet" href="/control/activaciones/control.css?v=20260921-recovery1">
 </head>
 <body>
   <section id="loginView" class="login-view">
@@ -22,6 +22,7 @@
         </label>
         <button type="submit">Entrar al panel</button>
       </form>
+      <button id="forgotPasswordBtn" class="forgot-btn" type="button">Olvidé mi contraseña</button>
       <div id="loginStatus" class="status"></div>
       <small>La sesión expira automáticamente por seguridad.</small>
     </div>
@@ -34,6 +35,7 @@
         <div><strong>Clase Graduanda <span>PR</span></strong><small>Control de Activaciones</small></div>
       </div>
       <div class="header-actions">
+        <button id="recoveryCodeBtn" class="ghost" type="button">Código de recuperación</button>
         <button id="changePasswordBtn" class="ghost" type="button">Cambiar contraseña</button>
         <button id="logoutBtn" class="ghost danger" type="button">Salir</button>
       </div>
@@ -129,6 +131,41 @@
     </div>
   </div>
 
+  <div id="forgotModal" class="modal" hidden>
+    <div class="modal-card">
+      <div class="modal-head">
+        <div><span class="eyebrow">RECUPERAR ACCESO</span><h2>Restablecer contraseña</h2></div>
+        <button class="x" data-close="forgotModal" type="button">×</button>
+      </div>
+      <p class="modal-copy">Ingresa tu código maestro de recuperación y crea una contraseña nueva.</p>
+      <form id="forgotForm" class="form-grid one">
+        <label>Código de recuperación<input id="forgotRecoveryCode" autocomplete="off" autocapitalize="characters" placeholder="RCV-XXXXXX-XXXXXX-XXXXXX" required></label>
+        <label>Nueva contraseña<input id="forgotNewPassword" type="password" minlength="12" required></label>
+        <label>Confirmar nueva contraseña<input id="forgotConfirmPassword" type="password" minlength="12" required></label>
+        <div class="modal-actions">
+          <button type="button" class="ghost" data-close="forgotModal">Cancelar</button>
+          <button type="submit" class="primary">Restablecer acceso</button>
+        </div>
+      </form>
+      <div id="forgotStatus" class="status"></div>
+    </div>
+  </div>
+
+  <div id="recoveryCodeModal" class="modal" hidden>
+    <div class="modal-card code-card">
+      <span class="success-mark">🔐</span>
+      <span class="eyebrow">CÓDIGO MAESTRO DE RECUPERACIÓN</span>
+      <h2>Guárdalo fuera del sistema</h2>
+      <p>Este código permite restablecer la contraseña si la olvidas. Generar uno nuevo invalida el anterior.</p>
+      <div id="recoveryCodeValue" class="generated-code"></div>
+      <div class="code-actions">
+        <button id="copyRecoveryBtn" class="primary" type="button">Copiar código</button>
+        <button class="ghost" data-close="recoveryCodeModal" type="button">Cerrar</button>
+      </div>
+      <div id="recoveryCodeStatus" class="status"></div>
+    </div>
+  </div>
+
   <div id="passwordModal" class="modal" hidden>
     <div class="modal-card">
       <div class="modal-head">
@@ -148,6 +185,6 @@
     </div>
   </div>
 
-  <script src="/control/activaciones/control.js?v=20260921-1"></script>
+  <script src="/control/activaciones/control.js?v=20260921-recovery1"></script>
 </body>
 </html>
