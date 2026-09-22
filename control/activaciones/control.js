@@ -26,7 +26,7 @@
     try{
       const recovery=await api('recovery_status');
       if(!recovery.configured){
-        setTimeout(()=>{ if(confirm('Aún no tienes un código maestro de recuperación. ¿Generarlo ahora?')) generateRecovery(); },250);
+        setTimeout(()=>{ if(confirm('Aún no tienes un código maestro de recuperación. ¿Generarlo ahora?')) generateRecovery(true); },250);
       }
     }catch{}
   }
@@ -153,8 +153,8 @@
     try{await api('revoke',{id});await loadItems()}catch(err){alert(err.message)}
   }
 
-  async function generateRecovery(){
-    if(!confirm('Generar un código nuevo invalidará cualquier código de recuperación anterior. ¿Continuar?')) return;
+  async function generateRecovery(skipConfirm=false){
+    if(!skipConfirm && !confirm('Generar un código nuevo invalidará cualquier código de recuperación anterior. ¿Continuar?')) return;
     try{
       const out=await api('generate_recovery');
       lastRecovery=out.recoveryCode;
