@@ -2,7 +2,7 @@
   const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
   const ENDPOINT='https://ujrqkwdkytuvfaqnbmzl.supabase.co/functions/v1/control-activations';
   const SESSION_KEY='cgpr_control_session_v1';
-  let items=[],lastCode='',lastOrg='';
+  let items=[],lastCode='',lastOrg='',lastRecovery='';
 
   const readSession=()=>{try{return JSON.parse(sessionStorage.getItem(SESSION_KEY)||'null')}catch{return null}};
   const saveSession=s=>sessionStorage.setItem(SESSION_KEY,JSON.stringify(s));
@@ -20,7 +20,43 @@
   }
 
   function showLogin(){$('#loginView').hidden=false;$('#panelView').hidden=true;setTimeout(()=>$('#adminPassword').focus(),50)}
-  async function showPanel(){$('#loginView').hidden=true;$('#panelView').hidden=false;await loadItems()}
+  async function showPanel(){
+    $('#loginView').hidden=true;$('#panelView').hidden=false;
+    await loadItems();
+    try{
+      const recovery=await api('recovery_status');
+      if(!recovery.configured){
+        setTimeout(()=>{ if(confirm('Aún no tienes un código maestro de recuperación. ¿Generarlo ahora?')) generateRecovery(); },250);
+      }
+    }catch{}
+  }
+
+  $('#forgotPasswordBtn').onclick=()=>{
+    $('#forgotForm').reset();
+    $('#forgotStatus').textContent='';
+    $('#forgotModal').hidden=false;
+    setTimeout(()=>$('#forgotRecoveryCode').focus(),50);
+  };
+
+  $('#forgotForm').addEventListener('submit',async e=>{
+    e.preventDefault();
+    const status=$('#forgotStatus'),next=$('#forgotNewPassword').value;
+    if(next!==$('#forgotConfirmPassword').value){status.textContent='Las contraseñas nuevas no coinciden.';return}
+    status.textContent='Restableciendo acceso…';
+    const btn=e.currentTarget.querySelector('button[type="submit"]');btn.disabled=true;
+    try{
+      const out=await api('recover_password',{
+        recoveryCode:$('#forgotRecoveryCode').value,
+        newPassword:next
+      },false);
+      $('#forgotModal').hidden=true;
+      lastRecovery=out.newRecoveryCode;
+      showRecoveryCode(out.newRecoveryCode,'Contraseña restablecida. Este es tu NUEVO código de recuperación; el anterior ya no funciona.');
+      clearSession();
+      $('#loginStatus').textContent='Contraseña restablecida. Ya puedes iniciar sesión con la nueva.';
+    }catch(err){status.textContent=err.message}
+    finally{btn.disabled=false}
+  });
 
   $('#loginForm').addEventListener('submit',async e=>{
     e.preventDefault();
@@ -116,6 +152,25 @@
     if(!confirm('¿Desactivar esta activación? El código dejará de funcionar.'))return;
     try{await api('revoke',{id});await loadItems()}catch(err){alert(err.message)}
   }
+
+  async function generateRecovery(){
+    if(!confirm('Generar un código nuevo invalidará cualquier código de recuperación anterior. ¿Continuar?')) return;
+    try{
+      const out=await api('generate_recovery');
+      lastRecovery=out.recoveryCode;
+      showRecoveryCode(out.recoveryCode,'Guárdalo en un lugar seguro. Solo se mostrará completo ahora.');
+    }catch(err){alert(err.message)}
+  }
+  function showRecoveryCode(code,message=''){
+    $('#recoveryCodeValue').textContent=code;
+    $('#recoveryCodeStatus').textContent=message;
+    $('#recoveryCodeModal').hidden=false;
+  }
+  $('#recoveryCodeBtn').onclick=generateRecovery;
+  $('#copyRecoveryBtn').onclick=async()=>{
+    try{await navigator.clipboard.writeText(lastRecovery);$('#recoveryCodeStatus').textContent='Código de recuperación copiado.'}
+    catch{$('#recoveryCodeStatus').textContent='No se pudo copiar automáticamente.'}
+  };
 
   $('#logoutBtn').onclick=async()=>{try{await api('logout')}catch{}clearSession();showLogin()};
   $('#changePasswordBtn').onclick=()=>{$('#passwordForm').reset();$('#passwordStatus').textContent='';$('#passwordModal').hidden=false};
