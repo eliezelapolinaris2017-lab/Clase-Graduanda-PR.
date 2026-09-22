@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#061c2c">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <title>Control de Activaciones | Clase Graduanda PR</title>
+  <link rel="icon" href="/icons/icon-192.png">
+  <link rel="stylesheet" href="/control/activaciones/control.css?v=20260921-1">
+</head>
+<body>
+  <section id="loginView" class="login-view">
+    <div class="login-card">
+      <img src="/icons/icon-192.png" alt="Clase Graduanda PR">
+      <span class="eyebrow">CONTROL INTERNO</span>
+      <h1>Panel de Activaciones</h1>
+      <p>Acceso exclusivo para administración de Clase Graduanda PR.</p>
+      <form id="loginForm">
+        <label>Contraseña administrativa
+          <input id="adminPassword" type="password" autocomplete="current-password" required>
+        </label>
+        <button type="submit">Entrar al panel</button>
+      </form>
+      <div id="loginStatus" class="status"></div>
+      <small>La sesión expira automáticamente por seguridad.</small>
+    </div>
+  </section>
+
+  <section id="panelView" class="panel-view" hidden>
+    <header>
+      <div class="brand">
+        <img src="/icons/icon-192.png" alt="">
+        <div><strong>Clase Graduanda <span>PR</span></strong><small>Control de Activaciones</small></div>
+      </div>
+      <div class="header-actions">
+        <button id="changePasswordBtn" class="ghost" type="button">Cambiar contraseña</button>
+        <button id="logoutBtn" class="ghost danger" type="button">Salir</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div>
+          <span class="eyebrow">LICENCIAS · COMPRAS · ACTIVACIONES</span>
+          <h1>Control de códigos de compra</h1>
+          <p>Crea y administra activaciones de un solo uso para cada colegio u organización estudiantil.</p>
+        </div>
+        <button id="newActivationBtn" class="primary" type="button">+ Nueva activación</button>
+      </section>
+
+      <section class="stats">
+        <article><span>Total</span><strong id="statTotal">0</strong></article>
+        <article><span>Disponibles</span><strong id="statAvailable">0</strong></article>
+        <article><span>Activados</span><strong id="statUsed">0</strong></article>
+        <article><span>Desactivados</span><strong id="statRevoked">0</strong></article>
+      </section>
+
+      <section class="toolbar">
+        <input id="searchInput" placeholder="Buscar colegio, responsable, email o referencia…">
+        <button id="refreshBtn" class="ghost" type="button">Actualizar</button>
+      </section>
+
+      <section id="activationList" class="activation-list"></section>
+      <div id="emptyState" class="empty" hidden>No hay activaciones registradas.</div>
+    </main>
+  </section>
+
+  <div id="activationModal" class="modal" hidden>
+    <div class="modal-card">
+      <div class="modal-head">
+        <div><span class="eyebrow">NUEVA LICENCIA</span><h2>Crear activación</h2></div>
+        <button class="x" data-close="activationModal" type="button">×</button>
+      </div>
+      <form id="activationForm" class="form-grid">
+        <label class="wide">Colegio u organización estudiantil*
+          <input id="organizationName" required placeholder="Ej. Colegio Santa Cruz · Clase Monarca 2030">
+        </label>
+        <label>Persona responsable*
+          <input id="responsibleName" required>
+        </label>
+        <label>Email*
+          <input id="buyerEmail" type="email" required>
+        </label>
+        <label>Teléfono
+          <input id="buyerPhone" type="tel">
+        </label>
+        <label>Método de compra
+          <select id="purchaseMethod">
+            <option value="">Seleccionar</option>
+            <option>Stripe</option>
+            <option>ATH Móvil</option>
+            <option>Cheque</option>
+            <option>Efectivo</option>
+            <option>Otro</option>
+          </select>
+        </label>
+        <label>Referencia de compra
+          <input id="purchaseRef" placeholder="Recibo, Payment ID, nota interna…">
+        </label>
+        <label>Expiración opcional
+          <input id="expiresAt" type="date">
+        </label>
+        <label class="wide">Notas administrativas
+          <textarea id="notes" rows="3"></textarea>
+        </label>
+        <div class="wide modal-actions">
+          <button type="button" class="ghost" data-close="activationModal">Cancelar</button>
+          <button type="submit" class="primary">Generar código</button>
+        </div>
+      </form>
+      <div id="activationStatus" class="status"></div>
+    </div>
+  </div>
+
+  <div id="codeModal" class="modal" hidden>
+    <div class="modal-card code-card">
+      <span class="success-mark">✓</span>
+      <span class="eyebrow">CÓDIGO GENERADO</span>
+      <h2>Activación lista</h2>
+      <p>Este código completo se muestra ahora para que puedas entregarlo al cliente.</p>
+      <div id="generatedCode" class="generated-code"></div>
+      <div class="code-actions">
+        <button id="copyCodeBtn" class="ghost" type="button">Copiar código</button>
+        <button id="copyMessageBtn" class="primary" type="button">Copiar mensaje WhatsApp</button>
+      </div>
+      <button class="link-btn" data-close="codeModal" type="button">Cerrar</button>
+      <div id="copyStatus" class="status"></div>
+    </div>
+  </div>
+
+  <div id="passwordModal" class="modal" hidden>
+    <div class="modal-card">
+      <div class="modal-head">
+        <div><span class="eyebrow">SEGURIDAD</span><h2>Cambiar contraseña</h2></div>
+        <button class="x" data-close="passwordModal" type="button">×</button>
+      </div>
+      <form id="passwordForm" class="form-grid one">
+        <label>Contraseña actual<input id="currentPassword" type="password" required></label>
+        <label>Nueva contraseña<input id="newPassword" type="password" minlength="12" required></label>
+        <label>Confirmar nueva contraseña<input id="confirmPassword" type="password" minlength="12" required></label>
+        <div class="modal-actions">
+          <button type="button" class="ghost" data-close="passwordModal">Cancelar</button>
+          <button type="submit" class="primary">Guardar contraseña</button>
+        </div>
+      </form>
+      <div id="passwordStatus" class="status"></div>
+    </div>
+  </div>
+
+  <script src="/control/activaciones/control.js?v=20260921-1"></script>
+</body>
+</html>
